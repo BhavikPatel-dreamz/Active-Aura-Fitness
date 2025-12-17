@@ -81,7 +81,7 @@ export async function submitQuiz(payload: any) {
 }
 
 
-export async function getQuizzes() {
+export async function getQuizList() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/list`,
     {
@@ -93,10 +93,11 @@ export async function getQuizzes() {
   );
 
   if (!res.ok) {
-    throw new Error('Failed to fetch quizzes');
+    throw new Error('Failed to fetch quiz list');
   }
 
   return res.json();
 }
+
 
 
