@@ -21,43 +21,43 @@ export async function getLandingPage() {
   return json.data;
 }
 
-export async function getQuizQuestions() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/questions`,
-    {
-      headers: {
-        'x-api-key': process.env.AURA_API_KEY!,
-        'Content-Type': 'application/json',
-      },
-      cache: 'no-store',
-    }
-  );
-
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text);
-  }
-
-  return res.json();
-}
-
-// export async function getQuizQuestions(quizId: number) {
+// export async function getQuizQuestions() {
 //   const res = await fetch(
-//     `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/questions?quiz_id=${quizId}`,
+//     `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/questions`,
 //     {
 //       headers: {
 //         'x-api-key': process.env.AURA_API_KEY!,
+//         'Content-Type': 'application/json',
 //       },
 //       cache: 'no-store',
 //     }
 //   );
 
 //   if (!res.ok) {
-//     throw new Error('Failed to fetch quiz questions');
+//     const text = await res.text();
+//     throw new Error(text);
 //   }
 
 //   return res.json();
 // }
+
+export async function getQuizQuestions(quizId: number) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/questions?quiz_id=${quizId}`,
+    {
+      headers: {
+        'x-api-key': process.env.AURA_API_KEY!,
+      },
+      cache: 'no-store',
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch quiz questions');
+  }
+
+  return res.json();
+}
 
 export async function submitQuiz(payload: any) {
   const res = await fetch(
@@ -81,7 +81,7 @@ export async function submitQuiz(payload: any) {
 }
 
 
-export async function getQuizzes() {
+export async function getQuizList() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/list`,
     {
@@ -93,10 +93,11 @@ export async function getQuizzes() {
   );
 
   if (!res.ok) {
-    throw new Error('Failed to fetch quizzes');
+    throw new Error('Failed to fetch quiz list');
   }
 
   return res.json();
 }
+
 
 

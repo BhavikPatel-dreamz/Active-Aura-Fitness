@@ -16,8 +16,10 @@ type QuizQuestion = {
 };
 
 export default function QuizSection({
+ quizId,
   onExitQuiz,
 }: {
+  quizId: number;
   onExitQuiz: () => void;
 }) {
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
@@ -34,14 +36,22 @@ export default function QuizSection({
   const [accepted, setAccepted] = useState(false);
 
   useEffect(() => {
-    async function loadQuiz() {
-      const res = await fetch('/api/quiz');
-      const json = await res.json();
-      setQuestions(json.questions);
-      setLoading(false);
-    }
-    loadQuiz();
-  }, []);
+  async function loadQuestions() {
+    setLoading(true);
+    setQuestions([]);
+    setCurrent(0);          
+    setAnswers({});         
+
+    const res = await fetch(`/api/quiz?quiz_id=${quizId}`);
+    const json = await res.json();
+
+    setQuestions(json.questions || []);
+    setLoading(false);
+  }
+
+  loadQuestions();
+}, [quizId]);
+
 
   if (loading) {
     return <p className="text-center py-20 text-white">Loading…</p>;
@@ -56,12 +66,11 @@ export default function QuizSection({
           setSubmitting(true);
 
           const payload = {
-            quiz_id: 123, // 🔴 replace if dynamic
+            quiz_id: quizId, 
             answers,
             user_name: name,
             user_email: email,
             user_phone: phone,
-            goal: 'lose_weight', // optional for now
             lifestyle: answers.lifestyle,
             weight_loss: answers.weight_loss,
           };
@@ -101,6 +110,17 @@ export default function QuizSection({
 }
 
   const question = questions[current];
+
+if (!question) {
+  return (
+    <section className="bg-[#E5391C] text-white py-20 text-center">
+      <p className="text-lg font-semibold">
+        Loading questions…
+      </p>
+    </section>
+  );
+}
+
 
   return (
     <section className="bg-[#E5391C] text-white py-20">

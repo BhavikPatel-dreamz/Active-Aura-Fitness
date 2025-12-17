@@ -27,13 +27,7 @@ export function FinalForm({
 }: Props) {
   return (
     <section className="bg-[#E5391C] text-white py-20 relative">
-      {/* TOP CTA */}
-      <div className="text-center mb-10">
-        <button className="bg-[#1f1f1f] text-white px-10 py-4 rounded-lg font-bold">
-          CLAIM YOUR FREE WEIGHT LOSS ASSESSMENT!
-        </button>
-      </div>
-
+      
       {/* PROGRESS DOTS */}
       <div className="flex justify-center gap-4 mb-12">
         {[1, 2, 3, 4, 5].map((i) => (

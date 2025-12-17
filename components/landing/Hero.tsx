@@ -1,25 +1,117 @@
+// type Props = {
+//   heroTitle: string;
+//   heroSubtitle: string;
+//   heroDescription: string;
+// };
+
+// export default function Hero({ heroTitle, heroSubtitle, heroDescription}: Props) {
+//   return (
+//     <section className="text-center px-6 py-16 max-w-5xl mx-auto">
+//       <h2 className="text-sm font-bold tracking-wide mb-4">
+//         {heroTitle}
+//       </h2>
+
+      
+//       <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
+//         {heroSubtitle}
+//       </h1>
+
+
+//       <h1>
+//         {heroDescription}
+//       </h1>
+
+//     </section>
+//   );
+// }
+
+import Image from 'next/image';
+
+type Benefit = {
+  text: string;
+  image: {
+    url: string;
+    alt: string;
+  };
+};
+
 type Props = {
   heroTitle: string;
   heroSubtitle: string;
   heroDescription: string;
+  benefits: Benefit[];
 };
 
-export default function Hero({ heroTitle, heroSubtitle, heroDescription}: Props) {
+export default function Hero({
+  heroTitle,
+  heroSubtitle,
+  heroDescription,
+  benefits,
+}: Props) {
+  const leftBenefits = benefits.slice(0, 3);
+  const rightBenefits = benefits.slice(3, 6);
+
   return (
-    <section className="text-center px-6 py-16 max-w-5xl mx-auto">
-      <h2 className="text-sm font-bold tracking-wide mb-4">
-        {heroTitle}
-      </h2>
+    <section className="relative px-6 py-24 max-w-7xl mx-auto">
+      {/* LEFT BENEFITS */}
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 space-y-6">
+        {leftBenefits.map((item, index) => (
+          <div
+            key={item.text}
+            className="bg-white text-black w-[200px] px-5 py-4 rounded-xl shadow-xl flex flex-col items-center text-center"
+            style={{ transform: `rotate(${-8 + index * 2}deg)` }}
+          >
+            <Image
+              src={item.image.url}
+              alt={item.image.alt}
+              width={36}
+              height={36}
+              className="mb-2"
+            />
+            <span className="text-sm font-semibold">
+              {item.text}
+            </span>
+          </div>
+        ))}
+      </div>
 
-      
-      <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
-        {heroSubtitle}
-      </h1>
+      {/* RIGHT BENEFITS */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 space-y-6">
+        {rightBenefits.map((item, index) => (
+          <div
+            key={item.text}
+            className="bg-white text-black w-[200px] px-5 py-4 rounded-xl shadow-xl flex flex-col items-center text-center"
+            style={{ transform: `rotate(${8 - index * 2}deg)` }}
+          >
+            <Image
+              src={item.image.url}
+              alt={item.image.alt}
+              width={36}
+              height={36}
+              className="mb-2"
+            />
+            <span className="text-sm font-semibold">
+              {item.text}
+            </span>
+          </div>
+        ))}
+      </div>
 
-      <h1>
-        {heroDescription}
-      </h1>
+      {/* HERO CONTENT */}
+      <div className="text-center max-w-4xl mx-auto relative z-10">
+        <h2 className="text-sm font-bold tracking-wide mb-4">
+          {heroTitle}
+        </h2>
 
+        <h1 className="text-3xl md:text-5xl font-extrabold leading-tight mb-6">
+          {heroSubtitle}
+        </h1>
+
+        <p className="text-base md:text-lg font-medium opacity-90">
+          {heroDescription}
+        </p>
+      </div>
     </section>
   );
 }
+
