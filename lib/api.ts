@@ -1,7 +1,7 @@
 import { LandingApiResponse } from './types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_AURA_API_BASE!;
-const API_KEY = process.env.AURA_API_KEY!;
+const API_KEY = process.env.NEXT_PUBLIC_AURA_API_KEY!;
 
 export async function getLandingPage() {
   const res = await fetch(`${BASE_URL}/landing-page`, {
@@ -21,32 +21,13 @@ export async function getLandingPage() {
   return json.data;
 }
 
-// export async function getQuizQuestions() {
-//   const res = await fetch(
-//     `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/questions`,
-//     {
-//       headers: {
-//         'x-api-key': process.env.AURA_API_KEY!,
-//         'Content-Type': 'application/json',
-//       },
-//       cache: 'no-store',
-//     }
-//   );
-
-//   if (!res.ok) {
-//     const text = await res.text();
-//     throw new Error(text);
-//   }
-
-//   return res.json();
-// }
 
 export async function getQuizQuestions(quizId: number) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/questions?quiz_id=${quizId}`,
     {
       headers: {
-        'x-api-key': process.env.AURA_API_KEY!,
+        'x-api-key': API_KEY,
       },
       cache: 'no-store',
     }
@@ -66,7 +47,7 @@ export async function submitQuiz(payload: any) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.AURA_API_KEY!,
+        'x-api-key': API_KEY,
       },
       body: JSON.stringify(payload),
     }
@@ -86,7 +67,7 @@ export async function getQuizList() {
     `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/list`,
     {
       headers: {
-        'x-api-key': process.env.AURA_API_KEY!,
+        'x-api-key': API_KEY,
       },
       cache: 'no-store',
     }
