@@ -24,10 +24,10 @@ export async function getLandingPage() {
 
 export async function getQuizQuestions(quizId: number) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/questions?quiz_id=${quizId}`,
+    `${BASE_URL}/quiz/questions?quiz_id=${quizId}`,
     {
       headers: {
-        'x-api-key': process.env.AURA_API_KEY!,
+        'x-api-key':API_KEY,
       },
       cache: 'no-store',
     }
@@ -42,12 +42,12 @@ export async function getQuizQuestions(quizId: number) {
 
 export async function submitQuiz(payload: any) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/submit`,
+    `${BASE_URL}/quiz/submit`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.AURA_API_KEY!,
+        'x-api-key': API_KEY,
       },
       body: JSON.stringify(payload),
     }
@@ -64,10 +64,10 @@ export async function submitQuiz(payload: any) {
 
 export async function getQuizList() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/list`,
+    `${BASE_URL}/quiz/list`,
     {
       headers: {
-        'x-api-key': process.env.AURA_API_KEY!,
+        'x-api-key': API_KEY,
       },
       cache: 'no-store',
     }
