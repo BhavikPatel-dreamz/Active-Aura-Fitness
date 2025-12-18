@@ -1,30 +1,3 @@
-// type Props = {
-//   heroTitle: string;
-//   heroSubtitle: string;
-//   heroDescription: string;
-// };
-
-// export default function Hero({ heroTitle, heroSubtitle, heroDescription}: Props) {
-//   return (
-//     <section className="text-center px-6 py-16 max-w-5xl mx-auto">
-//       <h2 className="text-sm font-bold tracking-wide mb-4">
-//         {heroTitle}
-//       </h2>
-
-      
-//       <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
-//         {heroSubtitle}
-//       </h1>
-
-
-//       <h1>
-//         {heroDescription}
-//       </h1>
-
-//     </section>
-//   );
-// }
-
 import Image from 'next/image';
 
 type Benefit = {
@@ -58,7 +31,7 @@ export default function Hero({
         {leftBenefits.map((item, index) => (
           <div
             key={item.text}
-            className="bg-white text-black w-[200px] px-5 py-4 rounded-xl shadow-xl flex flex-col items-center text-center"
+            className="bg-white text-black w-50 px-5 py-4 rounded-xl shadow-xl flex flex-col items-center text-center"
             style={{ transform: `rotate(${-8 + index * 2}deg)` }}
           >
             <Image
@@ -80,7 +53,7 @@ export default function Hero({
         {rightBenefits.map((item, index) => (
           <div
             key={item.text}
-            className="bg-white text-black w-[200px] px-5 py-4 rounded-xl shadow-xl flex flex-col items-center text-center"
+            className="bg-white text-black w-50 px-5 py-4 rounded-xl shadow-xl flex flex-col items-center text-center"
             style={{ transform: `rotate(${8 - index * 2}deg)` }}
           >
             <Image
@@ -107,9 +80,10 @@ export default function Hero({
           {heroSubtitle}
         </h1>
 
-        <p className="text-base md:text-lg font-medium opacity-90">
-          {heroDescription}
-        </p>
+        <div
+  className="text-base md:text-lg font-medium opacity-90"
+  dangerouslySetInnerHTML={{ __html: heroDescription }}
+/>
       </div>
     </section>
   );

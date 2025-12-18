@@ -1,7 +1,7 @@
 import { LandingApiResponse } from './types';
 
-const BASE_URL = process.env.NEXT_PUBLIC_AURA_API_BASE!;
-const API_KEY = process.env.NEXT_PUBLIC_AURA_API_KEY!;
+const BASE_URL = process.env.AURA_API_BASE!;
+const API_KEY = process.env.AURA_API_KEY!;
 
 export async function getLandingPage() {
   const res = await fetch(`${BASE_URL}/landing-page`, {
@@ -79,6 +79,30 @@ export async function getQuizList() {
 
   return res.json();
 }
+
+export async function validateQuiz(payload: {
+  quiz_id: number;
+  answers: Record<string, string>;
+}) {
+  const res = await fetch(
+    `${BASE_URL}/quiz/validate`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': API_KEY,
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error('Quiz validation failed');
+  }
+
+  return res.json();
+}
+
 
 
 
