@@ -27,7 +27,7 @@ export async function getQuizQuestions(quizId: number) {
     `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/questions?quiz_id=${quizId}`,
     {
       headers: {
-        'x-api-key': API_KEY,
+        'x-api-key': process.env.AURA_API_KEY!,
       },
       cache: 'no-store',
     }
@@ -47,7 +47,7 @@ export async function submitQuiz(payload: any) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': API_KEY,
+        'x-api-key': process.env.AURA_API_KEY!,
       },
       body: JSON.stringify(payload),
     }
@@ -67,7 +67,7 @@ export async function getQuizList() {
     `${process.env.NEXT_PUBLIC_AURA_API_BASE}/quiz/list`,
     {
       headers: {
-        'x-api-key': API_KEY,
+        'x-api-key': process.env.AURA_API_KEY!,
       },
       cache: 'no-store',
     }
