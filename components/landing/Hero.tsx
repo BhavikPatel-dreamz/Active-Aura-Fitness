@@ -31,7 +31,7 @@ export default function Hero({
         {leftBenefits.map((item, index) => (
           <div
             key={item.text}
-            className="bg-white text-black w-[200px] px-5 py-4 rounded-xl shadow-xl flex flex-col items-center text-center"
+            className="bg-white text-black w-50 px-5 py-4 rounded-xl shadow-xl flex flex-col items-center text-center"
             style={{ transform: `rotate(${-8 + index * 2}deg)` }}
           >
             <Image
@@ -53,7 +53,7 @@ export default function Hero({
         {rightBenefits.map((item, index) => (
           <div
             key={item.text}
-            className="bg-white text-black w-[200px] px-5 py-4 rounded-xl shadow-xl flex flex-col items-center text-center"
+            className="bg-white text-black w-50 px-5 py-4 rounded-xl shadow-xl flex flex-col items-center text-center"
             style={{ transform: `rotate(${8 - index * 2}deg)` }}
           >
             <Image

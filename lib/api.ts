@@ -1,7 +1,7 @@
 import { LandingApiResponse } from './types';
 
-const BASE_URL = process.env.NEXT_PUBLIC_AURA_API_BASE!;
-const API_KEY = process.env.NEXT_PUBLIC_AURA_API_KEY!;
+const BASE_URL = process.env.AURA_API_BASE!;
+const API_KEY = process.env.AURA_API_KEY!;
 
 export async function getLandingPage() {
   const res = await fetch(`${BASE_URL}/landing-page`, {

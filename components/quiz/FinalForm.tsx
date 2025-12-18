@@ -1,6 +1,10 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 type Props = {
   onBack: () => void;
-  onSubmit: () => void;
+  onSubmit: (fullPhone: string) => void; // ✅ FIXED
   submitting: boolean;
   name: string;
   email: string;
@@ -10,6 +14,12 @@ type Props = {
   setEmail: (v: string) => void;
   setPhone: (v: string) => void;
   setAccepted: (v: boolean) => void;
+};
+
+type CountryCode = {
+  name: string;
+  code: string;
+  flag: string;
 };
 
 export function FinalForm({
@@ -25,19 +35,42 @@ export function FinalForm({
   setPhone,
   setAccepted,
 }: Props) {
+  const [countries, setCountries] = useState<CountryCode[]>([]);
+  const [countryCode, setCountryCode] = useState('+1');
+
+  // 🔹 Fetch country calling codes
+  useEffect(() => {
+    async function fetchCountries() {
+      const res = await fetch(
+        'https://restcountries.com/v3.1/all?fields=name,idd,flags'
+      );
+      const data = await res.json();
+
+      const formatted: CountryCode[] = data
+        .filter((c: any) => c.idd?.root)
+        .map((c: any) => ({
+          name: c.name.common,
+          code: `${c.idd.root}${c.idd.suffixes?.[0] || ''}`,
+          flag: c.flags.png,
+        }))
+        .sort((a: CountryCode, b: CountryCode) =>
+          a.name.localeCompare(b.name)
+        );
+
+      setCountries(formatted);
+    }
+
+    fetchCountries();
+  }, []);
+
+  // 🔹 Submit handler
+  function handleSubmit() {
+    const fullPhone = `${countryCode}${phone}`; // ✅ combine here
+    onSubmit(fullPhone);
+  }
+
   return (
     <section className="bg-[#E5391C] text-white py-20 relative">
-      
-      {/* PROGRESS DOTS */}
-      <div className="flex justify-center gap-4 mb-12">
-        {[1, 2, 3, 4, 5].map((i) => (
-          <span
-            key={i}
-            className="w-3 h-3 rounded-full bg-[#1f1f1f]"
-          />
-        ))}
-      </div>
-
       {/* HEADING */}
       <h2 className="text-center text-2xl md:text-3xl font-bold mb-12 px-4">
         Final Step : Where Should We Send <br />
@@ -69,22 +102,26 @@ export function FinalForm({
         </div>
 
         {/* Phone */}
-        <div>
-          <label className="block text-sm mb-2">
-            Phone Number (For Sending Your Plan Instantly)
-          </label>
+        <div className="flex">
+          <select
+            value={countryCode}
+            onChange={(e) => setCountryCode(e.target.value)}
+            className="bg-white text-black px-3 py-4 rounded-l-lg border-r outline-none max-w-35"
+          >
+            {countries.map((c) => (
+             <option key={`${c.name}-${c.code}`} value={c.code}>
+  {c.name} ({c.code})
+</option>
 
-          <div className="flex">
-            <div className="bg-white text-black px-4 py-4 rounded-l-lg border-r">
-              +1
-            </div>
-            <input
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="555-123-4567"
-              className="w-full p-4 rounded-r-lg text-black bg-white"
-            />
-          </div>
+            ))}
+          </select>
+
+          <input
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Phone number"
+            className="w-full p-4 rounded-r-lg text-black bg-white outline-none"
+          />
         </div>
 
         {/* Terms */}
@@ -98,7 +135,7 @@ export function FinalForm({
         </label>
       </div>
 
-      {/* BOTTOM ACTION BAR */}
+      {/* ACTION BAR */}
       <div className="mt-16 border-t border-black/20 pt-8">
         <div className="flex justify-center gap-4">
           <button
@@ -110,7 +147,7 @@ export function FinalForm({
 
           <button
             disabled={!accepted || submitting}
-            onClick={onSubmit}
+            onClick={handleSubmit} // ✅ FIXED
             className="px-8 py-3 rounded-lg bg-black text-white disabled:opacity-40"
           >
             Get My Personalized Results →
