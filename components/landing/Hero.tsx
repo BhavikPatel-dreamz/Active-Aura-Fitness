@@ -1,30 +1,3 @@
-// type Props = {
-//   heroTitle: string;
-//   heroSubtitle: string;
-//   heroDescription: string;
-// };
-
-// export default function Hero({ heroTitle, heroSubtitle, heroDescription}: Props) {
-//   return (
-//     <section className="text-center px-6 py-16 max-w-5xl mx-auto">
-//       <h2 className="text-sm font-bold tracking-wide mb-4">
-//         {heroTitle}
-//       </h2>
-
-      
-//       <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
-//         {heroSubtitle}
-//       </h1>
-
-
-//       <h1>
-//         {heroDescription}
-//       </h1>
-
-//     </section>
-//   );
-// }
-
 import Image from 'next/image';
 
 type Benefit = {
@@ -107,9 +80,10 @@ export default function Hero({
           {heroSubtitle}
         </h1>
 
-        <p className="text-base md:text-lg font-medium opacity-90">
-          {heroDescription}
-        </p>
+        <div
+  className="text-base md:text-lg font-medium opacity-90"
+  dangerouslySetInnerHTML={{ __html: heroDescription }}
+/>
       </div>
     </section>
   );

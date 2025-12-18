@@ -59,14 +59,37 @@ export default function QuizSection({
 
   // 👉 SHOW FINAL FORM
   if (showFinalForm) {
-    return (
-      <FinalForm
-        onBack={() => setShowFinalForm(false)}
-        onSubmit={async () => {
-          setSubmitting(true);
+  return (
+    <FinalForm
+      onBack={() => setShowFinalForm(false)}
+      onSubmit={async () => {
+        setSubmitting(true);
 
+        try {
+          // 1️⃣ VALIDATE QUIZ FIRST
+          const validateRes = await fetch('/api/quiz/validate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              quiz_id: quizId,
+              answers,
+            }),
+          });
+
+          const validateJson = await validateRes.json();
+
+          if (!validateJson.success) {
+            alert(
+              validateJson.message ||
+                'Please answer all required questions'
+            );
+            setSubmitting(false);
+            return;
+          }
+
+          // 2️⃣ SUBMIT QUIZ (ONLY IF VALID)
           const payload = {
-            quiz_id: quizId, 
+            quiz_id: quizId,
             answers,
             user_name: name,
             user_email: email,
@@ -75,32 +98,38 @@ export default function QuizSection({
             weight_loss: answers.weight_loss,
           };
 
-          const res = await fetch('/api/quiz/submit', {
+          const submitRes = await fetch('/api/quiz/submit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
           });
 
-          const json = await res.json();
-          console.log('SUBMIT RESPONSE', json);
+          const submitJson = await submitRes.json();
+          console.log('SUBMIT RESPONSE', submitJson);
 
-          setSubmitting(false);
-
-          // 👉 later: redirect to pdf_url
           alert('Quiz submitted successfully!');
-        }}
-        submitting={submitting}
-        name={name}
-        email={email}
-        phone={phone}
-        accepted={accepted}
-        setName={setName}
-        setEmail={setEmail}
-        setPhone={setPhone}
-        setAccepted={setAccepted}
-      />
-    );
-  }
+
+          // 👉 later: redirect to submitJson.pdf_url
+        } catch (error) {
+          console.error(error);
+          alert('Something went wrong. Please try again.');
+        } finally {
+          setSubmitting(false);
+        }
+      }}
+      submitting={submitting}
+      name={name}
+      email={email}
+      phone={phone}
+      accepted={accepted}
+      setName={setName}
+      setEmail={setEmail}
+      setPhone={setPhone}
+      setAccepted={setAccepted}
+    />
+  );
+}
+
   
   function exitQuiz() {
   setCurrent(0);

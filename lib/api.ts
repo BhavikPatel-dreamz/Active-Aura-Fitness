@@ -80,5 +80,29 @@ export async function getQuizList() {
   return res.json();
 }
 
+export async function validateQuiz(payload: {
+  quiz_id: number;
+  answers: Record<string, string>;
+}) {
+  const res = await fetch(
+    `${BASE_URL}/quiz/validate`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': API_KEY,
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error('Quiz validation failed');
+  }
+
+  return res.json();
+}
+
+
 
 
