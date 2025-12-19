@@ -35,3 +35,45 @@ body {
   }
 }
 
+/* Styling for SabotageSection */
+
+.sabotage-content ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 40px;
+  margin-bottom: 28px;
+  list-style: none;
+  padding-left: 0;
+}
+
+.sabotage-content li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.sabotage-content li::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background-color: #ff4d1c;
+  border-radius: 9999px;
+  position: absolute;
+  left: 0;
+  top: 9px;
+}
+
+.sabotage-content p {
+  margin-bottom: 18px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #d1d5db;
+}
+
+/* Problem Section */
+
+.problem-content p {
+  margin-bottom: 18px;
+  color: #d1d5db;
+}

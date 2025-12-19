@@ -1,7 +1,7 @@
 import { LandingApiResponse } from './types';
 
-const BASE_URL = process.env.NEXT_PUBLIC_AURA_API_BASE!;
-const API_KEY = process.env.NEXT_PUBLIC_AURA_API_KEY!;
+const BASE_URL = process.env.AURA_API_BASE!;
+const API_KEY = process.env.AURA_API_KEY!;
 
 export async function getLandingPage() {
   const res = await fetch(`${BASE_URL}/landing-page`, {
@@ -78,6 +78,27 @@ export async function getQuizList() {
   }
 
   return res.json();
+}
+
+export async function getBookYourFreePage() {
+  const res = await fetch(
+    `${BASE_URL}/page-acf-fields?page_id=95`,
+    {
+      headers: {
+        'x-api-key': API_KEY,
+      },
+      cache: 'no-store',
+    }
+
+
+  );
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch page data');
+  }
+  
+  const json = await res.json();
+  return json.data;
 }
 
 
