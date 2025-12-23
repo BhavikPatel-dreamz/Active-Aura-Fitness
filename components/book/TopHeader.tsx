@@ -15,16 +15,6 @@ export default function TopHeader() {
             height={198}
             priority
           />
-
-          {/* Brand Text */}
-          <div className="text-white leading-tight">
-            <h1 className="text-xl font-semibold tracking-wide">
-              Active Aura
-            </h1>
-            <p className="text-[11px] tracking-widest text-gray-300">
-              YOUR JOURNEY TO INNER PEACE
-            </p>
-          </div>
         </div>
       </div>
     </header>

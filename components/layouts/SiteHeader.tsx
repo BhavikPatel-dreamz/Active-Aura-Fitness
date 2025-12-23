@@ -18,16 +18,13 @@ export default function SiteHeader() {
         <div className="max-w-7xl mx-auto px-4 flex flex-col items-center">
           {/* Logo + Name */}
           <div className="flex items-center gap-2">
-            <Image
-              src="/logo-icon.png" // replace with your logo path
-              alt="Active Aura Logo"
-              width={36}
-              height={36}
-              priority
-            />
-            <span className="text-white text-xl font-semibold tracking-wide">
-              Active Aura
-            </span>
+           <Image
+                       src="https://dddemo.net/wordpress/2025/aura-fitness/wp-content/uploads/2025/12/active-aura-white-logo.png"
+                       alt="Active Aura"
+                       width={198}
+                       height={198}
+                       priority
+                     />
           </div>
 
           {/* Tagline */}

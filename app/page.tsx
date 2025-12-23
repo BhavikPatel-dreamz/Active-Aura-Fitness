@@ -3,6 +3,7 @@ import Hero from '../components/landing/Hero';
 import Goals from '../components/landing/Goal';
 import CTA from '../components/landing/CTA';
 import SiteHeader from '@/components/layouts/SiteHeader';
+import TopHeader from '@/components/book/TopHeader';
 
 export default async function HomePage() {
   const data = await getLandingPage();
@@ -26,7 +27,10 @@ export default async function HomePage() {
         benefits={data.benefits}
       />
 
-      <CTA text={data.cta_button_text} />
+      <CTA 
+        text={data.cta_button_text}
+        href = "/reservation"
+       />
 
       <Goals
         goals={data.goal_options}
