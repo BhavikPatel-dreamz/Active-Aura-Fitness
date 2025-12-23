@@ -1,3 +1,4 @@
+import CTAButton from "../common/CTAButton";
 type SecretSectionData = {
   secret_title: string;
   secret_description: string;
@@ -34,15 +35,25 @@ export default function SecretSection({
         )}
 
         {/* CTA */}
-        {data.secret_cta_button?.title && (
-          <a
-            href={data.secret_cta_button.url || '#'}
-            target={data.secret_cta_button.target || '_self'}
-            className="inline-block bg-[#ff3d00] hover:bg-[#e63600] transition-colors text-white font-bold uppercase px-12 py-4 rounded-xl text-sm tracking-wide"
-          >
-            {data.secret_cta_button.title.trim()}
-          </a>
-        )}
+        {typeof data.secret_cta_button === 'object' &&
+  data.secret_cta_button?.title && (
+    <CTAButton
+      text={data.secret_cta_button.title.replace(/&nbsp;/g, '').trim()}
+      href={
+        data.secret_cta_button.url &&
+        data.secret_cta_button.url !== '#'
+          ? data.secret_cta_button.url
+          : '/reservation'
+      }
+      target={
+        data.secret_cta_button.target === '_blank'
+          ? '_blank'
+          : '_self'
+      }
+    />
+)}
+
+
       </div>
     </section>
   );

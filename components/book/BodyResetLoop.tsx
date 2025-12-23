@@ -1,3 +1,5 @@
+import CTAButton from "../common/CTAButton";
+
 type ProvenStat = {
   rating: string;
   title: string;
@@ -56,17 +58,27 @@ export default function BodyResetLoopSection({
         )}
 
         {/* CTA */}
-        {data.brl_cta_button?.title && (
-          <div className="text-center mb-24">
-            <a
-              href={data.brl_cta_button.url || '#'}
-              target={data.brl_cta_button.target || '_self'}
-              className="inline-block bg-[#ff3d00] hover:bg-[#e63600] transition-colors text-white font-bold uppercase px-12 py-4 rounded-xl text-sm tracking-wide"
-            >
-              {data.brl_cta_button.title.trim()}
-            </a>
-          </div>
-        )}
+        {typeof data.brl_cta_button === 'object' &&
+  data.brl_cta_button?.title && (
+    <div className="text-center mb-24">
+      <CTAButton
+        text={data.brl_cta_button.title.replace(/&nbsp;/g, '').trim()}
+        href={
+          data.brl_cta_button.url &&
+          data.brl_cta_button.url !== '#'
+            ? data.brl_cta_button.url
+            : '/reservation'
+        }
+        target={
+          data.brl_cta_button.target === '_blank'
+            ? '_blank'
+            : '_self'
+        }
+        className="px-12 py-4"
+      />
+    </div>
+)}
+
 
         {/* PROVEN TITLE */}
         {data.brl_proven_title && (
