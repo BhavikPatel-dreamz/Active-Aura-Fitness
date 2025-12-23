@@ -121,4 +121,45 @@ export async function validateQuiz(payload: {
   return res.json();
 }
 
+export async function getReservationPage() {
+  const res = await fetch(
+    `${BASE_URL}/page-acf-fields?page_id=205`,
+    {
+      headers: {
+        'x-api-key': API_KEY,
+      },
+      cache: 'no-store',
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch page data');
+  }
+
+  const json = await res.json();
+  return json.data;
+}
+
+export async function getLogos() {
+  const res = await fetch(
+    `${BASE_URL}/logo?source=site`,
+    {
+      headers: {
+        'x-api-key': API_KEY,
+      },
+      cache: 'no-store',
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch page data');
+  }
+
+  const json = await res.json();
+  return json.logo;
+}
+
+
+
+
 

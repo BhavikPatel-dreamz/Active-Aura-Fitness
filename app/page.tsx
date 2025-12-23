@@ -3,7 +3,6 @@ import Hero from '../components/landing/Hero';
 import Goals from '../components/landing/Goal';
 import CTA from '../components/landing/CTA';
 import SiteHeader from '@/components/layouts/SiteHeader';
-import TopHeader from '@/components/book/TopHeader';
 
 export default async function HomePage() {
   const data = await getLandingPage();

@@ -1,4 +1,4 @@
-import { getBookYourFreePage } from '@/lib/api';
+import { getBookYourFreePage, getLogos } from '@/lib/api';
 import HeroSection from '../../components/book/HeroSection';
 import SabotageSection from '@/components/book/SabotageSection';
 import ProblemSection from '@/components/book/ProblemSection';

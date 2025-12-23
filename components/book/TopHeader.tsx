@@ -1,22 +1,22 @@
-'use client';
 
 import Image from 'next/image';
+import { getLogos } from '@/lib/api';
 
-export default function TopHeader() {
+export default async function TopHeader() {
+  const logo = await getLogos();
+
   return (
-    <header className="bg-[#2f2f2f] py-4">
-      <div className="max-w-7xl mx-auto flex justify-center items-center">
-        <div className="flex items-center gap-3">
-          {/* Logo */}
-          <Image
-            src="https://dddemo.net/wordpress/2025/aura-fitness/wp-content/uploads/2025/12/active-aura-white-logo.png"
-            alt="Active Aura"
-            width={198}
-            height={198}
-            priority
-          />
-        </div>
-      </div>
+    <header className="w-full py-6 flex justify-center bg-[#2f2f2f]">
+      {logo?.url && (
+        <Image
+          src={logo.url}
+          alt={logo.alt || 'Active Aura'}
+          width={logo.width || 160}
+          height={logo.height || 40}
+          priority
+          className="object-contain"
+        />
+      )}
     </header>
   );
 }
