@@ -1,15 +1,16 @@
-import Image from 'next/image';
+import Image from "next/image";
+import { getLogos } from "@/lib/api";
 
-export default function SiteHeader() {
+export default async function SiteHeader() {
+  const logo = await getLogos();
   return (
     <header className="w-full">
       {/* TOP OFFER BAR */}
       <div className="w-full bg-[#303030] text-white text-uppercase text-xs md:text-lg font-weight-normal py-[19px]">
         <div className="max-w-7xl mx-auto px-4 text-center tracking-wide">
-          EXCLUSIVE OFFER FOR: 🇮🇳{' '}
-          <span className="font-normal text-sm">#1</span>{' '}
-          <span className="font-bold">amazon</span>{' '}
-          <span className="uppercase text-[16px]">BESTSELLER</span>
+          EXCLUSIVE OFFER FOR: 🇮🇳 <span className="font-bold">#1</span>{" "}
+          <span className="font-bold">amazon</span>{" "}
+          <span className="uppercase">BESTSELLER</span>
         </div>
       </div>
 

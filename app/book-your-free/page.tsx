@@ -1,4 +1,4 @@
-import { getBookYourFreePage } from '@/lib/api';
+import { getBookYourFreePage, getLogos } from '@/lib/api';
 import HeroSection from '../../components/book/HeroSection';
 import SabotageSection from '@/components/book/SabotageSection';
 import ProblemSection from '@/components/book/ProblemSection';
@@ -6,6 +6,12 @@ import SecretSection from '@/components/book/SecretSection';
 import BodyResetLoopSection from '@/components/book/BodyResetLoop';
 import ConsultationCtaWithTimer from '@/components/book/ConsultationCtaWithTimer';
 import TopHeader from '@/components/book/TopHeader';
+import WhyItWorksSection from '@/components/book/WhyItWorksSection';
+import LaunchPriceSection from '@/components/book/LaunchPriceSection';
+import ShockingStatisticSection from '@/components/book/ShockingStatisticSection';
+import ConsultationSection from '@/components/book/ConsultationSection';
+import TestimonialSection from '@/components/book/TestimonialSection';
+import FaqSection from '@/components/book/FaqSection';
 
 export default async function BookYourFreePage() {
   const pageData = await getBookYourFreePage();
@@ -43,7 +49,20 @@ export default async function BookYourFreePage() {
 
     <BodyResetLoopSection data={acf.body_reset_loop} />
 
+    <WhyItWorksSection data={acf.why_it_works_section} />
+    
+    <LaunchPriceSection data={acf.launch_price_section} />
 
+    <ShockingStatisticSection data = {acf.shocking_statistic_section} />
+
+    <ConsultationSection data = {acf.consultation_outline_section} />
+
+     <TestimonialSection data = {acf.testimonial_section} />
+
+     <FaqSection
+  data={acf.faq_section}
+  
+/>
 
       
     </main>

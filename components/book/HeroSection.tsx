@@ -1,3 +1,4 @@
+import CTAButton from "../common/CTAButton";
 type HeroSectionProps = {
   data: {
     hero_subtitle: string;
@@ -7,6 +8,7 @@ type HeroSectionProps = {
     hero_cta: {
       title: string;
       url: string;
+      target: string;
     };
   };
 };
@@ -38,12 +40,24 @@ export default function HeroSection({ data }: HeroSectionProps) {
         className="mx-auto rounded-xl max-w-4xl"
       />
 
-      <a
-        href={data.hero_cta.url}
-        className="inline-block mt-8 bg-orange-600 px-8 py-4 rounded-lg font-bold"
-      >
-        {data.hero_cta.title}
-      </a>
+      {data.hero_cta?.title && (
+  <div className="mt-8">
+    <CTAButton
+      text={data.hero_cta.title.trim()}
+      href={
+        data.hero_cta.url && data.hero_cta.url !== '#'
+          ? data.hero_cta.url
+          : '/reservation'
+      }
+      target={
+        data.hero_cta.target === '_blank'
+          ? '_blank'
+          : '_self'
+      }
+    />
+  </div>
+)}
+
     </section>
   );
 }

@@ -1,3 +1,5 @@
+import CTAButton from "../common/CTAButton";
+
 type Problem = {
   problem_title: string;
   problem_media_type: 'video' | 'image';
@@ -53,16 +55,24 @@ export default function ProblemSection({ data }: { data: Problem }) {
         />
       )}
 
-      {typeof data.problem_cta_button === 'object' &&
-        data.problem_cta_button?.title && (
-          <a
-            href={data.problem_cta_button.url || '#'}
-            target={data.problem_cta_button.target || '_self'}
-            className="inline-block bg-[#ff3d00] hover:bg-[#e63600] transition text-white font-bold uppercase px-10 py-4 rounded-xl text-sm tracking-wide"
-          >
-            {data.problem_cta_button.title.trim()}
-          </a>
-        )}
+     {typeof data.problem_cta_button === 'object' &&
+  data.problem_cta_button?.title && (
+    <CTAButton
+      text={data.problem_cta_button.title.replace(/&nbsp;/g, '').trim()}
+      href={
+        data.problem_cta_button.url &&
+        data.problem_cta_button.url !== '#'
+          ? data.problem_cta_button.url
+          : '/reservation'
+      }
+      target={
+        data.problem_cta_button.target === '_blank'
+          ? '_blank'
+          : '_self'
+      }
+    />
+)}
+
     </div>
   );
 
