@@ -17,7 +17,7 @@ export default async function HomePage() {
   });
 
   return (
-    <main className="bg-[#E5391C] text-white relative overflow-hidden">
+    <main className="bg-[#DB3706] text-white relative overflow-hidden">
       <SiteHeader />
 
       <Hero

@@ -25,7 +25,7 @@ export default function Hero({
   const rightBenefits = benefits.slice(3, 6);
 
   return (
-    <section className="relative px-6 py-24 max-w-7xl mx-auto">
+    <section className="relative px-6 max-w-7xl mx-auto">
       {/* LEFT BENEFITS */}
       <div className="absolute left-0 top-1/2 -translate-y-1/2 space-y-6">
         {leftBenefits.map((item, index) => (
@@ -72,11 +72,11 @@ export default function Hero({
 
       {/* HERO CONTENT */}
       <div className="text-center max-w-4xl mx-auto relative z-10">
-        <h2 className="text-sm font-bold tracking-wide mb-4">
+        <h2 className="text-2xl font-bold mb-4 text-[#303030] font-poppins">
           {heroTitle}
         </h2>
 
-        <h1 className="text-3xl md:text-5xl font-extrabold leading-tight mb-6">
+        <h1 className="text-3xl md:text-5xl font-extrabold leading-tight mb-6 font-bebas">
           {heroSubtitle}
         </h1>
 
