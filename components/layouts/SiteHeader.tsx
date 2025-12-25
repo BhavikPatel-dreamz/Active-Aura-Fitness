@@ -6,7 +6,7 @@ export default async function SiteHeader() {
   return (
     <header className="w-full">
       {/* TOP OFFER BAR */}
-      <div className="w-full bg-[#2b2b2b] text-white text-xs md:text-sm py-2">
+      <div className="w-full bg-[#303030] text-white text-uppercase text-xs md:text-lg font-weight-normal py-[19px]">
         <div className="max-w-7xl mx-auto px-4 text-center tracking-wide">
           EXCLUSIVE OFFER FOR: 🇮🇳 <span className="font-bold">#1</span>{" "}
           <span className="font-bold">amazon</span>{" "}
@@ -15,24 +15,20 @@ export default async function SiteHeader() {
       </div>
 
       {/* BRAND HEADER */}
-      <div className="w-full bg-[#E5391C] py-6">
+      <div className="w-full bg-[#DB3706] pt-8.5 pb-8">
         <div className="max-w-7xl mx-auto px-4 flex flex-col items-center">
           {/* Logo + Name */}
           <div className="flex items-center gap-2">
-            <Image
-              src={logo.url}
-              alt={logo.alt || "Active Aura"}
-              width={logo.width || 160}
-              height={logo.height || 40}
-              priority
-              className="object-contain"
-            />
+           <Image
+                       src="https://dddemo.net/wordpress/2025/aura-fitness/wp-content/uploads/2025/12/active-aura-white-logo.png"
+                       alt="Active Aura"
+                       width={323}
+                       height={60}
+                       priority
+                     />
           </div>
 
-          {/* Tagline */}
-          <p className="text-white/80 text-xs mt-1 tracking-wide italic">
-            “Your journey to inner peace”
-          </p>
+          
         </div>
       </div>
     </header>

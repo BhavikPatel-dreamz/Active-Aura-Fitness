@@ -30,7 +30,7 @@ body {
   font-family: var(--font-poppins), sans-serif;
 }
 
-h1, h2, .bebas {
+.font-bebas {
   font-family: var(--font-bebas), sans-serif;
 }
 
