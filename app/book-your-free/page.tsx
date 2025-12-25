@@ -15,14 +15,55 @@ import ConsultationSection from '@/components/book/ConsultationSection';
 import TestimonialSection from '@/components/book/TestimonialSection';
 import FaqSection from '@/components/book/FaqSection';
 
+const stripHtml = (html = '') =>
+  html.replace(/<[^>]*>/g, '').trim();
+
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPageBySlug(PAGE_SLUGS.BOOK_FREE);
+  const seo = page.yoast_head_json;
 
   return {
-    title: page.title,
-    description: page.excerpt || 'Book your free consultation',
+    title: seo?.title || page.title,
+
+    description:
+      seo?.description ||
+      stripHtml(page.excerpt) ||
+      'Book your free consultation',
+
+    alternates: {
+      canonical: seo?.og_url,
+    },
+
+    robots: {
+      index: seo?.robots?.index !== 'noindex',
+      follow: seo?.robots?.follow !== 'nofollow',
+    },
+
+    openGraph: {
+      title: seo?.og_title,
+      description: seo?.og_description,
+      url: seo?.og_url,
+      siteName: seo?.og_site_name,
+      type: seo?.og_type || 'website',
+      images: seo?.og_image?.map((img: any) => ({
+        url: img.url,
+        width: img.width,
+        height: img.height,
+        type: img.type,
+      })),
+    },
+
+    twitter: {
+      card: seo?.twitter_card || 'summary_large_image',
+      title: seo?.og_title,
+      description: seo?.og_description,
+      images: seo?.og_image?.[0]?.url
+        ? [seo.og_image[0].url]
+        : [],
+    },
   };
-}                        
+}                       
 
 export default async function BookYourFreePage() {
   const pageData = await getPageBySlug(PAGE_SLUGS.BOOK_FREE);

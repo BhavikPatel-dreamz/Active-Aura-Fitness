@@ -35,6 +35,8 @@ const poppins = Poppins({
 export async function generateMetadata(): Promise<Metadata> {
   const logo = await getLogos();
 
+  // const favicon = await getFavicon();
+
   return {
     title: {
       default: 'Active Aura Fitness',
