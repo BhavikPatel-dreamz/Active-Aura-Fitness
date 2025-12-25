@@ -67,7 +67,7 @@ export default function BodyResetLoopSection({
           data.brl_cta_button.url &&
           data.brl_cta_button.url !== '#'
             ? data.brl_cta_button.url
-            : '/reservation'
+            : '/${data.slug}'
         }
         target={
           data.brl_cta_button.target === '_blank'

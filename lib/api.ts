@@ -1,24 +1,33 @@
-import { LandingApiResponse } from './types';
 
 const BASE_URL = process.env.AURA_API_BASE!;
 const API_KEY = process.env.AURA_API_KEY!;
 
-export async function getLandingPage() {
-  const res = await fetch(`${BASE_URL}/landing-page`, {
-    headers: {
-      'x-api-key': API_KEY,
-    },
-    next: {
-      revalidate: 60, // ISR (revalidate every 60s)
-    },
-  });
-
+export async function getPageBySlug(slug: string) {
+  const res = await fetch(
+    `${process.env.AURA_API_PAGE}/pages?slug=${slug}`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
   if (!res.ok) {
-    throw new Error('Failed to fetch landing page data');
+    throw new Error(`Failed to fetch page: ${slug}`);
   }
 
-  const json: LandingApiResponse = await res.json();
-  return json.data;
+  const pages = await res.json();
+
+  // WordPress always returns an array
+  if (!Array.isArray(pages) || pages.length === 0) {
+    throw new Error(`Page not found: ${slug}`);
+  }
+
+  const page = pages[0];
+
+  // If you're using ACF
+  return {
+    ...page.acf,
+    title: page.title?.rendered,
+    content: page.content?.rendered,
+  };
 }
 
 
@@ -79,24 +88,7 @@ export async function getQuizList() {
 
   return res.json();
 }
-export async function getBookYourFreePage() {
-  const res = await fetch(
-    `${BASE_URL}/page-acf-fields?page_id=95`,
-    {
-      headers: {
-        'x-api-key': API_KEY,
-      },
-      cache: 'no-store',
-    }
-  );
 
-  if (!res.ok) {
-    throw new Error('Failed to fetch page data');
-  }
-
-  const json = await res.json();
-  return json.data;
-}
 
 export async function validateQuiz(payload: {
   quiz_id: number;
@@ -121,24 +113,6 @@ export async function validateQuiz(payload: {
   return res.json();
 }
 
-export async function getReservationPage() {
-  const res = await fetch(
-    `${BASE_URL}/page-acf-fields?page_id=205`,
-    {
-      headers: {
-        'x-api-key': API_KEY,
-      },
-      cache: 'no-store',
-    }
-  );
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch page data');
-  }
-
-  const json = await res.json();
-  return json.data;
-}
 
 export async function getLogos() {
   const res = await fetch(
@@ -158,6 +132,7 @@ export async function getLogos() {
   const json = await res.json();
   return json.logo;
 }
+
 
 
 

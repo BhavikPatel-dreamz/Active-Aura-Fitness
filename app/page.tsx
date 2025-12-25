@@ -1,11 +1,23 @@
-import { getLandingPage, getQuizList } from '../lib/api';
+import { getPageBySlug, getQuizList } from '../lib/api';
+import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+import type { Metadata } from 'next';
 import Hero from '../components/landing/Hero';
 import Goals from '../components/landing/Goal';
 import CTA from '../components/landing/CTA';
 import SiteHeader from '@/components/layouts/SiteHeader';
 
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageBySlug(PAGE_SLUGS.LANDING);
+
+  return {
+    title: 'Active Aura Fitness',
+    description:
+      'Personalized fitness & weight loss solutions',
+  };
+}
+
 export default async function HomePage() {
-  const data = await getLandingPage();
+  const landingData = await getPageBySlug(PAGE_SLUGS.LANDING);
   const quizListRes = await getQuizList();
 
   const quizMap: Record<string, number> = {};
@@ -20,20 +32,20 @@ export default async function HomePage() {
       <SiteHeader />
 
       <Hero
-        heroTitle={data.hero_title}
-        heroSubtitle={data.hero_subtitle}
-        heroDescription={data.hero_description}
-        benefits={data.benefits}
+        heroTitle={landingData.hero_title}
+        heroSubtitle={landingData.hero_subtitle}
+        heroDescription={landingData.hero_description}
+        benefits={landingData.benefits}
       />
 
-      <CTA 
-        text={data.cta_button_text}
-        href = "/reservation"
-       />
+      <CTA
+        text={landingData.cta_button_text}
+        href="/reservation"
+      />
 
       <Goals
-        goals={data.goal_options}
-        quizMap={quizMap}   
+        goals={landingData.goal_options}
+        quizMap={quizMap}
       />
     </main>
   );
