@@ -1,4 +1,6 @@
-import { getBookYourFreePage, getLogos } from '@/lib/api';
+import { getPageBySlug, getLogos} from '../../lib/api';
+import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+import type { Metadata } from 'next';
 import HeroSection from '../../components/book/HeroSection';
 import SabotageSection from '@/components/book/SabotageSection';
 import ProblemSection from '@/components/book/ProblemSection';
@@ -13,11 +15,22 @@ import ConsultationSection from '@/components/book/ConsultationSection';
 import TestimonialSection from '@/components/book/TestimonialSection';
 import FaqSection from '@/components/book/FaqSection';
 
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPageBySlug(PAGE_SLUGS.BOOK_FREE);
+
+  return {
+    title: page.title,
+    description: page.excerpt || 'Book your free consultation',
+  };
+}                        
+
 export default async function BookYourFreePage() {
-  const pageData = await getBookYourFreePage();
+  const pageData = await getPageBySlug(PAGE_SLUGS.BOOK_FREE);
+
+  
 
   // ✅ SERVER-SIDE SAFETY GUARD 
-  if (!pageData || !pageData.acf_fields) {
+  if (!pageData) {
     return (
       <main className="bg-[#2f2f2f] text-white p-20 text-center">
         <p>Page data not available</p>
@@ -25,7 +38,8 @@ export default async function BookYourFreePage() {
     );
   }
 
-  const acf = pageData.acf_fields;
+  // const acf = pageData.acf_fields;
+  const acf = pageData;
 
   return (
     <main className="bg-[#2f2f2f] text-white">
@@ -62,9 +76,7 @@ export default async function BookYourFreePage() {
      <FaqSection
   data={acf.faq_section}
   
-/>
-
-      
+/> 
     </main>
   );
 }

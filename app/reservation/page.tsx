@@ -1,12 +1,33 @@
 import Image from 'next/image';
 import TopHeader from '@/components/book/TopHeader';
-import { getReservationPage } from '@/lib/api';
+import { getPageBySlug } from '../../lib/api';
+import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+import type { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPageBySlug(PAGE_SLUGS.RESERVATION);
+
+  return {
+    title: page.title,
+    description:
+      page.excerpt?.replace(/<[^>]*>/g, '') ||
+      'Book your free consultation',
+  };
+}
 
 export default async function ReservationPage() {
-  const data = await getReservationPage();
+  const data = await getPageBySlug(PAGE_SLUGS.RESERVATION);
 
-  const reservation =
-    data?.acf_fields?.reservation_page;
+  // ✅ SAFETY GUARD
+  if (!data || !data.reservation_page) {
+    return (
+      <main className="min-h-screen bg-[#2f2f2f] text-white flex items-center justify-center">
+        <p>Reservation page data not available</p>
+      </main>
+    );
+  }
+
+  const reservation = data.reservation_page;
 
   const heroHeading =
     reservation?.header_hero_area?.main_heading;
@@ -16,7 +37,6 @@ export default async function ReservationPage() {
 
   return (
     <main className="min-h-screen bg-[#2f2f2f] text-white">
-      {/* Header */}
       <TopHeader />
 
       {/* Hero Heading */}
