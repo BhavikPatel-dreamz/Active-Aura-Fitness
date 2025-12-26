@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Bebas_Neue, Poppins } from 'next/font/google';
-import { getLogos } from '@/lib/api';
+import { getLogos, getFavicon} from '@/lib/api';
 
 import "./globals.css";
 
@@ -31,9 +31,11 @@ const poppins = Poppins({
 });
 
 
-
 export async function generateMetadata(): Promise<Metadata> {
-  const logo = await getLogos();
+  const [logo, favicon] = await Promise.all([
+    getLogos(),
+    getFavicon(),
+  ]);
 
   // const favicon = await getFavicon();
 
@@ -42,8 +44,10 @@ export async function generateMetadata(): Promise<Metadata> {
       default: 'Active Aura Fitness',
       template: '%s | Active Aura Fitness',
     },
+
     description:
       'Personalized fitness plans, body reset programs, and free consultations.',
+
     keywords: [
       'weight loss',
       'fitness',
@@ -51,15 +55,24 @@ export async function generateMetadata(): Promise<Metadata> {
       'personal training',
       'Active Aura',
     ],
+
     icons: {
-      icon: logo.url,          
-      apple: logo.url,
+      icon: [
+        {
+          url: favicon?.url || logo?.url,
+          sizes: `${favicon?.width || 32}x${
+            favicon?.height || 32
+          }`,
+          type: 'image/png',
+        },
+      ],
+      apple: favicon?.url || logo?.url,
     },
+
     openGraph: {
       title: 'Active Aura Fitness',
       description:
         'Science-backed body reset and weight loss programs.',
-      url: 'https://active-aura-fitness.vercel.app',
       siteName: 'Active Aura Fitness',
       images: [
         {
@@ -73,6 +86,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
   };
 }
+
 
 
 export default function RootLayout({

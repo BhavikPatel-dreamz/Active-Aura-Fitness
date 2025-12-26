@@ -153,6 +153,26 @@ export async function getFavicon() {
 
 
 
+export async function getFavicon() {
+  const res = await fetch(`${BASE_URL}/favicon`, {
+    headers: {
+      'x-api-key': API_KEY,
+    },
+    next: { revalidate: 3600 }, // cache for 1 hour
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error('Favicon API failed:', text);
+    throw new Error('Failed to fetch favicon');
+  }
+
+  const json = await res.json();
+  return json.favicon;
+}
+
+
+
 
 
 
