@@ -7,12 +7,47 @@ import CTA from '../components/landing/CTA';
 import SiteHeader from '@/components/layouts/SiteHeader';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await getPageBySlug(PAGE_SLUGS.LANDING);
+  const page = await getPageBySlug(PAGE_SLUGS.LANDING);
+  const seo = page.yoast_seo;
 
   return {
-    title: 'Active Aura Fitness',
+    title: seo?.title || page.title || 'Active Aura Fitness',
+
     description:
-      'Personalized fitness & weight loss solutions',
+      seo?.description ||
+      page.excerpt?.replace(/<[^>]*>/g, '') ||
+      'Personalized fitness & weight loss programs',
+
+    alternates: {
+      canonical: seo?.canonical || undefined,
+    },
+
+    robots: {
+      index: !seo?.robots?.noindex,
+      follow: !seo?.robots?.nofollow,
+    },
+
+    openGraph: {
+      title: seo?.open_graph?.title || seo?.title,
+      description:
+        seo?.open_graph?.description ||
+        seo?.description,
+      images: seo?.open_graph?.image
+        ? [{ url: seo.open_graph.image }]
+        : [],
+      type: 'website',
+    },
+
+    twitter: {
+      card: 'summary_large_image',
+      title: seo?.twitter?.title || seo?.title,
+      description:
+        seo?.twitter?.description ||
+        seo?.description,
+      images: seo?.twitter?.image
+        ? [seo.twitter.image]
+        : [],
+    },
   };
 }
 

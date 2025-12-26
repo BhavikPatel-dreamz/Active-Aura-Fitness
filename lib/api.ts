@@ -27,6 +27,8 @@ export async function getPageBySlug(slug: string) {
     ...page.acf,
     title: page.title?.rendered,
     content: page.content?.rendered,
+    yoast_seo: page.yoast_seo,
+    yoast_head_json: page.yoast_head_json,
   };
 }
 
@@ -132,6 +134,23 @@ export async function getLogos() {
   const json = await res.json();
   return json.logo;
 }
+
+export async function getFavicon() {
+  const res = await fetch(
+    `${BASE_URL}/favicon`,
+    {
+      next: { revalidate: 3600 }, 
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch favicon');
+  }
+
+  const json = await res.json();
+  return json.favicon; 
+}
+
 
 
 
