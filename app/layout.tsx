@@ -37,11 +37,8 @@ export async function generateMetadata(): Promise<Metadata> {
     getFavicon(),
   ]);
 
-     const faviconUrl =
-  favicon?.url || logo?.url;
-
-const version =
-  favicon?.id || '1';
+    const faviconUrl = favicon?.url || logo?.url;
+const version = favicon?.id || Date.now();
 
   // const favicon = await getFavicon();
 
@@ -78,13 +75,7 @@ const version =
  
 
 icons: {
-  icon: [
-    {
-      url: `${faviconUrl}?v=${version}`,
-      sizes: `${favicon?.width || 32}x${favicon?.height || 32}`,
-      type: 'image/png',
-    },
-  ],
+  icon: `${faviconUrl}?v=${version}`,
   apple: `${faviconUrl}?v=${version}`,
   shortcut: `${faviconUrl}?v=${version}`,
 },
