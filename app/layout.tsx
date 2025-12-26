@@ -37,6 +37,12 @@ export async function generateMetadata(): Promise<Metadata> {
     getFavicon(),
   ]);
 
+     const faviconUrl =
+  favicon?.url || logo?.url;
+
+const version =
+  favicon?.id || '1';
+
   // const favicon = await getFavicon();
 
   return {
@@ -56,18 +62,32 @@ export async function generateMetadata(): Promise<Metadata> {
       'Active Aura',
     ],
 
-    icons: {
-      icon: [
-        {
-          url: favicon?.url || logo?.url,
-          sizes: `${favicon?.width || 32}x${
-            favicon?.height || 32
-          }`,
-          type: 'image/png',
-        },
-      ],
-      apple: favicon?.url || logo?.url,
+    // icons: {
+    //   icon: [
+    //     {
+    //       url: favicon?.url || logo?.url,
+    //       sizes: `${favicon?.width || 32}x${
+    //         favicon?.height || 32
+    //       }`,
+    //       type: 'image/png',
+    //     },
+    //   ],
+    //   apple: favicon?.url || logo?.url,
+    // },
+
+ 
+
+icons: {
+  icon: [
+    {
+      url: `${faviconUrl}?v=${version}`,
+      sizes: `${favicon?.width || 32}x${favicon?.height || 32}`,
+      type: 'image/png',
     },
+  ],
+  apple: `${faviconUrl}?v=${version}`,
+  shortcut: `${faviconUrl}?v=${version}`,
+},
 
     openGraph: {
       title: 'Active Aura Fitness',
