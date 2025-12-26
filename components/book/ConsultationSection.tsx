@@ -1,4 +1,6 @@
 import CTAButton from "../common/CTAButton";
+import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+
 type Props = {
   data: {
     co_title: string;
@@ -52,7 +54,7 @@ export default function ConsultationSection({ data }: Props) {
           data.co_cta_button.url &&
           data.co_cta_button.url !== '#'
             ? data.co_cta_button.url
-            : '/reservation'
+            : `/${PAGE_SLUGS.RESERVATION}`
         }
         target={
           data.co_cta_button.target === '_blank'

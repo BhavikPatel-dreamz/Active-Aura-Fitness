@@ -1,5 +1,6 @@
 import Image from "next/image";
 import CTAButton from "../common/CTAButton";
+import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
 
 type ShockingStatisticSectionProps = {
   data: {
@@ -94,7 +95,7 @@ export default function ShockingStatisticSection({
         data.ss_image_cta_button.url &&
         data.ss_image_cta_button.url !== '#'
           ? data.ss_image_cta_button.url
-          : '/reservation'
+          : `/${PAGE_SLUGS.RESERVATION}`
       }
       target={
         data.ss_image_cta_button.target === '_blank'

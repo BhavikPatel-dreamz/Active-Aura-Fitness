@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import CTAButton from '@/components/common/CTAButton';
+import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
 
 type FaqItem = {
   title: string;
@@ -81,7 +82,7 @@ export default function FaqSection({ data }: Props) {
                 data.faq_cta_button.url &&
                 data.faq_cta_button.url !== '#'
                   ? data.faq_cta_button.url
-                  : '/reservation'
+                  : `/${PAGE_SLUGS.RESERVATION}`
               }
               target={
                 data.faq_cta_button.target === '_blank'
