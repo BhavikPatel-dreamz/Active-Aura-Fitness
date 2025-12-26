@@ -4,16 +4,69 @@ import { getPageBySlug } from '../../lib/api';
 import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
 import type { Metadata } from 'next';
 
+
+const stripHtml = (text = '') =>
+  text.replace(/<[^>]*>/g, '').trim();
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPageBySlug(PAGE_SLUGS.RESERVATION);
+  const seo = page.yoast_seo;
 
   return {
-    title: page.title,
+    title: seo?.title || page.title,
+
     description:
-      page.excerpt?.replace(/<[^>]*>/g, '') ||
+      seo?.description ||
+      stripHtml(page.excerpt) ||
       'Book your free consultation',
+
+    alternates: {
+      canonical: seo?.canonical || undefined,
+    },
+
+    robots: {
+      index: !seo?.robots?.noindex,
+      follow: !seo?.robots?.nofollow,
+    },
+
+    openGraph: {
+      title: seo?.open_graph?.title || seo?.title,
+      description:
+        seo?.open_graph?.description || seo?.description,
+      images: seo?.open_graph?.image
+        ? [
+            {
+              url: seo.open_graph.image,
+              width: 1200,
+              height: 630,
+              alt: seo?.open_graph?.title || seo?.title,
+            },
+          ]
+        : [],
+      type: 'website',
+    },
+
+    twitter: {
+      card: seo?.twitter?.image
+        ? 'summary_large_image'
+        : 'summary',
+      title:
+        seo?.twitter?.title ||
+        seo?.open_graph?.title ||
+        seo?.title,
+      description:
+        seo?.twitter?.description ||
+        seo?.open_graph?.description ||
+        seo?.description,
+      images: seo?.twitter?.image
+        ? [seo.twitter.image]
+        : seo?.open_graph?.image
+        ? [seo.open_graph.image]
+        : [],
+    },
   };
 }
+
 
 export default async function ReservationPage() {
   const data = await getPageBySlug(PAGE_SLUGS.RESERVATION);

@@ -1,4 +1,5 @@
 import CTAButton from "../common/CTAButton";
+import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
 
 type ProvenStat = {
   rating: string;
@@ -67,7 +68,7 @@ export default function BodyResetLoopSection({
           data.brl_cta_button.url &&
           data.brl_cta_button.url !== '#'
             ? data.brl_cta_button.url
-            : '/${data.slug}'
+            : `/${PAGE_SLUGS.RESERVATION}`
         }
         target={
           data.brl_cta_button.target === '_blank'

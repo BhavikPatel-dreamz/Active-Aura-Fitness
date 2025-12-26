@@ -1,4 +1,6 @@
 import CTAButton from "../common/CTAButton";
+import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+
 type SecretSectionData = {
   secret_title: string;
   secret_description: string;
@@ -43,7 +45,7 @@ export default function SecretSection({
         data.secret_cta_button.url &&
         data.secret_cta_button.url !== '#'
           ? data.secret_cta_button.url
-          : '/reservation'
+          : `/${PAGE_SLUGS.RESERVATION}`
       }
       target={
         data.secret_cta_button.target === '_blank'

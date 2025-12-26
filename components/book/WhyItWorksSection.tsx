@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import CTAButton from '../common/CTAButton';
+import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
 
 type WhyItWorksSectionProps = {
   data: {
@@ -54,7 +55,7 @@ export default function WhyItWorksSection({
         data.wiw_cta_button.url &&
         data.wiw_cta_button.url !== '#'
           ? data.wiw_cta_button.url
-          : '/reservation'
+          : `/${PAGE_SLUGS.RESERVATION}`
       }
       target={
         data.wiw_cta_button.target === '_blank'

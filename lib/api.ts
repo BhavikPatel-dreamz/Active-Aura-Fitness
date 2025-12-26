@@ -33,15 +33,28 @@ export async function getPageBySlug(slug: string) {
 }
 
 
-export async function getQuizQuestions(quizId: number) {
+// export async function getQuizQuestions(slug: string) {
+//   const res = await fetch(
+//     `${BASE_URL}/quiz/questions?slug=${slug}`,
+//     {
+//       headers: {
+//         'x-api-key':API_KEY,
+//       },
+//       cache: 'no-store',
+//     }
+//   );
+
+//   if (!res.ok) {
+//     throw new Error('Failed to fetch quiz questions');
+//   }
+
+//   return res.json();
+// }
+
+export async function getQuizQuestions(slug: string) {
   const res = await fetch(
-    `${BASE_URL}/quiz/questions?quiz_id=${quizId}`,
-    {
-      headers: {
-        'x-api-key':API_KEY,
-      },
-      cache: 'no-store',
-    }
+    `/api/quiz?slug=${slug}`,
+    { cache: 'no-store' }
   );
 
   if (!res.ok) {
@@ -50,6 +63,7 @@ export async function getQuizQuestions(quizId: number) {
 
   return res.json();
 }
+
 
 export async function submitQuiz(payload: any) {
   const res = await fetch(
@@ -134,24 +148,6 @@ export async function getLogos() {
   const json = await res.json();
   return json.logo;
 }
-
-export async function getFavicon() {
-  const res = await fetch(
-    `${BASE_URL}/favicon`,
-    {
-      next: { revalidate: 3600 }, 
-    }
-  );
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch favicon');
-  }
-
-  const json = await res.json();
-  return json.favicon; 
-}
-
-
 
 export async function getFavicon() {
   const res = await fetch(`${BASE_URL}/favicon`, {

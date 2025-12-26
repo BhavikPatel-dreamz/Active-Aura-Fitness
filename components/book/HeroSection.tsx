@@ -1,4 +1,6 @@
 import CTAButton from "../common/CTAButton";
+import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+
 type HeroSectionProps = {
   data: {
     hero_subtitle: string;
@@ -47,7 +49,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
       href={
         data.hero_cta.url && data.hero_cta.url !== '#'
           ? data.hero_cta.url
-          : '/reservation'
+          : `/${PAGE_SLUGS.RESERVATION}`
       }
       target={
         data.hero_cta.target === '_blank'

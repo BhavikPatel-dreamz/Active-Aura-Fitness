@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { FinalForm } from './FinalForm';
 import QuizResultDialog from './QuizResultDialog';
+import { getQuizQuestions } from '@/lib/api';
 
 type QuizOption = {
   id: string;
@@ -17,10 +18,10 @@ type QuizQuestion = {
 };
 
 export default function QuizSection({
-  quizId,
+  quizSlug,
   onExitQuiz,
 }: {
-  quizId: number;
+  quizSlug: string;
   onExitQuiz: () => void;
 }) {
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
@@ -29,6 +30,8 @@ export default function QuizSection({
   const [loading, setLoading] = useState(true);
   const [showFinalForm, setShowFinalForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [quizId, setQuizId] = useState<number | null>(null);
+
 
   // Final form state
   const [name, setName] = useState('');
@@ -42,22 +45,40 @@ export default function QuizSection({
   }>(null);
 
   // Load quiz questions
-  useEffect(() => {
-    async function loadQuestions() {
-      setLoading(true);
-      setQuestions([]);
-      setCurrent(0);
-      setAnswers({});
+ useEffect(() => {
+  let isMounted = true;
 
-      const res = await fetch(`/api/quiz?quiz_id=${quizId}`);
-      const json = await res.json();
+  async function loadQuestions() {
+    setLoading(true);
+    setQuestions([]);
+    setCurrent(0);
+    setAnswers({});
 
+    try {
+      const json = await getQuizQuestions(quizSlug);
+
+      if (!isMounted) return;
+
+      setQuizId(json.quiz_id);
       setQuestions(json.questions || []);
-      setLoading(false);
+    } catch (error) {
+      console.error('Failed to load quiz questions', error);
+    } finally {
+      if (isMounted) {
+        setLoading(false);
+      }
     }
+  }
 
+  if (quizSlug) {
     loadQuestions();
-  }, [quizId]);
+  }
+
+  return () => {
+    isMounted = false;
+  };
+}, [quizSlug]);
+
 
   if (loading) {
     return <p className="text-center py-20 text-white">Loading…</p>;
@@ -163,12 +184,12 @@ export default function QuizSection({
         <section className="bg-[#DB3706] text-white py-20">
          {/* ================= PROGRESS BAR ================= */}
         <div className="flex justify-center mb-8 sm:mb-10 px-4">
-          <div className="relative flex items-center w-full max-w-[545px]">
+          <div className="relative flex items-center w-full max-w-136.25">
             
             {/* Background line */}
             <div className="
               absolute left-0 top-1/2
-              h-[4px] sm:h-[5px]
+              h-1 sm:h-1.25
               w-full
               bg-white
               -translate-y-1/2
@@ -196,8 +217,8 @@ export default function QuizSection({
                   <span
                     key={i}
                     className={`
-                      w-[22px] h-[22px]
-                      sm:w-[29px] sm:h-[29px]
+                      w-5.5 h-5.5
+                      sm:w-7.25 sm:h-7.25
                       rounded-full
                       transition-colors duration-300
                       ${isActive ? 'bg-[#5B5B5B]' : 'bg-white'}
@@ -211,11 +232,11 @@ export default function QuizSection({
         {/* ================================================= */}
 
 
-          <h2 className="text-center font-semibold px-4 mb-8 max-w-[740px] mx-auto text-[22px] sm:text-[28px] lg:text-[35px] leading-[30px] sm:leading-[38px] lg:leading-[48px]">
+          <h2 className="text-center font-semibold px-4 mb-8 max-w-185 mx-auto text-[22px] sm:text-[28px] lg:text-[35px] leading-7.5 sm:leading-9.5 lg:leading-12">
             {question.question}
           </h2>
 
-          <div className="max-w-[619px] mx-auto space-y-[22px] px-6">
+          <div className="max-w-154.75 mx-auto space-y-5.5 px-6">
             {question.options.map((opt) => {
               const isSelected = answers[question.id] === opt.value;
 
@@ -225,7 +246,7 @@ export default function QuizSection({
                   onClick={() =>
                     setAnswers({ ...answers, [question.id]: opt.value })
                   }
-                  className={`w-full py-[18px] px-[18px] rounded-[10px] flex justify-between font-semibold transition-all
+                  className={`w-full py-4.5 px-4.5 rounded-[10px] flex justify-between font-semibold transition-all
                     ${isSelected ? 'bg-[#FFFFFF4D] text-white' : 'bg-white text-black'}
                   `}
                 >
@@ -269,7 +290,7 @@ export default function QuizSection({
               }}
               className="
                 group
-                w-full sm:w-[180px]
+                w-full sm:w-45
                 px-6 py-3
                 border border-white
                 text-base sm:text-lg
@@ -312,7 +333,7 @@ export default function QuizSection({
               }}
               className="
                 group
-                w-full sm:w-[180px]
+                w-full sm:w-45
                 px-6 py-3
                 border border-white
                 text-base sm:text-lg

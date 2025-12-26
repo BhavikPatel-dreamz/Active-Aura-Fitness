@@ -1,4 +1,5 @@
 import CTAButton from "../common/CTAButton";
+import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
 
 type Problem = {
   problem_title: string;
@@ -63,7 +64,7 @@ export default function ProblemSection({ data }: { data: Problem }) {
         data.problem_cta_button.url &&
         data.problem_cta_button.url !== '#'
           ? data.problem_cta_button.url
-          : '/reservation'
+          : `/${PAGE_SLUGS.RESERVATION}`
       }
       target={
         data.problem_cta_button.target === '_blank'

@@ -1,5 +1,5 @@
 import { getPageBySlug, getQuizList } from '../lib/api';
-import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+import { PAGE_SLUGS, QuizSlug} from '@/lib/constants/pageSlugs';
 import type { Metadata } from 'next';
 import Hero from '../components/landing/Hero';
 import Goals from '../components/landing/Goal';
@@ -55,12 +55,20 @@ export default async function HomePage() {
   const landingData = await getPageBySlug(PAGE_SLUGS.LANDING);
   const quizListRes = await getQuizList();
 
-  const quizMap: Record<string, number> = {};
-  quizListRes.quizzes.forEach((quiz: any) => {
-    quizMap[
-      quiz.title.toLowerCase().replace(/\s+/g, '_')
-    ] = quiz.id;
-  });
+  type QuizListItem = {
+  title: string;
+  slug: QuizSlug;
+};
+
+const quizMap: Record<string, QuizSlug> = {};
+
+quizListRes.quizzes.forEach((quiz: QuizListItem) => {
+  quizMap[
+    quiz.title.toLowerCase().replace(/\s+/g, '_')
+  ] = quiz.slug;
+});
+
+
 
   return (
     <main className="bg-[#DB3706] text-white relative overflow-hidden">
@@ -75,13 +83,15 @@ export default async function HomePage() {
 
       <CTA
         text={landingData.cta_button_text}
-        href="/reservation"
+        href={`/${PAGE_SLUGS.RESERVATION}`}
       />
 
       <Goals
         goals={landingData.goal_options}
         quizMap={quizMap}
       />
+
+     
     </main>
   );
 }
