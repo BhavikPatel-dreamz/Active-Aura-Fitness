@@ -89,6 +89,8 @@ quizListRes.quizzes.forEach((quiz: QuizListItem) => {
   />
 )}
 
+  
+
       <Goals
         goals={landingData.goal_options}
         quizMap={quizMap}

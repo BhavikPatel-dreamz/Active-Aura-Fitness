@@ -137,6 +137,55 @@ return (
         />
       )}
 
+{/* ================= PROGRESS BAR ================= */}
+        <div className="flex justify-center mb-8 sm:mb-10 px-4">
+          <div className="relative flex items-center w-full max-w-136.25">
+            
+            {/* Background line */}
+            <div className="
+              absolute left-0 top-1/2
+              h-1 sm:h-1.25
+              w-full
+              bg-white
+              -translate-y-1/2
+            " />
+
+            {/* Active line */}
+            {stepIndex > 0 && (
+              <div
+                className="
+                  absolute left-0 top-1/2
+                  h-[4.5px] sm:h-[5.5px]
+                  bg-[#5B5B5B]
+                  -translate-y-1/2
+                  transition-all duration-300 ease-in-out
+                "
+                style={{ width: `${activeProgressWidth}%` }}
+              />
+            )}
+
+            {/* Dots */}
+            <div className="relative z-10 flex justify-between w-full">
+              {Array.from({ length: MAX_DOTS }).map((_, i) => {
+                const isActive = stepIndex >= i * 2;
+                return (
+                  <span
+                    key={i}
+                    className={`
+                      w-5.5 h-5.5
+                      sm:w-7.25 sm:h-7.25
+                      rounded-full
+                      transition-colors duration-300
+                      ${isActive ? 'bg-[#5B5B5B]' : 'bg-white'}
+                    `}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        {/* ================================================= */} 
+        
       {/* Final Form */}
       {showFinalForm ? (
         <FinalForm
@@ -193,54 +242,7 @@ return (
         />
       ) : (
         <section className="bg-[#DB3706] text-white py-20">
-         {/* ================= PROGRESS BAR ================= */}
-        <div className="flex justify-center mb-8 sm:mb-10 px-4">
-          <div className="relative flex items-center w-full max-w-136.25">
-            
-            {/* Background line */}
-            <div className="
-              absolute left-0 top-1/2
-              h-1 sm:h-1.25
-              w-full
-              bg-white
-              -translate-y-1/2
-            " />
-
-            {/* Active line */}
-            {stepIndex > 0 && (
-              <div
-                className="
-                  absolute left-0 top-1/2
-                  h-[4.5px] sm:h-[5.5px]
-                  bg-[#5B5B5B]
-                  -translate-y-1/2
-                  transition-all duration-300 ease-in-out
-                "
-                style={{ width: `${activeProgressWidth}%` }}
-              />
-            )}
-
-            {/* Dots */}
-            <div className="relative z-10 flex justify-between w-full">
-              {Array.from({ length: MAX_DOTS }).map((_, i) => {
-                const isActive = stepIndex >= i * 2;
-                return (
-                  <span
-                    key={i}
-                    className={`
-                      w-5.5 h-5.5
-                      sm:w-7.25 sm:h-7.25
-                      rounded-full
-                      transition-colors duration-300
-                      ${isActive ? 'bg-[#5B5B5B]' : 'bg-white'}
-                    `}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        </div>
-        {/* ================================================= */}
+         
 
 
           <h2 className="text-center font-semibold px-4 mb-8 max-w-185 mx-auto text-[22px] sm:text-[28px] lg:text-[35px] leading-7.5 sm:leading-9.5 lg:leading-12">
