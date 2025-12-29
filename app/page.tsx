@@ -6,6 +6,7 @@ import Goals from '../components/landing/Goal';
 import CTA from '../components/landing/CTA';
 import SiteHeader from '@/components/layouts/SiteHeader';
 
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPageBySlug(PAGE_SLUGS.LANDING);
   const seo = page.yoast_seo;
@@ -81,10 +82,12 @@ quizListRes.quizzes.forEach((quiz: QuizListItem) => {
         benefits={landingData.benefits}
       />
 
-      <CTA
-        text={landingData.cta_button_text}
-        href={`/${PAGE_SLUGS.RESERVATION}`}
-      />
+      {landingData.cta_button_text && (
+  <CTA
+    text={landingData.cta_button_text}
+    href={`/${PAGE_SLUGS.RESERVATION}`}
+  />
+)}
 
       <Goals
         goals={landingData.goal_options}
