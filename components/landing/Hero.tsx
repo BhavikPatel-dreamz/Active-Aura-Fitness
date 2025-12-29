@@ -25,9 +25,9 @@ export default function Hero({
   const rightBenefits = benefits.slice(3, 6);
 
   return (
-    <section className="relative max-w-[1420px] mx-auto px-4 xl:px-0">
+    <section className="relative max-w-[1350px] mx-auto px-4 xl:px-0">
       {/* ================= DESKTOP LEFT BENEFITS (UNCHANGED VISUALLY) ================= */}
-      <div className="hidden xl:block absolute left-0 top-1/2 -translate-y-1/2">
+      <div className="hidden xl:block absolute left-0 top-10">
         {leftBenefits.map((item) => (
           <div
             key={item.text}
@@ -54,7 +54,7 @@ export default function Hero({
       </div>
 
       {/* ================= DESKTOP RIGHT BENEFITS (UNCHANGED VISUALLY) ================= */}
-      <div className="hidden xl:block absolute right-0 top-1/2 -translate-y-1/2 space-y-6">
+      <div className="hidden xl:block absolute right-0 top-10">
         {rightBenefits.map((item) => (
           <div
             key={item.text}

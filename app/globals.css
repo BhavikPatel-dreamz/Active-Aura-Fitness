@@ -48,15 +48,15 @@ body {
 
 @keyframes floatRotateLeft {
   0% {
-    transform: rotate(-12deg);
+    transform: rotate(-15deg);
   }
 
   50% {
-    transform: rotate(0);
+    transform: rotate(-8deg);
   }
 
   100% {
-    transform: rotate(-12deg);
+    transform: rotate(-15deg);
   }
 }
 
@@ -65,7 +65,7 @@ body {
     transform: rotate(15deg);
   }
   50% {
-    transform: rotate(7deg);
+    transform: rotate(8deg);
   }
   100% {
     transform: rotate(15deg);

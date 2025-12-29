@@ -192,7 +192,7 @@ return (
           setAccepted={setAccepted}
         />
       ) : (
-        <section className="bg-[#DB3706] text-white py-20">
+        <section className="bg-[#DB3706] text-white pt-8 pb-10">
          {/* ================= PROGRESS BAR ================= */}
         <div className="flex justify-center mb-8 sm:mb-10 px-4">
           <div className="relative flex items-center w-full max-w-136.25">
@@ -212,7 +212,8 @@ return (
                 className="
                   absolute left-0 top-1/2
                   h-[4.5px] sm:h-[5.5px]
-                  bg-[#5B5B5B]
+                  bg-[#282828]
+                  rounded-[8px]
                   -translate-y-1/2
                   transition-all duration-300 ease-in-out
                 "
@@ -232,7 +233,7 @@ return (
                       sm:w-7.25 sm:h-7.25
                       rounded-full
                       transition-colors duration-300
-                      ${isActive ? 'bg-[#5B5B5B]' : 'bg-white'}
+                      ${isActive ? 'bg-[#282828]' : 'bg-white'}
                     `}
                   />
                 );
@@ -277,7 +278,7 @@ return (
                         <circle cx="10" cy="10" r="10" fill="white" />
                         <path
                           d="M5 10.5L8.5 14L15 7"
-                          stroke="black"
+                          stroke="#DB3706"
                           strokeWidth="2"
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -291,7 +292,7 @@ return (
           </div>
 
           {/* Navigation */}
-          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-12 px-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-12 py-10 px-4 border-t border-b border-[#282828]">
             
             {/* BACK BUTTON */}
             <button
@@ -311,7 +312,7 @@ return (
                 hover:bg-white
                 text-white
                 hover:text-black
-                transition-colors duration-200
+                transition-colors duration-300
                 flex items-center gap-2
                 justify-center
                 cursor-pointer
@@ -354,7 +355,7 @@ return (
                 hover:bg-white
                 text-white
                 hover:text-black
-                transition-colors duration-200
+                transition-colors duration-300
                 flex items-center gap-2
                 justify-center
                 disabled:opacity-50
