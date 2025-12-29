@@ -1,6 +1,4 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 type CTAButtonProps = {
   text: string;
@@ -15,20 +13,13 @@ export default function CTAButton({
   target = '_self',
   className = '',
 }: CTAButtonProps) {
-  const router = useRouter();
-
-  const handleClick = () => {
-    if (target === '_blank') {
-      window.open(href, '_blank', 'noopener,noreferrer');
-    } else {
-      router.push(href);
-    }
-  };
-
   return (
-    <button
-      onClick={handleClick}
+    <Link
+      href={href}
+      target={target}
+      rel={target === '_blank' ? 'noopener noreferrer' : undefined}
       className={`
+        inline-block
         bg-[#e23b00]
         hover:bg-[#ff4500]
         text-white
@@ -41,6 +32,6 @@ export default function CTAButton({
       `}
     >
       {text}
-    </button>
+    </Link>
   );
 }

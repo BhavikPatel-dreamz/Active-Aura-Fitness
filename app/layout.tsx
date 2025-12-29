@@ -37,10 +37,8 @@ export async function generateMetadata(): Promise<Metadata> {
     getFavicon(),
   ]);
 
-    const faviconUrl = favicon?.url || logo?.url;
-const version = favicon?.id || Date.now();
-
-  // const favicon = await getFavicon();
+  const faviconUrl = favicon?.url || logo?.url;
+  const version = favicon?.id || '1';
 
   return {
     title: {
@@ -48,55 +46,14 @@ const version = favicon?.id || Date.now();
       template: '%s | Active Aura Fitness',
     },
 
-    description:
-      'Personalized fitness plans, body reset programs, and free consultations.',
-
-    keywords: [
-      'weight loss',
-      'fitness',
-      'body reset',
-      'personal training',
-      'Active Aura',
-    ],
-
-    // icons: {
-    //   icon: [
-    //     {
-    //       url: favicon?.url || logo?.url,
-    //       sizes: `${favicon?.width || 32}x${
-    //         favicon?.height || 32
-    //       }`,
-    //       type: 'image/png',
-    //     },
-    //   ],
-    //   apple: favicon?.url || logo?.url,
-    // },
-
- 
-
-icons: {
-  icon: `${faviconUrl}?v=${version}`,
-  apple: `${faviconUrl}?v=${version}`,
-  shortcut: `${faviconUrl}?v=${version}`,
-},
-
-    openGraph: {
-      title: 'Active Aura Fitness',
-      description:
-        'Science-backed body reset and weight loss programs.',
-      siteName: 'Active Aura Fitness',
-      images: [
-        {
-          url: logo.url,
-          width: 1200,
-          height: 630,
-          alt: 'Active Aura Fitness',
-        },
-      ],
-      type: 'website',
+    icons: {
+      icon: `${faviconUrl}?v=${version}`,
+      apple: `${faviconUrl}?v=${version}`,
+      shortcut: `${faviconUrl}?v=${version}`,
     },
   };
 }
+
 
 
 

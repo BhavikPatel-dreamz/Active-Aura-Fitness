@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import QuizSection from '@/components/quiz/QuizSection';
 import type { QuizSlug } from '@/lib/constants/pageSlugs';
 import { normalizeKey } from '@/lib/utils/normalizeKey';
-
-
+import { setCachedQuiz, getCachedQuiz } from '@/lib/quizCache';
+import { getQuizQuestions } from '@/lib/api';
 
 type Goal = {
   text: string;
@@ -22,6 +22,23 @@ export default function Goals({
   const [activeQuizSlug, setActiveQuizSlug] =
     useState<QuizSlug | null>(null);
 
+  // ✅ PREFETCH FUNCTION (safe + cached)
+  const prefetchQuiz = useCallback(async (slug: QuizSlug) => {
+    // ⛔ already cached → do nothing
+    if (getCachedQuiz(slug)) return;
+
+    try {
+      const data = await getQuizQuestions(slug);
+
+      if (data?.questions?.length) {
+        setCachedQuiz(slug, data.questions);
+      }
+    } catch (error) {
+      console.error('Quiz prefetch failed:', error);
+    }
+  }, []);
+
+  // ✅ When quiz is active → render QuizSection
   if (activeQuizSlug) {
     return (
       <QuizSection
@@ -29,33 +46,36 @@ export default function Goals({
         onExitQuiz={() => setActiveQuizSlug(null)}
       />
     );
-
   }
 
   return (
     <section className="px-4 sm:px-6 pb-16 sm:pb-20">
       {/* Heading */}
-      <h3 className="
-        max-w-4xl mx-auto text-center
-        text-[26px] sm:text-[30px] lg:text-[35px]
-        leading-9.5 sm:leading-12 lg:leading-15
-        capitalize text-white poppins font-semibold
-        mb-6 sm:mb-8
-      ">
+      <h3
+        className="
+          max-w-4xl mx-auto text-center
+          text-[26px] sm:text-[30px] lg:text-[35px]
+          leading-9.5 sm:leading-12 lg:leading-15
+          capitalize text-white poppins font-semibold
+          mb-6 sm:mb-8
+        "
+      >
         What’s Your #1 Goal Right Now?
       </h3>
 
       {/* Goals Grid */}
       <div className="grid sm:grid-cols-2 gap-4 sm:gap-6.25 max-w-154.75 mx-auto">
         {goals.map((goal) => {
+          // ✅ normalize text → match quizMap keys
           const quizSlug = quizMap[normalizeKey(goal.text)];
-
 
           if (!quizSlug) return null;
 
           return (
             <button
               key={goal.text}
+              onMouseEnter={() => prefetchQuiz(quizSlug)} // 🚀 PREFETCH
+              onFocus={() => prefetchQuiz(quizSlug)}     // ♿ keyboard
               onClick={() => setActiveQuizSlug(quizSlug)}
               className="
                 bg-white text-[#303030]

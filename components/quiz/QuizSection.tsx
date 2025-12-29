@@ -4,24 +4,16 @@ import { useEffect, useState } from 'react';
 import { FinalForm } from './FinalForm';
 import QuizResultDialog from './QuizResultDialog';
 import { getQuizQuestions } from '@/lib/api';
+import { getCachedQuiz } from '@/lib/quizCache';
+import type { QuizSlug } from '@/lib/constants/pageSlugs';
+import { QuizApiResponse,QuizOption,QuizQuestion } from '@/lib/types';
 
-type QuizOption = {
-  id: string;
-  text: string;
-  value: string;
-};
-
-type QuizQuestion = {
-  id: string;
-  question: string;
-  options: QuizOption[];
-};
 
 export default function QuizSection({
   quizSlug,
   onExitQuiz,
 }: {
-  quizSlug: string;
+  quizSlug: QuizSlug;
   onExitQuiz: () => void;
 }) {
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
@@ -31,7 +23,6 @@ export default function QuizSection({
   const [showFinalForm, setShowFinalForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [quizId, setQuizId] = useState<number | null>(null);
-
 
   // Final form state
   const [name, setName] = useState('');
@@ -44,54 +35,75 @@ export default function QuizSection({
     pdfUrl: string;
   }>(null);
 
-  // Load quiz questions
- useEffect(() => {
-  let isMounted = true;
+  //cache 
 
-  async function loadQuestions() {
-    setLoading(true);
-    setQuestions([]);
-    setCurrent(0);
-    setAnswers({});
+  useEffect(() => {
+    let mounted = true;
 
-    try {
-      const json = await getQuizQuestions(quizSlug);
+    async function load() {
+      setLoading(true);
+      setCurrent(0);
+      setAnswers({});
 
-      if (!isMounted) return;
-
-      setQuizId(json.quiz_id);
-      setQuestions(json.questions || []);
-    } catch (error) {
-      console.error('Failed to load quiz questions', error);
-    } finally {
-      if (isMounted) {
+      // ✅ 1. Try cache first
+      const cached = getCachedQuiz(quizSlug);
+      if (cached && mounted) {
+        setQuestions(cached);
         setLoading(false);
+        return;
+      }
+
+      // ✅ 2. Fallback to API
+      try {
+        const res = await getQuizQuestions(quizSlug);
+        if (!mounted) return;
+
+        setQuizId(res.quiz_id);
+        setQuestions(res.questions || []);
+      } catch (err) {
+        console.error('Failed to load quiz questions', err);
+      } finally {
+        if (mounted) setLoading(false);
       }
     }
-  }
 
-  if (quizSlug) {
-    loadQuestions();
-  }
+    load();
 
-  return () => {
-    isMounted = false;
-  };
-}, [quizSlug]);
+    return () => {
+      mounted = false;
+    };
+  }, [quizSlug]);
 
-
+  // =====================================================
   if (loading) {
-    return <p className="text-center py-20 text-white">Loading…</p>;
+    return (
+      <p className="text-center py-20 text-white">
+        Loading…
+      </p>
+    );
   }
 
   const question = questions[current];
   if (!question) return null;
 
-  // ============================================================
-  // 🔹 PIXEL-PERFECT 5-DOT PROGRESS (Figma-style half steps)
-  // ============================================================
+  // =====================================================
+  // PROGRESS CALCULATION
+  // =====================================================
+  // const MAX_DOTS = 5;
+  // const TOTAL_SEGMENTS = MAX_DOTS - 1;
+  // const TOTAL_STEPS = TOTAL_SEGMENTS * 2;
 
-  const MAX_DOTS = 5;
+  // const stepIndex = Math.min(
+  //   TOTAL_STEPS,
+  //   Math.round((current / (questions.length - 1)) * TOTAL_STEPS)
+  // );
+
+  // const segmentWidth = 100 / TOTAL_SEGMENTS;
+  // const activeProgressWidth =
+  //   Math.floor(stepIndex / 2) * segmentWidth +
+  //   (stepIndex % 2 ? segmentWidth / 2 : 0);
+
+   const MAX_DOTS = 5;
   const TOTAL_SEGMENTS = MAX_DOTS - 1; // 4
   const TOTAL_STEPS = TOTAL_SEGMENTS * 2; // 8 half-steps
 
@@ -108,9 +120,8 @@ export default function QuizSection({
     fullSegments * segmentWidth +
     (isHalf ? segmentWidth / 2 : 0);
 
-  // ============================================================
 
-  return (
+return (
     <>
       {/* Result Modal */}
       {result && (
