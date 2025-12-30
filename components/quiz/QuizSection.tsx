@@ -245,6 +245,7 @@ return (
          
 
 
+
           <h2 className="text-center font-semibold px-4 mb-8 max-w-185 mx-auto text-[22px] sm:text-[28px] lg:text-[35px] leading-7.5 sm:leading-9.5 lg:leading-12">
             {question.question}
           </h2>
@@ -279,7 +280,7 @@ return (
                         <circle cx="10" cy="10" r="10" fill="white" />
                         <path
                           d="M5 10.5L8.5 14L15 7"
-                          stroke="black"
+                          stroke="#DB3706"
                           strokeWidth="2"
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -293,7 +294,7 @@ return (
           </div>
 
           {/* Navigation */}
-          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-12 px-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-12 py-10 px-4 border-t border-b border-[#282828]">
             
             {/* BACK BUTTON */}
             <button
@@ -313,7 +314,7 @@ return (
                 hover:bg-white
                 text-white
                 hover:text-black
-                transition-colors duration-200
+                transition-colors duration-300
                 flex items-center gap-2
                 justify-center
                 cursor-pointer
@@ -356,7 +357,7 @@ return (
                 hover:bg-white
                 text-white
                 hover:text-black
-                transition-colors duration-200
+                transition-colors duration-300
                 flex items-center gap-2
                 justify-center
                 disabled:opacity-50

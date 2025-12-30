@@ -36,14 +36,14 @@ export default function QuizResultDialog({
           <a
             href={pdfUrl}
             target="_blank"
-            className="px-6 py-3 rounded-lg bg-black text-white"
+            className="px-6 py-3 rounded-lg bg-black text-white text-base sm:text-lg font-semibold"
           >
             Download PDF
           </a>
 
           <button
             onClick={onClose}
-            className="px-6 py-3 rounded-lg border border-black"
+            className="px-6 py-3 rounded-lg border border-black text-base sm:text-lg font-semibold"
           >
             Close
           </button>
