@@ -11,7 +11,7 @@ export default function LaunchPriceSection({
   if (!data) return null;
 
   return (
-    <section className="bg-[#303030] py-20 px-4">
+    <section className="launch-price-section bg-[#303030] py-20 px-4">
       <div className="max-w-5xl mx-auto text-white">
         {/* 🔹 Title */}
         <h2 className="text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-4 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">

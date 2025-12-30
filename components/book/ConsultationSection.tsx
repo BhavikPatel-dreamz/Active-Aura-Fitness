@@ -18,26 +18,27 @@ export default function ConsultationSection({ data }: Props) {
   if (!data) return null;
 
   return (
-    <section className="bg-[#2f2f2f] text-white py-20 px-4">
-      <div className="max-w-4xl mx-auto">
+    <section className="consultation-section bg-[#303030] text-white py-20 px-4">
+      <div className="max-w-5xl mx-auto">
         {/* Heading */}
-        <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-10">
+        <h2 className="max-w-5xl mx-auto text-center text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-6 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
           {data.co_title}
         </h2>
-
-        {/* Ordered List */}
-        <div
-          className="text-gray-300 text-[15px] leading-relaxed space-y-4
-                     [&_ol]:list-decimal [&_ol]:pl-6
-                     [&_li]:mb-4
-                     [&_strong]:text-white"
-          dangerouslySetInnerHTML={{ __html: data.co_description }}
-        />
-
+        
+        <div className="rounded-xl p-10 bg-[#FFFFFF1A] mb-10">
+          {/* Ordered List */}
+          <div
+            className="text-[#FFFFFFCC] text-lg leading-relaxed
+                      [&_ol]:list-decimal [&_ol]:pl-6 
+                      [&_li]:mb-6
+                      [&_strong]:text-white [&_strong]:font-semibold capitalize"
+            dangerouslySetInnerHTML={{ __html: data.co_description }}
+          />
+        </div>
         {/* Text before CTA */}
         {data.co_before_cta_content && (
           <div
-            className="text-gray-300 text-[15px] leading-relaxed mt-10 space-y-4"
+            className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-6"
             dangerouslySetInnerHTML={{
               __html: data.co_before_cta_content,
             }}

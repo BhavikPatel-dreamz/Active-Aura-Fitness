@@ -25,7 +25,7 @@ export default function ShockingStatisticSection({
   if (!data) return null;
 
   return (
-    <section className="bg-[#3a3a3a] py-20 text-white">
+    <section className="shokicking-statistics-section bg-[#3B3B3B] py-20 text-white">
       <div className="max-w-6xl mx-auto">
         {/* 🔹 Badge */}
         <div className="flex justify-center mb-8">
@@ -77,7 +77,7 @@ export default function ShockingStatisticSection({
 
           {/* Content */}
           <div>
-            <h3 className="text-2xl md:text-3xl font-extrabold uppercase leading-snug mb-6">
+            <h3 className="text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-6 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
               {data.ss_image_title}
             </h3>
 

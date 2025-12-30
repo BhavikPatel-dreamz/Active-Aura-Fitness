@@ -22,7 +22,7 @@ export default function WhyItWorksSection({
   if (!data) return null;
 
   return (
-    <section className="bg-[#3B3B3B] py-12.5">
+    <section className="why-it-works-section bg-[#3B3B3B] py-12.5">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* 🔹 Left Image */}
         <div className="relative w-full rounded-xl overflow-hidden h-[240px] sm:h-[320px] md:h-full">
