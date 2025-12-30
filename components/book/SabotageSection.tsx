@@ -6,26 +6,25 @@ type SabotageSectionProps = {
   };
 };
 
-export default function SabotageSection({
-  data,
-}: SabotageSectionProps) {
+export default function SabotageSection({ data }: SabotageSectionProps) {
   if (!data) return null;
 
   return (
-    <section className="bg-[#3a3a3a] text-white py-12.5">
-      <div className="max-w-6xl mx-auto px-6">
+    <section className="sabotage-section bg-[#3a3a3a] text-white py-8 sm:py-10 md:py-12.5">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        
         {/* Headings */}
-        <h2 className="text-center text-[30px] md:text-[56px] leading-[62px] font-normal uppercase mb-3 font-bebas">
+        <h2 className="text-center text-[24px] sm:text-[30px] md:text-[56px] leading-tight md:leading-[62px] font-normal uppercase mb-3 font-bebas">
           {data.sabotage_title}
         </h2>
 
-        <h3 className="text-center text-[30px] md:text-[56px] font-normal leading-[62px] uppercase mb-5.5 font-bebas">
+        <h3 className="text-center text-[24px] sm:text-[30px] md:text-[56px] font-normal leading-tight md:leading-[62px] uppercase mb-4 sm:mb-5.5 font-bebas">
           {data.sabotage_secondary_title}
         </h3>
 
         {/* Content */}
         <div
-          className="sabotage-content max-w-[1064px] mx-auto text-[#FFFFFFCC]"
+          className="sabotage-content max-w-[1064px] mx-auto text-[#FFFFFFCC] text-base sm:text-lg leading-relaxed"
           dangerouslySetInnerHTML={{
             __html: data.sabotage_description,
           }}

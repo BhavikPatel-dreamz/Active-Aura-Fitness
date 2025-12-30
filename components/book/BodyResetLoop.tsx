@@ -30,8 +30,8 @@ export default function BodyResetLoopSection({
   if (!data) return null;
 
   return (
-    <section className="body-reset-loop-section bg-[#303030] text-white py-20">
-      <div className="max-w-6xl mx-auto px-6">
+    <section className="body-reset-loop-section bg-[#303030] text-white lg:py-20 md:py-12 py-8">
+      <div className="max-w-6xl mx-auto sm:px-6 px-4">
         {/* TITLE */}
         <h2 className="text-center text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-4 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
           {data.brl_title}
@@ -40,7 +40,7 @@ export default function BodyResetLoopSection({
         {/* DESCRIPTION */}
         {data.brl_description && (
           <div
-            className="max-w-5xl mx-auto text-[#FFFFFFCC] text-base sm:text-lg leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9 mb-8 sm:mb-10"
+            className="max-w-5xl mx-auto text-[#FFFFFFCC] text-sm xl:text-lg sm:text-base leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9 mb-8 sm:mb-10"
             dangerouslySetInnerHTML={{
               __html: data.brl_description,
             }}
@@ -65,7 +65,7 @@ export default function BodyResetLoopSection({
         {/* CTA */}
         {typeof data.brl_cta_button === 'object' &&
   data.brl_cta_button?.title && (
-    <div className="text-center sm:mb-20 mb-12">
+    <div className="text-center lg:mb-20 sm:mb-12 mb-8">
       <CTAButton
         text={data.brl_cta_button.title.replace(/&nbsp;/g, '').trim()}
         href={
@@ -87,14 +87,14 @@ export default function BodyResetLoopSection({
 
         {/* PROVEN TITLE */}
         {data.brl_proven_title && (
-          <h3 className="max-w-[950px] mx-auto text-center text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-8 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
+          <h3 className="max-w-5xl mx-auto text-center text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-8 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
             {data.brl_proven_title}
           </h3>
         )}
 
         {/* PROVEN STATS */}
         {data.brl_proven_stats && data.brl_proven_stats.length > 0 && (
-          <div className="max-w-[950px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-y-[30px] gap-x-[40px]">
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-y-[30px] gap-x-[40px]">
             {data.brl_proven_stats.map((item, index) => (
               <div
                 key={index}
@@ -114,7 +114,7 @@ export default function BodyResetLoopSection({
 
                 {/* COMMENT */}
                 <div
-                  className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-4 mb-4"
+                  className="text-[#FFFFFFCC] text-sm xl:text-lg sm:text-base leading-relaxed space-y-4 mb-4"
                   dangerouslySetInnerHTML={{
                     __html: item.comment,
                   }}

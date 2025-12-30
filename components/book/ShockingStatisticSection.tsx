@@ -26,31 +26,31 @@ export default function ShockingStatisticSection({
 
   return (
     <section className="shokicking-statistics-section bg-[#3B3B3B] py-12.5 text-white">
-      <div className="max-w-7xl mx-auto sm:px-6 px-3">
+      <div className="max-w-7xl mx-auto sm:px-6 px-4">
         {/* 🔹 Badge */}
         <div className="flex justify-center mb-8">
-          <span className="bg-white text-[#DB3706] text-[22px] font-bold px-7 py-2.5 rounded-[20px] uppercase tracking-wide">
+          <span className="bg-white text-[#DB3706] sm:text-[22px] text-[14px] font-bold px-7 py-2.5 rounded-[20px] uppercase tracking-wide">
             {data.ss_subtitle}
           </span>
         </div>
 
         {/* 🔹 Main Title */}
-        <h2 className="max-w-[818px] mx-auto text-center text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-10 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
+        <h2 className="max-w-[818px] mx-auto text-center text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] md:mb-10 mb-5 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
           {data.ss_title}
         </h2>
 
         {/* 🔹 Top Grid (Text + Video) */}
-        <div className="grid md:grid-cols-2 gap-10 items-stretch mb-10">
+        <div className="grid lg:grid-cols-2 gap-10 lg:flex-row items-stretch mb-10">
           {/* Left Content */}
           <div
-            className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-6"
+            className="text-[#FFFFFFCC] text-sm xl:text-lg sm:text-base leading-relaxed space-y-6 order-2 lg:order-1"
             dangerouslySetInnerHTML={{
               __html: data.ss_video_description,
             }}
           />
 
           {/* Right Video */}
-          <div className="rounded-[12px] overflow-hidden h-[240px] sm:h-[320px] md:h-full">
+          <div className="rounded-[12px] overflow-hidden h-[240px] sm:h-[320px] md:h-full order-1 lg:order-2">
             <video
               src={data.ss_video}
               autoPlay
@@ -63,7 +63,7 @@ export default function ShockingStatisticSection({
         </div>
 
         {/* 🔹 Bottom Grid (Image + Content) */}
-        <div className="grid md:grid-cols-2 gap-10 items-stretch">
+        <div className="grid lg:grid-cols-2 gap-10 items-stretch">
           {/* Image */}
           <div className="rounded-[12px] overflow-hidden h-[240px] sm:h-[320px] md:h-full">
             <Image
@@ -82,7 +82,7 @@ export default function ShockingStatisticSection({
             </h3>
 
             <div
-              className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-6"
+              className="text-[#FFFFFFCC] text-sm xl:text-lg sm:text-base leading-relaxed space-y-6"
               dangerouslySetInnerHTML={{
                 __html: data.ss_image_description,
               }}

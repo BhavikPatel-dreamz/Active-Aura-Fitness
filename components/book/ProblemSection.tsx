@@ -49,7 +49,7 @@ export default function ProblemSection({ data }: { data: Problem }) {
 
       {data.problem_description && (
         <div
-          className="text-[#FFFFFFCC] text-base sm:text-lg leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9"
+          className="text-[#FFFFFFCC] text-sm xl:text-lg sm:text-base leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9"
           dangerouslySetInnerHTML={{
             __html: data.problem_description,
           }}
@@ -80,8 +80,8 @@ export default function ProblemSection({ data }: { data: Problem }) {
 
   return (
     <section className="image-with-text bg-[#303030] text-white">
-      <div className="max-w-7xl mx-auto px-4 md:px-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-10 items-center">
           {isMediaLeft ? (
             <>
               {Media}

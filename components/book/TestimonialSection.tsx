@@ -1,12 +1,12 @@
 'use client';
 
 import Slider from 'react-slick';
-import { useRef } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 
 type Testimonial = {
   rating: string;
   title: string;
-  comment: string; // HTML
+  comment: string;
   author: string;
   author_city: string;
 };
@@ -21,48 +21,135 @@ type Props = {
 export default function TestimonialSection({ data }: Props) {
   const sliderRef = useRef<Slider | null>(null);
 
+  const innerContainerRef = useRef<HTMLDivElement | null>(null);
+  const sliderWrapperRef = useRef<HTMLDivElement | null>(null);
+  const resizeObserverRef = useRef<ResizeObserver | null>(null);
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [slidesToShow, setSlidesToShow] = useState(2.5); // ✅ FIX
+
   if (!data || !data.testimonials?.length) return null;
 
+  const totalSlides = data.testimonials.length;
+
+  /* ===========================
+     ✅ slidesToShow by width
+  ============================ */
+  const updateSlidesToShow = useCallback(() => {
+    if (window.innerWidth <= 640) {
+      setSlidesToShow(1); // ✅ MOBILE
+    } else if (window.innerWidth <= 1024) {
+      setSlidesToShow(1.5);
+    } else {
+      setSlidesToShow(2.5);
+    }
+  }, []);
+
+  /* ===========================
+     Margin-left logic (UNCHANGED)
+  ============================ */
+  const applyMarginLeft = useCallback(() => {
+    if (!innerContainerRef.current || !sliderWrapperRef.current) return;
+
+    const slickList = sliderWrapperRef.current.querySelector(
+      '.slick-list'
+    ) as HTMLElement | null;
+
+    if (!slickList) return;
+
+    slickList.classList.add('testimonial-slick-animated');
+
+    if (window.innerWidth <= 575) {
+      slickList.style.marginLeft = '0px';
+      return;
+    }
+
+    const leftOffset =
+      innerContainerRef.current.getBoundingClientRect().left;
+
+    slickList.style.marginLeft = `${leftOffset}px`;
+  }, []);
+
+  /* ===========================
+     Resize handlers
+  ============================ */
+  useEffect(() => {
+    updateSlidesToShow();
+    applyMarginLeft();
+
+    window.addEventListener('resize', updateSlidesToShow);
+
+    if (innerContainerRef.current) {
+      resizeObserverRef.current = new ResizeObserver(() => {
+        applyMarginLeft();
+      });
+      resizeObserverRef.current.observe(innerContainerRef.current);
+    }
+
+    return () => {
+      window.removeEventListener('resize', updateSlidesToShow);
+      resizeObserverRef.current?.disconnect();
+    };
+  }, [applyMarginLeft, updateSlidesToShow]);
+
+  /* ===========================
+     Slick settings (ARROWS SAME)
+  ============================ */
   const settings = {
     dots: false,
-    arrows: false, // we use custom arrows
+    arrows: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 2.5,
+    slidesToShow,
     slidesToScroll: 1,
     swipeToSlide: true,
+
+    beforeChange: (_: number, next: number) => {
+      setCurrentSlide(next);
+    },
+
+    afterChange: applyMarginLeft,
+
     responsive: [
       {
         breakpoint: 1024,
-        settings: {
-          slidesToShow: 1.5,
-        },
+        settings: { slidesToShow: 1.5 },
       },
       {
         breakpoint: 640,
-        settings: {
-          slidesToShow: 1.1,
-        },
+        settings: { slidesToShow: 1 }, // ✅ FIX
       },
     ],
   };
 
-  return (
-    <section className="testimonial-section bg-[#FFFFFF0D] text-white py-12 px-4">
-      <div className="max-w-7xl mx-auto sm:px-6 px-3">
+  /* ===========================
+     Arrow disabled logic (FIXED)
+  ============================ */
+  const isPrevDisabled = currentSlide === 0;
+  const isNextDisabled =
+    currentSlide >= totalSlides - Math.ceil(slidesToShow);
 
+  return (
+    <section className="testimonial-section bg-[#FFFFFF0D] text-white py-12">
+      <div
+        ref={innerContainerRef}
+        className="inner-container max-w-7xl mx-auto sm:px-6 px-4"
+      >
         {/* Header */}
-        <div className="flex items-center justify-between mb-10">
+        <div className="flex items-center sm:gap-0 gap-5 justify-between mb-10">
           <h2 className="text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
             {data.testimonial_title}
           </h2>
 
-          {/* Custom Arrows */}
+          {/* 🔒 CUSTOM SVG ARROWS — UNTOUCHED */}
           <div className="flex gap-4">
             <button
-              onClick={() => sliderRef.current?.slickPrev()}
-              className="group w-10 h-10 flex items-center justify-center"
+              onClick={() => !isPrevDisabled && sliderRef.current?.slickPrev()}
+              disabled={isPrevDisabled}
+              className={`group w-5 h-5 sm:w-10 sm:h-10 flex items-center justify-center outline-0
+                ${isPrevDisabled ? 'opacity-30 cursor-not-allowed' : ''}`}
             >
+              {/* YOUR ORIGINAL SVG */}
               <svg width="12" height="24" viewBox="0 0 12 24">
                 <path
                   className="fill-white group-hover:fill-[#FFFFFF99] transition"
@@ -72,9 +159,12 @@ export default function TestimonialSection({ data }: Props) {
             </button>
 
             <button
-              onClick={() => sliderRef.current?.slickNext()}
-              className="group w-10 h-10 flex items-center justify-center"
+              onClick={() => !isNextDisabled && sliderRef.current?.slickNext()}
+              disabled={isNextDisabled}
+              className={`group w-5 h-5 sm:w-10 sm:h-10 flex items-center justify-center outline-0
+                ${isNextDisabled ? 'opacity-30 cursor-not-allowed' : ''}`}
             >
+              {/* YOUR ORIGINAL SVG */}
               <svg width="12" height="24" viewBox="0 0 12 24">
                 <path
                   className="fill-white group-hover:fill-[#FFFFFF99] transition"
@@ -84,30 +174,30 @@ export default function TestimonialSection({ data }: Props) {
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Slider */}
+      {/* Slider */}
+      <div
+        ref={sliderWrapperRef}
+        className="container-left-padding container-fluid ml-auto sm:pl-3"
+      >
         <Slider ref={sliderRef} {...settings} className="testimonial-slider">
           {data.testimonials.map((t, i) => (
-            <div key={i} className="px-4">
-              <div className="bg-[#4a4a4a] rounded-[5px] p-6 border-r-4 border-b-4 border-white/20 flex flex-col justify-between hover:bg-[#555555] transition">
-                
-                {/* Stars */}
+            <div key={i} className="px-4 h-full">
+              <div className="bg-[#4a4a4a] rounded-[5px] p-6 border-r-4 border-b-4 border-white/20 flex flex-col justify-between hover:bg-[#555555] transition h-full">
                 <div className="flex gap-1 text-[#FEE106] mb-2 text-2xl">
                   {Array.from({ length: Number(t.rating) }).map((_, i) => (
                     <span key={i}>★</span>
                   ))}
                 </div>
 
-                {/* Title */}
                 <h3 className="font-semibold mb-2.5 text-lg">{t.title}</h3>
 
-                {/* Comment */}
                 <div
-                  className="text-lg text-[#FFFFFFCC] leading-relaxed mb-3"
+                  className="text-sm xl:text-lg sm:text-base text-[#FFFFFFCC] leading-relaxed mb-3"
                   dangerouslySetInnerHTML={{ __html: t.comment }}
                 />
 
-                {/* Author */}
                 <div>
                   <p className="font-semibold">{t.author}</p>
                   <p className="text-sm text-gray-300">{t.author_city}</p>

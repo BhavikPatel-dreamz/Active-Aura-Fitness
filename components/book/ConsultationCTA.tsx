@@ -12,7 +12,7 @@ type Props = {
 
 export default function HeroSection({ data }: Props) {
   return (
-    <section className="py-24 text-center max-w-6xl mx-auto px-6">
+    <section className="py-24 text-center max-w-6xl mx-auto sm:px-6 px-4">
       <h1 className="text-4xl md:text-6xl font-extrabold mb-6">
         {data.title}
       </h1>

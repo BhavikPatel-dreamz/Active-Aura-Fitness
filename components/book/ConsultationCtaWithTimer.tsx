@@ -10,7 +10,6 @@ function formatTime(seconds: number) {
 }
 
 export default function ConsultationCtaWithTimer() {
-  // ⏱ 11:50:00 → total seconds
   const [timeLeft, setTimeLeft] = useState(11 * 3600 + 50 * 60);
 
   useEffect(() => {
@@ -24,21 +23,25 @@ export default function ConsultationCtaWithTimer() {
   }, [timeLeft]);
 
   return (
-    <section className="bg-[#2f2f2f] text-center sm:pb-20 pb-10">
+    <section className="consultation-cta-with-timer bg-[#2f2f2f] text-center pb-10 sm:pb-14 md:pb-20 px-4">
       
       {/* TIMER CARD */}
-      <div className="max-w-[470px] mx-auto border-2 border-[#FFFFFF33] rounded-[12px] px-[15px] py-[27px]">
+      <div className="max-w-[470px] mx-auto border-2 border-[#FFFFFF33] rounded-[12px] px-4 sm:px-[15px] py-6 sm:py-[27px]">
+        
         {/* Header */}
-        <div className="flex items-center justify-center text-white font-bold uppercase text-sm mb-8.5">
-          <span className="w-10 h-10 mr-[5px] -mt-[2px]"><img src="/fire.gif" alt="fire gif icon" /></span>
-          <span className='text-white text-[31px] font-bebas font-normal'>
+        <div className="flex flex-row items-center justify-center text-white uppercase mb-3 sm:mb-8.5 text-center">
+          <span className="w-5 h-5 sm:w-10 sm:h-10 mr-[5px] -mt-[2px]">
+            <img src="/fire.gif" alt="fire gif icon" className="w-full h-full object-contain" />
+          </span>
+
+          <span className="text-white text-[22px] sm:text-[26px] md:text-[31px] font-bebas font-normal leading-tight">
             Just <span className="text-[#DB3706]">5</span> Slots Remaining Don’t Miss Out
           </span>
         </div>
 
         {/* Timer */}
-        <div className="mx-4">
-          <p className="text-white text-4xl md:text-[100px] max-w-[396px] font-normal font-bebas leading-[140%] bg-[#DB3706] rounded-xl">
+        <div className="mx-2 sm:mx-4">
+          <p className="text-white text-[42px] sm:text-[64px] md:text-[100px] max-w-[396px] mx-auto font-normal font-bebas leading-[120%] sm:leading-[140%] bg-[#DB3706] rounded-xl py-2 sm:py-0">
             {formatTime(timeLeft)}
           </p>
         </div>

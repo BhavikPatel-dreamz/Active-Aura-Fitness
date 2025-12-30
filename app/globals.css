@@ -145,3 +145,13 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+@media (max-width: 640px) {
+  .sabotage-content li ,.sabotage-content p {
+    font-size: 14px;
+  }
+
+  .sabotage-content ul {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}

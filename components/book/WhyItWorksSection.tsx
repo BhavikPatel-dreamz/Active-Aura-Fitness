@@ -23,7 +23,7 @@ export default function WhyItWorksSection({
 
   return (
     <section className="why-it-works-section bg-[#3B3B3B] py-12.5">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center sm:px-6 px-3">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 lg:gap-x-12 gap-7 items-center sm:px-6 px-4">
         {/* 🔹 Left Image */}
         <div className="relative w-full rounded-xl overflow-hidden h-[240px] sm:h-[320px] md:h-full">
           <Image
@@ -41,7 +41,7 @@ export default function WhyItWorksSection({
           </h2>
 
           <div
-            className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-6"
+            className="text-[#FFFFFFCC] text-sm xl:text-lg sm:text-base leading-relaxed space-y-6"
             dangerouslySetInnerHTML={{
               __html: data.wiw_description,
             }}

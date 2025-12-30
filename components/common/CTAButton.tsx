@@ -18,30 +18,9 @@ export default function CTAButton({
       href={href}
       target={target}
       rel={target === '_blank' ? 'noopener noreferrer' : undefined}
-      className={`
-        text-[40px]
-        inline-block
-        bg-[#e23b00]
-        hover:bg-[#ff4500]
-        hover:transform hover:scale-105
-        transform transition-transform duration-300
-        text-white
-        font-normal
-        px-14.5
-        py-3
-        mt-7.5
-        rounded-[12px]
-        transition
-        font-bebas
-        w-[500px]
-        h-[82px]
-        capitalize
-        ${className}
-      `}
+      className={`outline-0 inline-block text-[22px] sm:text-[28px] md:text-[36px] lg:text-[40px] bg-[#e23b00] hover:bg-[#ff4500] transform transition-transform duration-300 hover:scale-105 text-white font-normal px-6 sm:px-10 xl:px-14.5 py-2.5 sm:py-3 mt-6 sm:mt-7.5 rounded-[12px] font-bebas sm:w-auto lg:w-[500px] h-auto lg:h-[82px] capitalize text-center ${className}`}
     >
       {text}
     </Link>
   );
 }
-
-
