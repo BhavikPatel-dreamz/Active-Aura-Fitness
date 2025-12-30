@@ -19,15 +19,20 @@ export default function CTAButton({
       target={target}
       rel={target === '_blank' ? 'noopener noreferrer' : undefined}
       className={`
+        text-[40px]
         inline-block
         bg-[#e23b00]
         hover:bg-[#ff4500]
         text-white
-        font-bold
-        px-10
-        py-4
-        rounded-lg
+        font-normal
+        px-14.5
+        py-3
+        rounded-[12px]
         transition
+        font-bebas
+        w-[500px]
+        h-[82px]
+        capitalize
         ${className}
       `}
     >

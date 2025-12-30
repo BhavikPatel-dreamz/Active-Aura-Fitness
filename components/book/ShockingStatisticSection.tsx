@@ -25,32 +25,32 @@ export default function ShockingStatisticSection({
   if (!data) return null;
 
   return (
-    <section className="bg-[#3a3a3a] py-20 px-4 text-white">
+    <section className="bg-[#3a3a3a] py-20 text-white">
       <div className="max-w-6xl mx-auto">
         {/* 🔹 Badge */}
         <div className="flex justify-center mb-8">
-          <span className="bg-white text-[#e43d12] text-sm font-bold px-6 py-2 rounded-full uppercase tracking-wide">
+          <span className="bg-white text-[#DB3706] text-[22px] font-bold px-7 py-2.5 rounded-[20px] uppercase tracking-wide">
             {data.ss_subtitle}
           </span>
         </div>
 
         {/* 🔹 Main Title */}
-        <h2 className="text-center text-3xl md:text-4xl font-extrabold uppercase leading-tight mb-14">
+        <h2 className="max-w-[818px] mx-auto text-center text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-10 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
           {data.ss_title}
         </h2>
 
         {/* 🔹 Top Grid (Text + Video) */}
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
+        <div className="grid md:grid-cols-2 gap-12 items-stretch mb-10">
           {/* Left Content */}
           <div
-            className="text-gray-300 text-[15px] leading-relaxed space-y-5"
+            className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-6 mb-6"
             dangerouslySetInnerHTML={{
               __html: data.ss_video_description,
             }}
           />
 
           {/* Right Video */}
-          <div className="rounded-xl overflow-hidden">
+          <div className="rounded-[12px] overflow-hidden h-[240px] sm:h-[320px] md:h-full">
             <video
               src={data.ss_video}
               autoPlay
@@ -63,15 +63,15 @@ export default function ShockingStatisticSection({
         </div>
 
         {/* 🔹 Bottom Grid (Image + Content) */}
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-stretch">
           {/* Image */}
-          <div className="rounded-xl overflow-hidden">
+          <div className="rounded-[12px] overflow-hidden h-[240px] sm:h-[320px] md:h-full">
             <Image
               src={data.ss_image}
               alt={data.ss_image_title}
               width={700}
               height={500}
-              className="rounded-xl object-cover"
+              className="w-full h-full object-cover rounded-xl"
             />
           </div>
 
@@ -82,7 +82,7 @@ export default function ShockingStatisticSection({
             </h3>
 
             <div
-              className="text-gray-300 text-[15px] leading-relaxed space-y-5 mb-8"
+              className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-6 mb-6"
               dangerouslySetInnerHTML={{
                 __html: data.ss_image_description,
               }}

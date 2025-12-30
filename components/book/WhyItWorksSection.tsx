@@ -22,26 +22,26 @@ export default function WhyItWorksSection({
   if (!data) return null;
 
   return (
-    <section className="bg-[#3a3a3a] py-20 px-4">
+    <section className="bg-[#3B3B3B] py-12.5">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* 🔹 Left Image */}
-        <div className="relative w-full h-130 rounded-xl overflow-hidden">
+        <div className="relative w-full rounded-xl overflow-hidden h-[240px] sm:h-[320px] md:h-full">
           <Image
             src={data.wiw_image}
             alt={data.wiw_title}
             fill
-            className="object-cover"
+            className="object-cover object-top"
           />
         </div>
 
         {/* 🔹 Right Content */}
         <div className="text-white">
-          <h2 className="text-3xl lg:text-4xl font-extrabold uppercase leading-tight mb-6">
+          <h2 className="text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-4 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
             {data.wiw_title}
           </h2>
 
           <div
-            className="text-gray-300 text-[15px] leading-relaxed space-y-5 mb-10"
+            className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-6 mb-6"
             dangerouslySetInnerHTML={{
               __html: data.wiw_description,
             }}

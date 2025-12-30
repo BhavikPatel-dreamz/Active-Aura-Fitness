@@ -94,11 +94,15 @@ export default async function BookYourFreePage() {
       {/* SABOTAGE */}
       <SabotageSection data={acf.sabotage_section} />
 
+     {/* PROBLEM SECTIONS */}
+    <section className="image-with-text-wrapper py-12 md:py-20 space-y-12 md:space-y-20">
       {acf.problem_section?.problems?.map(
-  (problem: any, index: number) => (
-    <ProblemSection key={index} data={problem} />
-  )
-)}
+        (problem: any, index: number) => (
+          <ProblemSection key={index} data={problem} />
+        )
+      )}
+    </section>
+
 
     <SecretSection data={acf.secret_section} />
 
