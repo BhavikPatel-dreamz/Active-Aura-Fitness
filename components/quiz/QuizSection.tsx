@@ -86,22 +86,6 @@ export default function QuizSection({
   const question = questions[current];
   if (!question) return null;
 
-  // =====================================================
-  // PROGRESS CALCULATION
-  // =====================================================
-  // const MAX_DOTS = 5;
-  // const TOTAL_SEGMENTS = MAX_DOTS - 1;
-  // const TOTAL_STEPS = TOTAL_SEGMENTS * 2;
-
-  // const stepIndex = Math.min(
-  //   TOTAL_STEPS,
-  //   Math.round((current / (questions.length - 1)) * TOTAL_STEPS)
-  // );
-
-  // const segmentWidth = 100 / TOTAL_SEGMENTS;
-  // const activeProgressWidth =
-  //   Math.floor(stepIndex / 2) * segmentWidth +
-  //   (stepIndex % 2 ? segmentWidth / 2 : 0);
 
    const MAX_DOTS = 5;
   const TOTAL_SEGMENTS = MAX_DOTS - 1; // 4
@@ -137,7 +121,7 @@ return (
         />
       )}
 
-{/* ================= PROGRESS BAR ================= */}
+        {/* ================= PROGRESS BAR ================= */}
         <div className="flex justify-center mb-8 sm:mb-10 px-4">
           <div className="relative flex items-center w-full max-w-136.25">
             

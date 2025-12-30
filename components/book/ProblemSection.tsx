@@ -1,4 +1,4 @@
-import CTAButton from "../common/CTAButton";
+import CTAButton from '../common/CTAButton';
 import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
 
 type Problem = {
@@ -56,24 +56,25 @@ export default function ProblemSection({ data }: { data: Problem }) {
         />
       )}
 
-     {typeof data.problem_cta_button === 'object' &&
-  data.problem_cta_button?.title && (
-    <CTAButton
-      text={data.problem_cta_button.title.replace(/&nbsp;/g, '').trim()}
-      href={
-        data.problem_cta_button.url &&
-        data.problem_cta_button.url !== '#'
-          ? data.problem_cta_button.url
-          : `/${PAGE_SLUGS.RESERVATION}`
-      }
-      target={
-        data.problem_cta_button.target === '_blank'
-          ? '_blank'
-          : '_self'
-      }
-    />
-)}
-
+      {typeof data.problem_cta_button === 'object' &&
+        data.problem_cta_button?.title && (
+          <CTAButton
+            text={data.problem_cta_button.title
+              .replace(/&nbsp;/g, '')
+              .trim()}
+            href={
+              data.problem_cta_button.url &&
+              data.problem_cta_button.url !== '#'
+                ? data.problem_cta_button.url
+                : `/${PAGE_SLUGS.RESERVATION}`
+            }
+            target={
+              data.problem_cta_button.target === '_blank'
+                ? '_blank'
+                : '_self'
+            }
+          />
+        )}
     </div>
   );
 
