@@ -52,6 +52,10 @@ export default function BodyResetLoopSection({
           <div className="relative max-w-5xl mx-auto rounded-xl overflow-hidden">
             <video
               src={data.brl_video}
+              autoPlay
+              muted
+              loop
+              playsInline
               controls
               className="w-full h-auto rounded-2xl"
             />
