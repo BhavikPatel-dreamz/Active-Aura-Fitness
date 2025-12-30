@@ -1,6 +1,4 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 type Props = {
   text: string;
@@ -8,12 +6,10 @@ type Props = {
 };
 
 export default function CTA({ text, href }: Props) {
-  const router = useRouter();
-
   return (
-    <div className="text-center mt-10 sm:mt-12 mb-2 px-4">
-      <button
-        onClick={() => router.push(href)}
+    <div className="text-center mt-10 sm:mt-12 mb-4 px-4">
+      <Link
+        href={href}
         className="
           bg-[#282828] text-white font-bebas font-normal
           w-full max-w-206.5 lg:w-206.5
@@ -25,10 +21,11 @@ export default function CTA({ text, href }: Props) {
           hover:opacity-90 hover:scale-105
           transition-all duration-300
           cursor-pointer
+          inline-flex items-center justify-center
         "
       >
         {text}
-      </button>
+      </Link>
     </div>
   );
 }

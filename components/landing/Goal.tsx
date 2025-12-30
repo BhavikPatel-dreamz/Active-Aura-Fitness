@@ -22,9 +22,9 @@ export default function Goals({
   const [activeQuizSlug, setActiveQuizSlug] =
     useState<QuizSlug | null>(null);
 
-  // ✅ PREFETCH FUNCTION (safe + cached)
+  // PREFETCH FUNCTION 
   const prefetchQuiz = useCallback(async (slug: QuizSlug) => {
-    // ⛔ already cached → do nothing
+    
     if (getCachedQuiz(slug)) return;
 
     try {
