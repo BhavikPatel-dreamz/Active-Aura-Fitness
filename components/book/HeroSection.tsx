@@ -15,6 +15,7 @@ type HeroSectionProps = {
   };
 };
 
+
 export default function HeroSection({ data }: HeroSectionProps) {
   if (!data) return null;
 
@@ -46,12 +47,18 @@ export default function HeroSection({ data }: HeroSectionProps) {
 
       <video
         src={data.hero_video}
+        autoPlay
+        muted
+        loop
+        playsInline
         controls
-        className="mx-auto rounded-[8px] max-w-[1104px] outline-0"
+        width={1104}
+        height={621}
+        className="mx-auto rounded-[8px] max-w-[1104px] outline-0 w-full h-full"
       />
 
       {data.hero_cta?.title && (
-  <div className="mt-10.5">
+  <div className="hero-cta-btn">
     <CTAButton
       text={data.hero_cta.title.trim()}
       href={

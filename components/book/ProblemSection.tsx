@@ -49,7 +49,7 @@ export default function ProblemSection({ data }: { data: Problem }) {
 
       {data.problem_description && (
         <div
-          className="text-[#FFFFFFCC] text-base sm:text-lg leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9 mb-8 sm:mb-10"
+          className="text-[#FFFFFFCC] text-base sm:text-lg leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9"
           dangerouslySetInnerHTML={{
             __html: data.problem_description,
           }}

@@ -20,7 +20,7 @@ export default function LaunchPriceSection({
 
         {/* 🔹 Description */}
         <div
-          className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-6 mb-6"
+          className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-6"
           dangerouslySetInnerHTML={{
             __html: data.lp_description,
           }}

@@ -30,7 +30,7 @@ export default function TestimonialSection({ data }: Props) {
 
   return (
     <section className="testimonial-section bg-[#FFFFFF0D] text-white py-12 px-4">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto sm:px-6 px-3">
         {/* Header */}
         <div className="flex items-center justify-between mb-10">
           <h2 className="text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">

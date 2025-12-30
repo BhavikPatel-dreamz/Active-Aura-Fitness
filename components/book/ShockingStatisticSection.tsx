@@ -25,8 +25,8 @@ export default function ShockingStatisticSection({
   if (!data) return null;
 
   return (
-    <section className="shokicking-statistics-section bg-[#3B3B3B] py-20 text-white">
-      <div className="max-w-6xl mx-auto">
+    <section className="shokicking-statistics-section bg-[#3B3B3B] py-12.5 text-white">
+      <div className="max-w-7xl mx-auto sm:px-6 px-3">
         {/* 🔹 Badge */}
         <div className="flex justify-center mb-8">
           <span className="bg-white text-[#DB3706] text-[22px] font-bold px-7 py-2.5 rounded-[20px] uppercase tracking-wide">
@@ -40,10 +40,10 @@ export default function ShockingStatisticSection({
         </h2>
 
         {/* 🔹 Top Grid (Text + Video) */}
-        <div className="grid md:grid-cols-2 gap-12 items-stretch mb-10">
+        <div className="grid md:grid-cols-2 gap-10 items-stretch mb-10">
           {/* Left Content */}
           <div
-            className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-6 mb-6"
+            className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-6"
             dangerouslySetInnerHTML={{
               __html: data.ss_video_description,
             }}
@@ -63,7 +63,7 @@ export default function ShockingStatisticSection({
         </div>
 
         {/* 🔹 Bottom Grid (Image + Content) */}
-        <div className="grid md:grid-cols-2 gap-12 items-stretch">
+        <div className="grid md:grid-cols-2 gap-10 items-stretch">
           {/* Image */}
           <div className="rounded-[12px] overflow-hidden h-[240px] sm:h-[320px] md:h-full">
             <Image
@@ -82,7 +82,7 @@ export default function ShockingStatisticSection({
             </h3>
 
             <div
-              className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-6 mb-6"
+              className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-6"
               dangerouslySetInnerHTML={{
                 __html: data.ss_image_description,
               }}

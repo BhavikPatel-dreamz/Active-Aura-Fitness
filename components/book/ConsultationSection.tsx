@@ -48,7 +48,7 @@ export default function ConsultationSection({ data }: Props) {
         {/* CTA */}
         {typeof data.co_cta_button === 'object' &&
   data.co_cta_button?.title && (
-    <div className="text-center mt-12">
+    <div className="text-center">
       <CTAButton
         text={data.co_cta_button.title.replace(/&nbsp;/g, '').trim()}
         href={

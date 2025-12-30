@@ -27,10 +27,10 @@ export default function ConsultationCtaWithTimer() {
     <section className="bg-[#2f2f2f] text-center sm:pb-20 pb-10">
       
       {/* TIMER CARD */}
-      <div className="max-w-[470px] mx-auto border-2 border-[#FFFFFF33] rounded-[12px] px-[19px] py-[27px]">
+      <div className="max-w-[470px] mx-auto border-2 border-[#FFFFFF33] rounded-[12px] px-[15px] py-[27px]">
         {/* Header */}
-        <div className="flex items-center justify-center text-white font-bold uppercase text-sm mb-6">
-          <span className="text-[31px] mr-[5px]">🔥</span>
+        <div className="flex items-center justify-center text-white font-bold uppercase text-sm mb-8.5">
+          <span className="w-10 h-10 mr-[5px] -mt-[2px]"><img src="/fire.gif" alt="fire gif icon" /></span>
           <span className='text-white text-[31px] font-bebas font-normal'>
             Just <span className="text-[#DB3706]">5</span> Slots Remaining Don’t Miss Out
           </span>
@@ -38,7 +38,7 @@ export default function ConsultationCtaWithTimer() {
 
         {/* Timer */}
         <div className="mx-4">
-          <p className="text-white text-4xl md:text-[100px] font-normal font-bebas leading-[140%] bg-[#ff3d00] rounded-[12px]">
+          <p className="text-white text-4xl md:text-[100px] max-w-[396px] font-normal font-bebas leading-[140%] bg-[#DB3706] rounded-xl">
             {formatTime(timeLeft)}
           </p>
         </div>

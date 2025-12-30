@@ -23,10 +23,13 @@ export default function CTAButton({
         inline-block
         bg-[#e23b00]
         hover:bg-[#ff4500]
+        hover:transform hover:scale-105
+        transform transition-transform duration-300
         text-white
         font-normal
         px-14.5
         py-3
+        mt-7.5
         rounded-[12px]
         transition
         font-bebas

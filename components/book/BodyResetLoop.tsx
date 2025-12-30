@@ -30,7 +30,7 @@ export default function BodyResetLoopSection({
   if (!data) return null;
 
   return (
-    <section className="bg-[#303030] text-white py-20">
+    <section className="body-reset-loop-section bg-[#303030] text-white py-20">
       <div className="max-w-6xl mx-auto px-6">
         {/* TITLE */}
         <h2 className="text-center text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-4 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
@@ -49,7 +49,7 @@ export default function BodyResetLoopSection({
 
         {/* VIDEO */}
         {data.brl_video && (
-          <div className="relative max-w-5xl mx-auto rounded-xl overflow-hidden mb-7.5">
+          <div className="relative max-w-5xl mx-auto rounded-xl overflow-hidden">
             <video
               src={data.brl_video}
               controls
@@ -61,7 +61,7 @@ export default function BodyResetLoopSection({
         {/* CTA */}
         {typeof data.brl_cta_button === 'object' &&
   data.brl_cta_button?.title && (
-    <div className="text-center mb-24">
+    <div className="text-center sm:mb-20 mb-12">
       <CTAButton
         text={data.brl_cta_button.title.replace(/&nbsp;/g, '').trim()}
         href={

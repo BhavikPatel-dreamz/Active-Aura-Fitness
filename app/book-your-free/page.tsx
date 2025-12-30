@@ -89,7 +89,7 @@ export default async function BookYourFreePage() {
       <SabotageSection data={acf.sabotage_section} />
 
      {/* PROBLEM SECTIONS */}
-    <section className="image-with-text-wrapper py-12 md:py-20 space-y-12 md:space-y-20">
+    <section className="image-with-text-wrapper pt-12 md:pt-20 space-y-12 md:space-y-20">
       {acf.problem_section?.problems?.map(
         (problem: any, index: number) => (
           <ProblemSection key={index} data={problem} />
@@ -98,10 +98,10 @@ export default async function BookYourFreePage() {
     </section>
 
       {acf.problem_section?.problem_overall_description && (
-        <section className="bg-[#3a3a3a] text-white pb-24">
-          <div className="max-w-5xl mx-auto px-6">
+        <section className="full-width-text bg-[#303030]text-white pt-7.5 pb-20">
+          <div className="max-w-7xl mx-auto px-4 md:px-0">
             <div
-              className="text-gray-300 text-[15px] leading-relaxed space-y-5"
+              className="text-[#FFFFFFCC] text-base sm:text-lg leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9"
               dangerouslySetInnerHTML={{
                 __html: acf.problem_section.problem_overall_description,
               }}

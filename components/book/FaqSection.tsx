@@ -27,7 +27,7 @@ export default function FaqSection({ data }: Props) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="faq-section bg-[#303030] text-white py-20 px-4">
+    <section className="faq-section bg-[#303030] text-white pt-20 pb-10 px-4">
       {/* Heading */}
       <div className="text-center mb-5">
         <h2 className="max-w-5xl mx-auto text-center text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-3 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
@@ -39,7 +39,7 @@ export default function FaqSection({ data }: Props) {
       </div>
 
      {/* FAQ List */}
-<div className="max-w-5xl mx-auto divide-y divide-white/20">
+<div className="max-w-6xl mx-auto sm:px-6 px-3 divide-y divide-white/20">
   {data.faqs.map((faq, index) => {
     const isOpen = openIndex === index;
 
@@ -73,7 +73,7 @@ export default function FaqSection({ data }: Props) {
         {index === 2 && (
           <div className='faq-cta border-t border-white/20'>
             <div className="my-10 bg-[#3a3a3a] rounded-xl py-14 text-center">
-              <h3 className="text-3xl font-extrabold uppercase mb-8">
+              <h3 className="text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
                 {data.faq_cta_heading}
               </h3>
 
