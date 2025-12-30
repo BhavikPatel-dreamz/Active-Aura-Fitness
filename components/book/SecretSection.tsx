@@ -19,17 +19,17 @@ export default function SecretSection({
   if (!data) return null;
 
   return (
-    <section className="bg-[#3a3a3a] text-white py-28">
+    <section className="bg-[#3B3B3B] text-white py-12.5">
       <div className="max-w-5xl mx-auto px-6 text-center">
         {/* TITLE */}
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase leading-tight mb-8">
+        <h2 className="text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-4 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
           {data.secret_title}
         </h2>
 
         {/* DESCRIPTION */}
         {data.secret_description && (
           <div
-            className="text-gray-300 text-[15px] md:text-[16px] leading-relaxed space-y-6 max-w-4xl mx-auto mb-14"
+            className="text-[#FFFFFFCC] text-base sm:text-lg leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9 mb-8 sm:mb-10"
             dangerouslySetInnerHTML={{
               __html: data.secret_description,
             }}

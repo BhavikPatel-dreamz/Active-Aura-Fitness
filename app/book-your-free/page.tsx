@@ -88,10 +88,14 @@ export default async function BookYourFreePage() {
       {/* SABOTAGE */}
       <SabotageSection data={acf.sabotage_section} />
 
-      {/* Problem section */}
-      {acf.problem_section?.problems?.map((problem: any, index: number) => (
-        <ProblemSection key={index} data={problem} />
-      ))}
+     {/* PROBLEM SECTIONS */}
+    <section className="image-with-text-wrapper py-12 md:py-20 space-y-12 md:space-y-20">
+      {acf.problem_section?.problems?.map(
+        (problem: any, index: number) => (
+          <ProblemSection key={index} data={problem} />
+        )
+      )}
+    </section>
 
       {acf.problem_section?.problem_overall_description && (
         <section className="bg-[#3a3a3a] text-white pb-24">

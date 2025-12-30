@@ -90,13 +90,15 @@ body {
   margin-bottom: 28px;
   list-style: none;
   padding-left: 0;
+  max-width: 576px;
 }
 
 .sabotage-content li {
   position: relative;
-  padding-left: 18px;
-  font-size: 15px;
+  padding-left: 23px;
+  font-size: 16px;
   line-height: 1.6;
+  font-weight: 500;
 }
 
 .sabotage-content li::before {
@@ -112,9 +114,10 @@ body {
 
 .sabotage-content p {
   margin-bottom: 18px;
-  font-size: 15px;
-  line-height: 1.7;
-  color: #d1d5db;
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 400;
+  color: #FFFFFFCC;
 }
 
 /* Problem Section */

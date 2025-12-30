@@ -30,17 +30,17 @@ export default function BodyResetLoopSection({
   if (!data) return null;
 
   return (
-    <section className="bg-[#3a3a3a] text-white py-28">
+    <section className="bg-[#303030] text-white py-20">
       <div className="max-w-6xl mx-auto px-6">
         {/* TITLE */}
-        <h2 className="text-center text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase leading-tight mb-10">
+        <h2 className="text-center text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-4 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
           {data.brl_title}
         </h2>
 
         {/* DESCRIPTION */}
         {data.brl_description && (
           <div
-            className="max-w-4xl mx-auto text-gray-300 text-[15px] md:text-[16px] leading-relaxed space-y-6 text-center mb-14"
+            className="max-w-5xl mx-auto text-[#FFFFFFCC] text-base sm:text-lg leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9 mb-8 sm:mb-10"
             dangerouslySetInnerHTML={{
               __html: data.brl_description,
             }}
@@ -49,7 +49,7 @@ export default function BodyResetLoopSection({
 
         {/* VIDEO */}
         {data.brl_video && (
-          <div className="relative max-w-5xl mx-auto rounded-2xl overflow-hidden mb-16">
+          <div className="relative max-w-5xl mx-auto rounded-xl overflow-hidden mb-7.5">
             <video
               src={data.brl_video}
               controls
@@ -83,44 +83,44 @@ export default function BodyResetLoopSection({
 
         {/* PROVEN TITLE */}
         {data.brl_proven_title && (
-          <h3 className="text-center text-2xl md:text-3xl font-extrabold uppercase mb-16 max-w-5xl mx-auto">
+          <h3 className="max-w-[950px] mx-auto text-center text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-8 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
             {data.brl_proven_title}
           </h3>
         )}
 
         {/* PROVEN STATS */}
         {data.brl_proven_stats && data.brl_proven_stats.length > 0 && (
-          <div className="grid md:grid-cols-2 gap-10">
+          <div className="max-w-[950px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-y-[30px] gap-x-[40px]">
             {data.brl_proven_stats.map((item, index) => (
               <div
                 key={index}
-                className="bg-[#2f2f2f] rounded-2xl p-8 shadow-lg"
+                className="bg-[#FFFFFF0D] rounded-xl p-6"
               >
                 {/* RATING */}
-                <div className="flex gap-1 text-orange-500 mb-4">
+                <div className="flex gap-1 text-[#FEE106] mb-3 text-2xl">
                   {Array.from({ length: Number(item.rating) }).map((_, i) => (
                     <span key={i}>★</span>
                   ))}
                 </div>
 
                 {/* TITLE */}
-                <h4 className="font-bold text-lg mb-4">
+                <h4 className="font-semibold text-lg mb-4">
                   {item.title}
                 </h4>
 
                 {/* COMMENT */}
                 <div
-                  className="text-gray-300 text-[15px] leading-relaxed space-y-4 mb-6"
+                  className="text-[#FFFFFFCC] text-lg leading-relaxed space-y-4 mb-4"
                   dangerouslySetInnerHTML={{
                     __html: item.comment,
                   }}
                 />
 
                 {/* AUTHOR */}
-                <p className="font-semibold text-white">
+                <p className="font-semibold text-white text-lg">
                   {item.author}
                 </p>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-[#FFFFFFCC]">
                   {item.author_city}
                 </p>
               </div>
