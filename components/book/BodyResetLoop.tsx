@@ -98,7 +98,7 @@ export default function BodyResetLoopSection({
             {data.brl_proven_stats.map((item, index) => (
               <div
                 key={index}
-                className="bg-[#FFFFFF0D] rounded-xl p-6"
+                className="bg-[#FFFFFF0D] rounded-xl p-6 flex flex-col justify-between"
               >
                 {/* RATING */}
                 <div className="flex gap-1 text-[#FEE106] mb-3 text-2xl">
