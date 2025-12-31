@@ -62,7 +62,7 @@ export default function WhyItWorksSection({
           ? '_blank'
           : '_self'
       }
-      className="bg-[#E5391C] hover:bg-[#cf341a] px-8 py-4 uppercase"
+      className="bg-[#E5391C] hover:bg-[#cf341a]"
     />
 )}
 

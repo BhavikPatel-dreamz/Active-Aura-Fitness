@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Bebas_Neue, Poppins } from 'next/font/google';
 import { getLogos, getFavicon} from '@/lib/api';
@@ -32,6 +32,12 @@ const poppins = Poppins({
   style: ['normal', 'italic'],
 });
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const [logo, favicon] = await Promise.all([

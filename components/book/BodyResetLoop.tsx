@@ -79,7 +79,7 @@ export default function BodyResetLoopSection({
             ? '_blank'
             : '_self'
         }
-        className="px-12 py-4"
+        className="sm:px-12 sm:py-4"
       />
     </div>
 )}
