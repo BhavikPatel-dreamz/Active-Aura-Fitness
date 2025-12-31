@@ -170,10 +170,11 @@ export function FinalForm({
               name="phone"
               className="flex-1 sm:px-5 px-3 sm:py-4 py-3 text-black outline-none border-l border-[#9E9E9E] sm:ml-[10px] ml-1 sm:text-base text-sm"
             />
-            {errors.phone && (
+            
+          </div>
+          {errors.phone && (
               <p className="text-xs text-yellow-200 mt-1">{errors.phone}</p>
             )}
-          </div>
         </div>
 
         {/* Terms */}
