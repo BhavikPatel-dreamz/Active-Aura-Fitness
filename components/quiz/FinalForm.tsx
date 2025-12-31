@@ -119,7 +119,7 @@ useEffect(() => {
               value={countryCode}
               onChange={(e) => setCountryCode(e.target.value)}
               name="countryCode"
-              className="text-center text-black font-medium outline-none sm:w-[67px] w-[50px] text-sm sm:text-base"
+              className="text-center text-black font-medium outline-none sm:w-[67px] w-auto max-w-[96px] text-sm sm:text-base"
             >
               {codes.map((c) => (
                 <option key={c.code} value={c.code}>
@@ -133,7 +133,7 @@ useEffect(() => {
               onChange={(e) => setPhone(e.target.value)}
               placeholder="5551234567"
               name="phone"
-              className="flex-1 sm:px-5 px-3 sm:py-4 py-3 text-black outline-none border-l border-[#9E9E9E] ml-[10px] sm:text-base text-sm"
+              className="flex-1 sm:px-5 px-3 sm:py-4 py-3 text-black outline-none border-l border-[#9E9E9E] sm:ml-[10px] ml-1 sm:text-base text-sm"
             />
           </div>
         </div>
@@ -171,7 +171,7 @@ useEffect(() => {
             onChange={(e) => setAccepted(e.target.checked)}
             name="accepted"
           />
-          <span className='capitalize text-[14px] font-normal'>I accept the Terms & Conditions</span>
+          <span className='capitalize sm:text-[14px] text-xs font-normal'>I accept the Terms & Conditions</span>
         </label>
       </div>
 
