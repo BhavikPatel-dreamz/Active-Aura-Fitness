@@ -185,19 +185,20 @@ export default function TestimonialSection({ data }: Props) {
           {data.testimonials.map((t, i) => (
             <div key={i} className="px-4 h-full md:min-h-[354px]">
               <div className="bg-[#4a4a4a] rounded-[5px] sm:p-8.5 p-6 border-r-4 border-b-4 border-white/20 flex flex-col justify-between hover:bg-[#555555] transition h-full">
-                <div className="flex gap-1 text-[#FEE106] mb-2 text-2xl">
-                  {Array.from({ length: Number(t.rating) }).map((_, i) => (
-                    <span key={i}>★</span>
-                  ))}
+                <div className='testimonial-top'>
+                  <div className="flex gap-1 text-[#FEE106] mb-2 text-2xl">
+                    {Array.from({ length: Number(t.rating) }).map((_, i) => (
+                      <span key={i}>★</span>
+                    ))}
+                  </div>
+
+                  <h3 className="font-semibold mb-2.5 sm:text-lg text-md">{t.title}</h3>
+
+                  <div
+                    className="text-sm xl:text-lg sm:text-base text-[#FFFFFFCC] leading-relaxed mb-3"
+                    dangerouslySetInnerHTML={{ __html: t.comment }}
+                  />
                 </div>
-
-                <h3 className="font-semibold mb-2.5 sm:text-lg text-md">{t.title}</h3>
-
-                <div
-                  className="text-sm xl:text-lg sm:text-base text-[#FFFFFFCC] leading-relaxed mb-3"
-                  dangerouslySetInnerHTML={{ __html: t.comment }}
-                />
-
                 <div>
                   <p className="font-semibold sm:text-lg text-md">{t.author}</p>
                   <p className="text-sm text-gray-300">{t.author_city}</p>
