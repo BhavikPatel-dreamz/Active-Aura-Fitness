@@ -139,10 +139,11 @@ return (
               <div
                 className="
                   absolute left-0 top-1/2
-                  h-[4.5px] sm:h-[5.5px]
+                  h-[5px] sm:h-[6px]
                   bg-[#282828]
                   -translate-y-1/2
                   transition-all duration-300 ease-in-out
+                  rounded-[8px]
                 "
                 style={{ width: `${activeProgressWidth}%` }}
               />
@@ -234,7 +235,7 @@ return (
             {question.question}
           </h2>
 
-          <div className="max-w-154.75 mx-auto space-y-5.5 px-6">
+          <div className="max-w-154.75 mx-auto sm:space-y-5.5 space-y-3 px-6">
             {question.options.map((opt) => {
               const isSelected = answers[question.id] === opt.value;
 
@@ -244,7 +245,7 @@ return (
                   onClick={() =>
                     setAnswers({ ...answers, [question.id]: opt.value })
                   }
-                  className={`w-full py-4.5 px-4.5 rounded-[10px] flex justify-between font-semibold transition-all
+                  className={`w-full sm:py-4.5 py-3 sm:px-4.5 px-3 sm:rounded-[10px] rounded-[6px] flex justify-between font-semibold transition-all
                     ${isSelected ? 'bg-[#FFFFFF4D] text-white' : 'bg-white text-black'}
                   `}
                 >
