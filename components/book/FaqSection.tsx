@@ -52,7 +52,7 @@ export default function FaqSection({ data }: Props) {
                   className="w-full flex justify-between items-start gap-4 text-left outline-0"
                 >
                   {/* Question */}
-                  <h3 className="text-[20px] sm:text-[28px] md:text-[45px] font-normal leading-snug sm:leading-tight uppercase font-bebas">
+                  <h3 className="text-[22px] sm:text-[28px] md:text-[45px] font-normal leading-snug sm:leading-tight uppercase font-bebas">
                     {faq.title}
                   </h3>
 
@@ -64,7 +64,7 @@ export default function FaqSection({ data }: Props) {
 
                 {/* Answer */}
                 {isOpen && (
-                  <p className="mt-3 text-[#FFFFFFCC] text-sm sm:text-base leading-7 sm:leading-8 font-medium max-w-4xl">
+                  <p className="mt-3 text-[#FFFFFFCC] text-sm sm:text-base leading-5.5 sm:leading-8 font-medium max-w-4xl">
                     {faq.answer}
                   </p>
                 )}
