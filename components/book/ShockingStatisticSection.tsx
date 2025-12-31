@@ -102,7 +102,7 @@ export default function ShockingStatisticSection({
           ? '_blank'
           : '_self'
       }
-      className="bg-[#e43d12] hover:bg-[#c7350f] px-10 py-4 uppercase"
+      className="bg-[#e43d12] hover:bg-[#c7350f]"
     />
 )}
 
