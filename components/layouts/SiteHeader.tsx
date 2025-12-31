@@ -6,27 +6,28 @@ export default async function SiteHeader() {
   return (
     <header className="w-full">
       {/* TOP OFFER BAR */}
-      <div className="w-full bg-[#303030] text-white text-uppercase text-xs md:text-lg font-weight-normal py-[19px]">
-        <div className="max-w-7xl mx-auto px-4 text-center tracking-wide">
-          EXCLUSIVE OFFER FOR: 🇮🇳 <span className="font-bold">#1</span>{" "}
-          <span className="font-bold">amazon</span>{" "}
-          <span className="uppercase">BESTSELLER</span>
+      <div className="w-full bg-[#303030] sm:py-[19px] py-2 sm:h-[66px] h-[44px] flex items-center">
+        <div className="max-w-7xl mx-auto sm:px-4 px-3 text-white text-uppercase text-xs md:text-lg font-weight-normal  text-center tracking-wide flex items-center justify-center">
+          EXCLUSIVE OFFER FOR: 🇮🇳 <span className="sm:text-sm text-xs font-normal uppercase text-white">&nbsp;#1</span>{" "}
+          <img src="/logo-amazon.svg" alt="amazon" className="sm:mx-2 mx-1 sm:w-[90px] xs:w-[60px] w-[50px] sm:h-[27px] h-auto object-contain relative sm:bottom-[-5px] bottom-[-3px]" />{" "}
+          <span className="uppercase sm:text-base text-xs">BESTSELLER</span>
         </div>
       </div>
 
       {/* BRAND HEADER */}
-      <div className="w-full bg-[#DB3706] pt-8.5 pb-8">
+      <div className="w-full bg-[#DB3706] sm:pt-8.5 pt-5 sm:pb-8 pb-4">
         <div className="max-w-7xl mx-auto px-4 flex flex-col items-center">
           {/* Logo + Name */}
-          <div className="flex items-center gap-2">
+          <a href="/" className="flex items-center gap-2" aria-label="Site Logo">
            <Image
                        src="https://dddemo.net/wordpress/2025/aura-fitness/wp-content/uploads/2025/12/active-aura-white-logo.png"
                        alt="Active Aura"
                        width={323}
                        height={60}
                        priority
+                       className="sm:w-[323px] w-[240px] sm:h-[60px] h-[40px] object-contain"
                      />
-          </div>
+          </a>
 
           
         </div>

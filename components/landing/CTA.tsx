@@ -7,7 +7,7 @@ type Props = {
 
 export default function CTA({ text, href }: Props) {
   return (
-    <div className="text-center mt-10 sm:mt-12 mb-4 px-4">
+    <div className="text-center mt-10 sm:mt-12 mb-10 px-4">
       <Link
         href={href}
         className="

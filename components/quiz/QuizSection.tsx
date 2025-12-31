@@ -140,7 +140,7 @@ return (
                 className="
                   absolute left-0 top-1/2
                   h-[4.5px] sm:h-[5.5px]
-                  bg-[#5B5B5B]
+                  bg-[#282828]
                   -translate-y-1/2
                   transition-all duration-300 ease-in-out
                 "
@@ -160,7 +160,7 @@ return (
                       sm:w-7.25 sm:h-7.25
                       rounded-full
                       transition-colors duration-300
-                      ${isActive ? 'bg-[#5B5B5B]' : 'bg-white'}
+                      ${isActive ? 'bg-[#282828]' : 'bg-white'}
                     `}
                   />
                 );
@@ -225,7 +225,7 @@ return (
           setAccepted={setAccepted}
         />
       ) : (
-        <section className="bg-[#DB3706] text-white py-20">
+        <section className="bg-[#DB3706] text-white pt-3 pb-10">
          
 
 
@@ -289,6 +289,8 @@ return (
               className="
                 group
                 w-full sm:w-45
+                sm:h-[60px]
+                h-[50px]
                 px-6 py-3
                 border border-white
                 text-base sm:text-lg
@@ -302,10 +304,11 @@ return (
                 flex items-center gap-2
                 justify-center
                 cursor-pointer
+                outline-none
               "
             >
               {/* Arrow SVG */}
-              <span className="flex items-center transition-transform duration-200 group-hover:-translate-x-1 mr-3">
+              <span className="flex items-center transition-transform duration-200 mr-3">
                 <svg
                   width="20"
                   height="11"
@@ -332,12 +335,14 @@ return (
               className="
                 group
                 w-full sm:w-45
+                sm:h-[60px]
+                h-[50px]
                 px-6 py-3
-                border border-white
+                border border-[#282828] hover:border-white
                 text-base sm:text-lg
                 font-semibold
                 rounded-[10px]
-                bg-[#FFFFFF33]
+                bg-[#282828]
                 hover:bg-white
                 text-white
                 hover:text-black
@@ -347,12 +352,13 @@ return (
                 disabled:opacity-50
                 disabled:cursor-not-allowed
                 cursor-pointer
+                outline-none
               "
             >
               <span>Next</span>
 
               {/* Right Arrow SVG */}
-              <span className="flex items-center transition-transform duration-200 group-hover:translate-x-1 ml-3">
+              <span className="flex items-center transition-transform duration-200  ml-3">
                 <svg
                   width="20"
                   height="11"

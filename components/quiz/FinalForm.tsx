@@ -73,7 +73,7 @@ useEffect(() => {
   }
 
   return (
-    <section className="bg-[#DB3706] text-white py-8">
+    <section className="bg-[#DB3706] text-white pb-8">
       <h2 className="text-center font-semibold text-[22px] sm:text-[26px] md:text-[35px] sm:mb-12 mb-5 px-4">
         Final Step : Where Should We Send <br />
         Your Personalized Results?
@@ -89,6 +89,7 @@ useEffect(() => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter Your Name"
+            name="name"
             className="w-full sm:px-5 px-3 sm:py-4 py-3 sm:rounded-[10px] rounded-[5px] text-black bg-white sm:text-base text-sm"
           />
         </div>
@@ -102,6 +103,7 @@ useEffect(() => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter Your Email Address"
+            name="email"
             className="w-full sm:px-5 px-3 sm:py-4 py-3 sm:rounded-[10px] rounded-[5px] text-black bg-white sm:text-base text-sm"
           />
         </div>
@@ -116,6 +118,7 @@ useEffect(() => {
             <select
               value={countryCode}
               onChange={(e) => setCountryCode(e.target.value)}
+              name="countryCode"
               className="text-center text-black font-medium outline-none sm:w-[67px] w-[50px] text-sm sm:text-base"
             >
               {codes.map((c) => (
@@ -129,6 +132,7 @@ useEffect(() => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="5551234567"
+              name="phone"
               className="flex-1 sm:px-5 px-3 sm:py-4 py-3 text-black outline-none border-l border-[#9E9E9E] ml-[10px] sm:text-base text-sm"
             />
           </div>
@@ -165,6 +169,7 @@ useEffect(() => {
             type="checkbox"
             checked={accepted}
             onChange={(e) => setAccepted(e.target.checked)}
+            name="accepted"
           />
           <span className='capitalize text-[14px] font-normal'>I accept the Terms & Conditions</span>
         </label>
@@ -215,10 +220,10 @@ useEffect(() => {
                 text-base sm:text-lg
                 font-semibold
                 rounded-[10px]
-                bg-black hover:bg-transparent
+                bg-black hover:bg-white
                 hover:[#FFFFFF33]
                 text-white
-                hover:text-white
+                hover:text-black
                 transition-colors duration-300
                 flex items-center gap-2
                 justify-center
@@ -228,13 +233,13 @@ useEffect(() => {
         >
           <span> Get My Personalized Results</span>
           {/* Right Arrow SVG */}
-              <span className="flex items-center transition-transform duration-200 group-hover:translate-x-1 ml-3">
+              <span className="flex items-center transition-transform duration-200 ml-3">
                 <svg
                   width="20"
                   height="11"
                   viewBox="0 0 20 11"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="fill-white group-hover:fill-white transition-colors duration-200"
+                  className="fill-white group-hover:fill-black transition-colors duration-200"
                 >
                   <path d="M19.2686 3.98725L16.0436 0.728907C15.9662 0.650801 15.874 0.588805 15.7724 0.546498C15.6709 0.504191 15.562 0.482409 15.452 0.482409C15.342 0.482409 15.233 0.504191 15.1315 0.546498C15.0299 0.588805 14.9378 0.650801 14.8603 0.728907C14.7051 0.885047 14.618 1.09625 14.618 1.3164C14.618 1.53656 14.7051 1.74775 14.8603 1.9039L17.827 4.89557H0.835329C0.614318 4.89557 0.402362 4.98337 0.246081 5.13965C0.0897995 5.29593 0.002 5.50789 0.002 5.7289C0.002 5.94991 0.0897995 6.16187 0.246081 6.31815C0.402362 6.47443 0.614318 6.56223 0.835329 6.56223H17.877L14.8603 9.57057C14.7822 9.64804 14.7202 9.74021 14.6779 9.84176C14.6356 9.94331 14.6138 10.0522 14.6138 10.1623C14.6138 10.2723 14.6356 10.3812 14.6779 10.4827C14.7202 10.5843 14.7822 10.6764 14.8603 10.7539C14.9378 10.832 15.0299 10.894 15.1315 10.9363C15.233 10.9786 15.342 11.0004 15.452 11.0004C15.562 11.0004 15.6709 10.9786 15.7724 10.9363C15.874 10.894 15.9662 10.832 16.0436 10.7539L19.2686 7.52057C19.7368 7.05182 19.9998 6.4164 19.9998 5.7539C19.9998 5.0914 19.7368 4.45599 19.2686 3.98725Z" />
                 </svg>
