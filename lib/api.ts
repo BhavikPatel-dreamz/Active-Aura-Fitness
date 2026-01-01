@@ -33,24 +33,6 @@ export async function getPageBySlug(slug: string) {
 }
 
 
-// export async function getQuizQuestions(slug: string) {
-//   const res = await fetch(
-//     `${BASE_URL}/quiz/questions?slug=${slug}`,
-//     {
-//       headers: {
-//         'x-api-key':API_KEY,
-//       },
-//       cache: 'no-store',
-//     }
-//   );
-
-//   if (!res.ok) {
-//     throw new Error('Failed to fetch quiz questions');
-//   }
-
-//   return res.json();
-// }
-
 export async function getQuizQuestions(slug: string) {
   const res = await fetch(
     `/api/quiz?slug=${slug}`,
