@@ -15,9 +15,11 @@ export default function QuizResultDialog({
   pdfUrl,
   onClose,
 }: Props) {
+
+  console.log(pdfUrl);
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 sm:px-0 px-3">
-      <div className="bg-white text-black rounded-xl sm:max-w-md max-w-sm w-full sm:p-8 p-4 text-center">
+    <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 sm:px-0 px-3">
+      <div onClick={(e) => e.stopPropagation()} className="bg-white text-black rounded-xl sm:max-w-md max-w-sm w-full sm:p-8 p-4 text-center">
         <h3 className="sm:text-2xl text-lg font-semibold leading-tight mb-4">
           🎉 Your Results Are Ready!
         </h3>
@@ -33,13 +35,15 @@ export default function QuizResultDialog({
         </p>
 
         <div className="flex justify-center gap-4">
-          <a
-            href={pdfUrl}
-            target="_blank"
+          <button
+            onClick={() => {
+    window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+  }}
+            
             className="sm:px-6 px-4 sm:py-3 py-2 rounded-lg bg-black text-white text-sm sm:text-lg font-semibold"
           >
             Download PDF
-          </a>
+          </button>
 
           <button
             onClick={onClose}

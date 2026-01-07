@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 import { FinalForm } from './FinalForm';
 import QuizResultDialog from './QuizResultDialog';
-import { getQuizQuestions } from '@/lib/api';
+import { getQuizQuestions, submitQuiz } from '@/lib/api';
 import { getCachedQuiz } from '@/lib/quizCache';
 import type { QuizSlug } from '@/lib/constants/pageSlugs';
-import { QuizApiResponse,QuizOption,QuizQuestion } from '@/lib/types';
+import {QuizQuestion} from '@/lib/types';
 
 
 export default function QuizSection({
@@ -73,6 +73,8 @@ export default function QuizSection({
       mounted = false;
     };
   }, [quizSlug]);
+
+
 
   // =====================================================
   if (loading) {
@@ -175,46 +177,41 @@ return (
       {showFinalForm ? (
         <FinalForm
           onBack={() => setShowFinalForm(false)}
-          onSubmit={async (fullPhone: string) => {
-            setSubmitting(true);
-            try {
-              const validateRes = await fetch('/api/quiz/validate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ quiz_id: quizId, answers }),
-              });
+        onSubmit={async (fullPhone: string) => {
+  setSubmitting(true);
+  try {
+    const submitRes = await fetch('/api/quiz/submit', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    quiz_id: quizId,
+    answers,
+    user_name: name,
+    user_email: email,
+    user_phone: fullPhone,
+  }),
+});
 
-              const validateJson = await validateRes.json();
-              if (!validateJson.success) {
-                alert(validateJson.message || 'Please answer all questions');
-                return;
-              }
+const submitJson = await submitRes.json();
 
-              const submitRes = await fetch('/api/quiz/submit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  quiz_id: quizId,
-                  answers,
-                  user_name: name,
-                  user_email: email,
-                  user_phone: fullPhone,
-                }),
-              });
+    if (submitJson.success) {
+      const pdfUrl =
+        submitJson.pdfs && submitJson.pdfs.length > 0
+          ? submitJson.pdfs[0].url
+          : '';
 
-              const submitJson = await submitRes.json();
-              if (submitJson.success) {
-                setShowFinalForm(false);
-                setResult({
-                  score: submitJson.score,
-                  percentage: submitJson.percentage,
-                  pdfUrl: submitJson.pdf_url,
-                });
-              }
-            } finally {
-              setSubmitting(false);
-            }
-          }}
+      setShowFinalForm(false);
+      setResult({
+        score: submitJson.correct_answers,
+        percentage: submitJson.percentage,
+        pdfUrl,
+      });
+    }
+  } finally {
+    setSubmitting(false);
+  }
+}}
+
           submitting={submitting}
           name={name}
           email={email}
@@ -228,9 +225,6 @@ return (
       ) : (
         <section className="bg-[#DB3706] text-white pt-3 pb-10">
          
-
-
-
           <h2 className="text-center font-semibold px-4 mb-8 max-w-185 mx-auto text-[22px] sm:text-[28px] lg:text-[35px] leading-7.5 sm:leading-9.5 lg:leading-12">
             {question.question}
           </h2>

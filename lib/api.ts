@@ -66,6 +66,7 @@ export async function submitQuiz(payload: any) {
   }
 
   return res.json();
+  
 }
 
 
