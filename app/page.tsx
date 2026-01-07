@@ -30,7 +30,7 @@ export default async function HomePage() {
 
       <Goals
         goals={data.goal_options}
-        quizMap={quizMap}   
+        quizMap={quizMap}
       />
     </main>
   );

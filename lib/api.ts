@@ -27,7 +27,7 @@ export async function getQuizQuestions(quizId: number) {
     `${BASE_URL}/quiz/questions?quiz_id=${quizId}`,
     {
       headers: {
-        'x-api-key':API_KEY,
+        'x-api-key': API_KEY,
       },
       cache: 'no-store',
     }
