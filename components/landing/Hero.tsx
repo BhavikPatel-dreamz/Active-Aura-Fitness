@@ -25,7 +25,7 @@ export default function Hero({
   const rightBenefits = benefits.slice(3, 6);
 
   return (
-    <section className="relative max-w-[1350px] mx-auto px-4 xl:px-0">
+    <section className="relative max-w-[1350px] max-[1400px]:max-w-[1200px] mx-auto px-4 xl:px-0">
       {/* ================= DESKTOP LEFT BENEFITS (UNCHANGED VISUALLY) ================= */}
       <div className="hidden xl:block absolute left-0 top-10">
         {leftBenefits.map((item) => (
@@ -81,23 +81,23 @@ export default function Hero({
       </div>
 
       {/* ================= HERO CONTENT ================= */}
-      <div className="text-center relative z-10 md:py-16 py-5 xl:py-0">
-        <h2 className="text-xl xl:text-2xl font-bold max-w-4xl mx-auto mb-[30px] text-[#303030] font-poppins">
+      <div className="text-center relative z-10 md:py-4 py-5 xl:py-0">
+        <h2 className="text-xl xl:text-2xl font-bold max-w-4xl max-[1400px]:max-w-[700px] mx-auto mb-[30px] text-[#303030] font-poppins">
           {heroTitle}
         </h2>
 
-        <h1 className="text-3xl xl:text-[56px] xl:max-w-[856px] max-w-[700px] mx-auto leading-tight xl:leading-[62px] mb-6 font-bebas">
+        <h1 className="text-3xl xl:text-[56px] max-w-[856px] max-[1400px]:max-w-[700px] mx-auto leading-tight xl:leading-[62px] mb-6 font-bebas">
           {heroSubtitle}
         </h1>
 
         <div
-          className="text-[16px] xl:text-[19px] leading-[26px] xl:leading-[30px] uppercase font-bold max-w-[942px] mx-auto text-[#282828] font-poppins"
+          className="text-[16px] xl:text-[19px] leading-[26px] xl:leading-[30px] uppercase font-bold max-w-[942px] max-[1400px]:max-w-[700px] mx-auto text-[#282828] font-poppins"
           dangerouslySetInnerHTML={{ __html: heroDescription }}
         />
       </div>
 
       {/* ================= MOBILE / TABLET BENEFITS ================= */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12 xl:hidden">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12 xl:hidden max-[1400px]:max-w-[700px] mx-auto">
         {benefits.map((item) => (
           <div
             key={item.text}
