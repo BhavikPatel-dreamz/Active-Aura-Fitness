@@ -7,7 +7,7 @@ type Props = {
 
 export default function Benefits({ benefits }: Props) {
   return (
-    <section className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto px-6">
+    <section className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto sm:px-6 px-4">
       {benefits.map((benefit, i) => (
         <div
           key={i}

@@ -35,6 +35,7 @@ export type QuizOption = {
   id: string;
   label: string;
   value: string;
+  text: string;
 };
 
 export type QuizQuestion = {
@@ -50,4 +51,11 @@ export type QuizResponse = {
     questions: QuizQuestion[];
   };
 };
+
+
+export type QuizApiResponse = {
+  quiz_id: number;
+  questions: QuizQuestion[];
+};
+
 

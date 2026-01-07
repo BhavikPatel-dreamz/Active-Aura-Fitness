@@ -1,3 +1,6 @@
+import CTAButton from '../common/CTAButton';
+import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+
 type Problem = {
   problem_title: string;
   problem_media_type: 'video' | 'image';
@@ -18,7 +21,7 @@ export default function ProblemSection({ data }: { data: Problem }) {
   const isMediaLeft = data.media_position === 'left';
 
   const Media = (
-    <div className="rounded-2xl overflow-hidden">
+    <div className="rounded-[12px] overflow-hidden h-[240px] sm:h-[320px] md:h-full">
       {data.problem_media_type === 'video' && data.problem_video ? (
         <video
           src={data.problem_video}
@@ -39,14 +42,14 @@ export default function ProblemSection({ data }: { data: Problem }) {
   );
 
   const Content = (
-    <div>
-      <h2 className="text-3xl md:text-4xl font-extrabold uppercase leading-tight mb-6">
+    <div className="mt-6 md:mt-0">
+      <h2 className="text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-4 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
         {data.problem_title}
       </h2>
 
       {data.problem_description && (
         <div
-          className="text-gray-300 text-[15px] leading-relaxed space-y-5 mb-10"
+          className="text-[#FFFFFFCC] text-sm xl:text-lg sm:text-base leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9"
           dangerouslySetInnerHTML={{
             __html: data.problem_description,
           }}
@@ -55,21 +58,30 @@ export default function ProblemSection({ data }: { data: Problem }) {
 
       {typeof data.problem_cta_button === 'object' &&
         data.problem_cta_button?.title && (
-          <a
-            href={data.problem_cta_button.url || '#'}
-            target={data.problem_cta_button.target || '_self'}
-            className="inline-block bg-[#ff3d00] hover:bg-[#e63600] transition text-white font-bold uppercase px-10 py-4 rounded-xl text-sm tracking-wide"
-          >
-            {data.problem_cta_button.title.trim()}
-          </a>
+          <CTAButton
+            text={data.problem_cta_button.title
+              .replace(/&nbsp;/g, '')
+              .trim()}
+            href={
+              data.problem_cta_button.url &&
+              data.problem_cta_button.url !== '#'
+                ? data.problem_cta_button.url
+                : `/${PAGE_SLUGS.RESERVATION}`
+            }
+            target={
+              data.problem_cta_button.target === '_blank'
+                ? '_blank'
+                : '_self'
+            }
+          />
         )}
     </div>
   );
 
   return (
-    <section className="bg-[#3a3a3a] text-white py-24">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+    <section className="image-with-text bg-[#303030] text-white">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-10 items-center">
           {isMediaLeft ? (
             <>
               {Media}

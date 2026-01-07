@@ -15,35 +15,39 @@ export default function QuizResultDialog({
   pdfUrl,
   onClose,
 }: Props) {
+
+  console.log(pdfUrl);
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-      <div className="bg-white text-black rounded-xl max-w-md w-full p-8 text-center">
-        <h3 className="text-2xl font-bold mb-4">
+    <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 sm:px-0 px-3">
+      <div onClick={(e) => e.stopPropagation()} className="bg-white text-black rounded-xl sm:max-w-md max-w-sm w-full sm:p-8 p-4 text-center">
+        <h3 className="sm:text-2xl text-lg font-semibold leading-tight mb-4">
           🎉 Your Results Are Ready!
         </h3>
 
-        <p className="mb-4">
+        <p className="mb-4 sm:text-lg text-sm">
           You scored <strong>{score}</strong> out of{' '}
           <strong>{total}</strong> ({percentage}%)
         </p>
 
-        <p className="text-sm text-gray-600 mb-6">
+        <p className="sm:text-sm text-xs text-gray-600 mb-6">
           Your personalized fitness plan has been sent to your email.
           You can also download it using the button below.
         </p>
 
         <div className="flex justify-center gap-4">
-          <a
-            href={pdfUrl}
-            target="_blank"
-            className="px-6 py-3 rounded-lg bg-black text-white"
+          <button
+            onClick={() => {
+    window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+  }}
+            
+            className="sm:px-6 px-4 sm:py-3 py-2 rounded-lg bg-black text-white text-sm sm:text-lg font-semibold"
           >
             Download PDF
-          </a>
+          </button>
 
           <button
             onClick={onClose}
-            className="px-6 py-3 rounded-lg border border-black"
+            className="sm:px-6 px-4 sm:py-3 py-2 rounded-lg border border-black text-sm sm:text-lg font-semibold"
           >
             Close
           </button>

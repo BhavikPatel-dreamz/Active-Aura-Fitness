@@ -25,14 +25,46 @@ export default function Hero({
   const rightBenefits = benefits.slice(3, 6);
 
   return (
-    <section className="relative px-6 py-24 max-w-7xl mx-auto">
-      {/* LEFT BENEFITS */}
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 space-y-6">
-        {leftBenefits.map((item, index) => (
+    <section className="relative max-w-[1350px] max-[1400px]:max-w-[1200px] mx-auto px-4 xl:px-0">
+      {/* ================= DESKTOP LEFT BENEFITS (UNCHANGED VISUALLY) ================= */}
+      <div className="hidden xl:block absolute left-0 top-10">
+        {leftBenefits.map((item) => (
           <div
             key={item.text}
-            className="bg-white text-black w-50 px-5 py-4 rounded-xl shadow-xl flex flex-col items-center text-center"
-            style={{ transform: `rotate(${-8 + index * 2}deg)` }}
+            className="
+              white-rotate-box bg-white text-black
+              w-full max-w-[210px] xl:w-[210px]
+              h-[160px] px-2 py-4
+              flex flex-col items-center justify-center text-center
+            "
+            style={{ boxShadow: '0px 4px 4px 0px #FFFFFF2E' }}
+          >
+            <Image
+              src={item.image.url}
+              alt={item.image.alt}
+              width={36}
+              height={36}
+              className="mb-3"
+            />
+            <span className="font-poppins font-semibold text-[18px] leading-[27px] capitalize text-[#303030]">
+              {item.text}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* ================= DESKTOP RIGHT BENEFITS (UNCHANGED VISUALLY) ================= */}
+      <div className="hidden xl:block absolute right-0 top-10">
+        {rightBenefits.map((item) => (
+          <div
+            key={item.text}
+            className="
+              white-rotate-box bg-white text-black
+              w-full max-w-[210px] xl:w-[210px]
+              h-[160px] px-2 py-4
+              flex flex-col items-center justify-center text-center
+            "
+            style={{ boxShadow: '0px 4px 4px 0px #FFFFFF2E' }}
           >
             <Image
               src={item.image.url}
@@ -41,51 +73,56 @@ export default function Hero({
               height={36}
               className="mb-2"
             />
-            <span className="text-sm font-semibold">
+            <span className="font-poppins font-semibold text-[18px] leading-[27px] capitalize text-[#303030]">
               {item.text}
             </span>
           </div>
         ))}
       </div>
 
-      {/* RIGHT BENEFITS */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 space-y-6">
-        {rightBenefits.map((item, index) => (
-          <div
-            key={item.text}
-            className="bg-white text-black w-50 px-5 py-4 rounded-xl shadow-xl flex flex-col items-center text-center"
-            style={{ transform: `rotate(${8 - index * 2}deg)` }}
-          >
-            <Image
-              src={item.image.url}
-              alt={item.image.alt}
-              width={36}
-              height={36}
-              className="mb-2"
-            />
-            <span className="text-sm font-semibold">
-              {item.text}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      {/* HERO CONTENT */}
-      <div className="text-center max-w-4xl mx-auto relative z-10">
-        <h2 className="text-sm font-bold tracking-wide mb-4">
+      {/* ================= HERO CONTENT ================= */}
+      <div className="text-center relative z-10 md:py-4 py-5 xl:py-0">
+        <h2 className="text-xl xl:text-2xl font-bold max-w-4xl max-[1400px]:max-w-[700px] mx-auto mb-[30px] text-[#303030] font-poppins">
           {heroTitle}
         </h2>
 
-        <h1 className="text-3xl md:text-5xl font-extrabold leading-tight mb-6">
+        <h1 className="text-3xl xl:text-[56px] max-w-[856px] max-[1400px]:max-w-[700px] mx-auto leading-tight xl:leading-[62px] mb-6 font-bebas">
           {heroSubtitle}
         </h1>
 
         <div
-  className="text-base md:text-lg font-medium opacity-90"
-  dangerouslySetInnerHTML={{ __html: heroDescription }}
-/>
+          className="text-[16px] xl:text-[19px] leading-[26px] xl:leading-[30px] uppercase font-bold max-w-[942px] max-[1400px]:max-w-[700px] mx-auto text-[#282828] font-poppins"
+          dangerouslySetInnerHTML={{ __html: heroDescription }}
+        />
+      </div>
+
+      {/* ================= MOBILE / TABLET BENEFITS ================= */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12 xl:hidden max-[1400px]:max-w-[700px] mx-auto">
+        {benefits.map((item) => (
+          <div
+            key={item.text}
+            className="
+              white-rotate-box bg-white text-black
+              w-full max-w-[210px]
+              h-[160px] px-2 py-4
+              mx-auto
+              flex flex-col items-center justify-center text-center
+            "
+            style={{ boxShadow: '0px 4px 4px 0px #FFFFFF2E' }}
+          >
+            <Image
+              src={item.image.url}
+              alt={item.image.alt}
+              width={36}
+              height={36}
+              className="mb-3"
+            />
+            <span className="font-poppins font-semibold text-[18px] leading-[27px] capitalize text-[#303030]">
+              {item.text}
+            </span>
+          </div>
+        ))}
       </div>
     </section>
   );
 }
-

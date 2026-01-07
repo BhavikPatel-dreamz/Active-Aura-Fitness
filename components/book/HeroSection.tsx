@@ -1,3 +1,6 @@
+import CTAButton from "../common/CTAButton";
+import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+
 type HeroSectionProps = {
   data: {
     hero_subtitle: string;
@@ -7,6 +10,7 @@ type HeroSectionProps = {
     hero_cta: {
       title: string;
       url: string;
+      target: string;
     };
   };
 };
@@ -15,35 +19,56 @@ export default function HeroSection({ data }: HeroSectionProps) {
   if (!data) return null;
 
   return (
-    <section className="text-center py-20 px-6">
-      <p className="text-sm uppercase mb-4">
+    <section className="text-center pt-6 sm:pt-8 md:pt-10 pb-10 md:pb-14 px-4 sm:px-6">
+      
+      {/* Subtitle */}
+      <p className="text-[18px] sm:text-[22px] lg:text-[26px] font-normal text-white uppercase mb-2 text-shadow-[0px_4px_4px_rgba(255,_255,_255,_0.1)] font-bebas">
         {data.hero_subtitle}
       </p>
 
-      <h1 className="text-4xl font-bold mb-6">
+      {/* Title */}
+      <h1 className="text-[32px] sm:text-[42px] lg:text-[56px] font-normal text-white text-shadow-[0px_4px_4px_rgba(255,_255,_255,_0.1)] mb-4 md:mb-6 font-bebas leading-tight lg:leading-normal">
         {data.hero_title}
       </h1>
 
-      <div className="flex justify-center gap-6 mb-8">
+      {/* Steps */}
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 mb-8 md:mb-10 capitalize">
         {data.hero_steps.map((step, i) => (
-          <span key={i} className="text-orange-500">
-            Step {i + 1}: {step.step_text}
+          <span key={i} className="text-white font-semibold text-sm sm:text-sm lg:text-base xl:text-xl border-r border-[#FFFFFF33] pr-0 sm:pr-2 lg:pr-4 last:border-r-0">
+            <span className="text-[#DB3706]">Step {i + 1}:</span> {step.step_text}
           </span>
         ))}
       </div>
 
-      <video
-        src={data.hero_video}
-        controls
-        className="mx-auto rounded-xl max-w-4xl"
-      />
+      {/* Video */}
+      <div className="px-0 sm:px-4">
+        <video
+          src={data.hero_video}
+          autoPlay
+          muted
+          loop
+          playsInline
+          controls
+          width={1104}
+          height={621}
+          className="mx-auto rounded-[8px] max-w-[1104px] w-full h-auto outline-0"
+        />
+      </div>
 
-      <a
-        href={data.hero_cta.url}
-        className="inline-block mt-8 bg-orange-600 px-8 py-4 rounded-lg font-bold"
-      >
-        {data.hero_cta.title}
-      </a>
+      {/* CTA */}
+      {data.hero_cta?.title && (
+        <div className="hero-cta-btn flex justify-center">
+          <CTAButton
+            text={data.hero_cta.title.trim()}
+            href={
+              data.hero_cta.url && data.hero_cta.url !== '#'
+                ? data.hero_cta.url
+                : `/${PAGE_SLUGS.RESERVATION}`
+            }
+            target={data.hero_cta.target === '_blank' ? '_blank' : '_self'}
+          />
+        </div>
+      )}
     </section>
   );
 }
