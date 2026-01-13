@@ -45,7 +45,6 @@ export default function HeroSection({ data }: HeroSectionProps) {
         <video
           src={data.hero_video}
           autoPlay
-          muted
           loop
           playsInline
           controls

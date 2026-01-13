@@ -8,18 +8,15 @@ export default async function TopHeader() {
   return (
     <header className="w-full py-6 flex justify-center bg-[#2f2f2f]">
      <div className='site-logo'>
-      <a href="/">
-        {logo?.url && (
-          <Image
-            src={logo.url}
-            alt={logo.alt || 'Active Aura'}
-            width={logo.width || 160}
-            height={logo.height || 40}
-            priority
-            className="object-contain"
-          />
-        )}
-        </a>
+      <a
+      href="/"
+      className="flex items-center"
+      aria-label="Active Aura Fitness"
+    >
+      <h1 className="text-white font-bold text-[26px] sm:text-[32px] lg:text-[40px] tracking-wide">
+        Active Aura Fitness
+      </h1>
+    </a>
       </div>
     </header>
   );

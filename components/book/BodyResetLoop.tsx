@@ -53,7 +53,6 @@ export default function BodyResetLoopSection({
             <video
               src={data.brl_video}
               autoPlay
-              muted
               loop
               playsInline
               controls
