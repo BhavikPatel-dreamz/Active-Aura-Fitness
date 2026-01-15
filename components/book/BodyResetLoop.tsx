@@ -1,5 +1,6 @@
 import CTAButton from "../common/CTAButton";
 import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+import AutoplayVideo from "../common/AutoPlayVideo";
 
 type ProvenStat = {
   rating: string;
@@ -27,6 +28,8 @@ export default function BodyResetLoopSection({
 }: {
   data: BodyResetLoopData;
 }) {
+
+  
   if (!data) return null;
 
   return (
@@ -50,14 +53,11 @@ export default function BodyResetLoopSection({
         {/* VIDEO */}
         {data.brl_video && (
           <div className="relative max-w-5xl mx-auto rounded-xl overflow-hidden">
-            <video
-              src={data.brl_video}
-              autoPlay
-              loop
-              playsInline
-              controls
-              className="w-full h-auto rounded-2xl"
-            />
+           <AutoplayVideo
+  src={data.brl_video}
+  className="w-full h-auto rounded-2xl"
+/>
+ 
           </div>
         )}
 

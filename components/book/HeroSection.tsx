@@ -1,5 +1,6 @@
 import CTAButton from "../common/CTAButton";
 import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+import AutoplayVideo from "../common/AutoPlayVideo";
 
 type HeroSectionProps = {
   data: {
@@ -42,16 +43,10 @@ export default function HeroSection({ data }: HeroSectionProps) {
 
       {/* Video */}
       <div className="px-0 sm:px-4">
-        <video
-          src={data.hero_video}
-          autoPlay
-          loop
-          playsInline
-          controls
-          width={1104}
-          height={621}
-          className="mx-auto rounded-[8px] max-w-[1104px] w-full h-auto outline-0"
-        />
+        <AutoplayVideo
+    src={data.hero_video}
+    className="mx-auto rounded-[8px] max-w-[1104px] w-full h-auto outline-0"
+  />
       </div>
 
       {/* CTA */}
