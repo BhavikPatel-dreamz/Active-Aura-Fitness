@@ -81,12 +81,12 @@ export default function Hero({
       </div>
 
       {/* ================= HERO CONTENT ================= */}
-      <div className="text-center relative z-10 md:py-4 py-5 xl:py-0">
-        <h2 className="text-xl xl:text-2xl font-bold max-w-4xl max-[1400px]:max-w-[700px] mx-auto mb-[30px] text-[#303030] font-poppins">
+      <div className="text-center relative z-10 md:py-4 py-2 xl:py-0">
+        {/* <h2 className="text-xl xl:text-2xl font-bold max-w-4xl max-[1400px]:max-w-[700px] mx-auto mb-[30px] text-[#303030] font-poppins">
           {heroTitle}
-        </h2>
+        </h2> */}
 
-        <h1 className="text-3xl text-black xl:text-[56px] max-w-[856px] max-[1400px]:max-w-[700px] mx-auto leading-tight xl:leading-[62px] mb-6 font-bebas">
+        <h1 className="text-3xl pt-1 text-black xl:text-[56px] max-w-[856px] max-[1400px]:max-w-[700px] mx-auto leading-tight xl:leading-[62px] mb-4 font-bebas">
           {heroSubtitle}
         </h1>
 

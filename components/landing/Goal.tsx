@@ -49,15 +49,15 @@ export default function Goals({
   }
 
   return (
-    <section className="px-4 sm:px-6 pb-8 sm:pb-14">
+    <section className="px-3 sm:px-6 pb-8 sm:pb-14">
       {/* Heading */}
       <h3
         className="
           max-w-4xl mx-auto text-center
-          text-[24px] sm:text-[30px] lg:text-[35px]
+          text-[16px] sm:text-[16px] lg:text-[35px]
           leading-9.5 sm:leading-12 lg:leading-15
           capitalize text-black poppins font-semibold
-          mb-6 sm:mb-8
+          mb-4 sm:mb-8
         "
       >
         What’s Your #1 Goal Right Now?
@@ -81,7 +81,7 @@ export default function Goals({
                 bg-white text-[#303030]
                 text-[16px] sm:text-[18px]
                 capitalize rounded-[10px]
-                px-4 py-3 sm:p-4
+                px-3 py-2 sm:p-4
                 font-semibold
                 flex justify-between items-center
                 w-full max-w-74.25 mx-auto

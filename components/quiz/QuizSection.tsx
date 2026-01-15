@@ -79,7 +79,7 @@ export default function QuizSection({
   // =====================================================
   if (loading) {
     return (
-      <p className="text-center lg:py-20 md:py-12 py-8 text-white">
+      <p className="text-center lg:py-20 md:py-12 py-8 text-black">
         Loading…
       </p>
     );
