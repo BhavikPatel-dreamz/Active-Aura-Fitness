@@ -40,7 +40,7 @@ export default function QuizResultDialog({
     window.open(pdfUrl, '_blank', 'noopener,noreferrer');
   }}
             
-            className="sm:px-6 px-4 sm:py-3 py-2 rounded-lg bg-black text-white text-sm sm:text-lg font-semibold"
+            className="sm:px-6 px-4 sm:py-3 py-2 rounded-lg bg-[#6F00FF] text-white text-sm sm:text-lg font-semibold"
           >
             Download PDF
           </button>

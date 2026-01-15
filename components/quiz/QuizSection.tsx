@@ -223,7 +223,7 @@ const submitJson = await submitRes.json();
           setAccepted={setAccepted}
         />
       ) : (
-        <section className="bg-[#DB3706] text-white pt-3 pb-10">
+        <section className="bg-[#ECECEB] text-black pt-3 pb-10">
          
           <h2 className="text-center font-semibold px-4 mb-8 max-w-185 mx-auto text-[22px] sm:text-[28px] lg:text-[35px] leading-7.5 sm:leading-9.5 lg:leading-12">
             {question.question}
@@ -291,9 +291,9 @@ const submitJson = await submitRes.json();
                 text-base sm:text-lg
                 font-semibold
                 rounded-[10px]
-                bg-[#FFFFFF33]
+                bg-[#28272733]
                 hover:bg-white
-                text-white
+                text-black
                 hover:text-black
                 transition-colors duration-300
                 flex items-center gap-2
@@ -337,7 +337,7 @@ const submitJson = await submitRes.json();
                 text-base sm:text-lg
                 font-semibold
                 rounded-[10px]
-                bg-[#282828]
+                bg-[#6F00FF]
                 hover:bg-white
                 text-white
                 hover:text-black
