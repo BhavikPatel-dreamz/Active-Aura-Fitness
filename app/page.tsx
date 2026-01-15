@@ -72,7 +72,7 @@ export default async function HomePage() {
 
 
   return (
-    <main className="bg-[#DB3706] text-white relative overflow-hidden">
+    <main className="bg-[#ECECEB] text-black relative overflow-hidden">
       <SiteHeader />
 
       <Hero
@@ -81,6 +81,7 @@ export default async function HomePage() {
         heroDescription={landingData.hero_description}
         benefits={landingData.benefits}
       />
+
 
       {landingData.cta_button_text && (
         <CTA

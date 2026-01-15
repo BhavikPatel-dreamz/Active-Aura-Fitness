@@ -22,7 +22,7 @@ export default function WhyItWorksSection({
   if (!data) return null;
 
   return (
-    <section className="why-it-works-section bg-[#3B3B3B] py-12.5">
+    <section className="why-it-works-section  py-12.5">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 lg:gap-x-12 gap-7 items-center sm:px-6 px-4">
         {/* 🔹 Left Image */}
         <div className="relative w-full rounded-xl overflow-hidden h-[240px] sm:h-[320px] md:h-full">
@@ -35,13 +35,13 @@ export default function WhyItWorksSection({
         </div>
 
         {/* 🔹 Right Content */}
-        <div className="text-white">
+        <div className="">
           <h2 className="text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-4 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
             {data.wiw_title}
           </h2>
 
           <div
-            className="text-[#FFFFFFCC] text-sm xl:text-lg sm:text-base leading-relaxed space-y-6"
+            className=" text-sm xl:text-lg sm:text-base leading-relaxed space-y-6"
             dangerouslySetInnerHTML={{
               __html: data.wiw_description,
             }}
@@ -62,7 +62,7 @@ export default function WhyItWorksSection({
           ? '_blank'
           : '_self'
       }
-      className="bg-[#E5391C] hover:bg-[#cf341a]"
+      
     />
 )}
 

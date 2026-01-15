@@ -86,7 +86,7 @@ export default function Hero({
           {heroTitle}
         </h2>
 
-        <h1 className="text-3xl xl:text-[56px] max-w-[856px] max-[1400px]:max-w-[700px] mx-auto leading-tight xl:leading-[62px] mb-6 font-bebas">
+        <h1 className="text-3xl text-black xl:text-[56px] max-w-[856px] max-[1400px]:max-w-[700px] mx-auto leading-tight xl:leading-[62px] mb-6 font-bebas">
           {heroSubtitle}
         </h1>
 
@@ -96,33 +96,7 @@ export default function Hero({
         />
       </div>
 
-      {/* ================= MOBILE / TABLET BENEFITS ================= */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12 xl:hidden max-[1400px]:max-w-[700px] mx-auto">
-        {benefits.map((item) => (
-          <div
-            key={item.text}
-            className="
-              white-rotate-box bg-white text-black
-              w-full max-w-[210px]
-              h-[160px] px-2 py-4
-              mx-auto
-              flex flex-col items-center justify-center text-center
-            "
-            style={{ boxShadow: '0px 4px 4px 0px #FFFFFF2E' }}
-          >
-            <Image
-              src={item.image.url}
-              alt={item.image.alt}
-              width={36}
-              height={36}
-              className="mb-3"
-            />
-            <span className="font-poppins font-semibold text-[18px] leading-[27px] capitalize text-[#303030]">
-              {item.text}
-            </span>
-          </div>
-        ))}
-      </div>
+    
     </section>
   );
 }

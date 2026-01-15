@@ -10,7 +10,7 @@ export default function SabotageSection({ data }: SabotageSectionProps) {
   if (!data) return null;
 
   return (
-    <section className="sabotage-section bg-[#3a3a3a] text-white py-8 sm:py-10 md:py-12.5">
+    <section className="sabotage-section   py-8 sm:py-10 md:py-12.5">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Headings */}
@@ -24,7 +24,7 @@ export default function SabotageSection({ data }: SabotageSectionProps) {
 
         {/* Content */}
         <div
-          className="sabotage-content max-w-[1064px] mx-auto text-[#FFFFFFCC] text-base sm:text-lg leading-relaxed"
+          className="sabotage-content max-w-[1064px] mx-auto text-black text-base sm:text-lg leading-relaxed"
           dangerouslySetInnerHTML={{
             __html: data.sabotage_description,
           }}

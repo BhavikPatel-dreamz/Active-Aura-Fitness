@@ -30,7 +30,7 @@ export default function BodyResetLoopSection({
   if (!data) return null;
 
   return (
-    <section className="body-reset-loop-section bg-[#303030] text-white lg:py-20 md:py-12 py-8">
+    <section className="body-reset-loop-section bg-[#ECECEB] text-black lg:py-20 md:py-12 py-8">
       <div className="max-w-6xl mx-auto sm:px-6 px-4">
         {/* TITLE */}
         <h2 className="text-center text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-4 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
@@ -40,7 +40,7 @@ export default function BodyResetLoopSection({
         {/* DESCRIPTION */}
         {data.brl_description && (
           <div
-            className="max-w-5xl mx-auto text-[#FFFFFFCC] text-sm xl:text-lg sm:text-base leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9 mb-8 sm:mb-10"
+            className="max-w-5xl mx-auto  text-sm xl:text-lg sm:text-base leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9 mb-8 sm:mb-10"
             dangerouslySetInnerHTML={{
               __html: data.brl_description,
             }}
@@ -53,7 +53,6 @@ export default function BodyResetLoopSection({
             <video
               src={data.brl_video}
               autoPlay
-              muted
               loop
               playsInline
               controls
@@ -65,7 +64,7 @@ export default function BodyResetLoopSection({
         {/* CTA */}
         {typeof data.brl_cta_button === 'object' &&
   data.brl_cta_button?.title && (
-    <div className="text-center lg:mb-20 sm:mb-12 mb-8">
+    <div className="text-center lg:mb-20 sm:mb-12 mb-8 ">
       <CTAButton
         text={data.brl_cta_button.title.replace(/&nbsp;/g, '').trim()}
         href={
@@ -79,7 +78,7 @@ export default function BodyResetLoopSection({
             ? '_blank'
             : '_self'
         }
-        className="sm:px-12 sm:py-4"
+        className="sm:px-12 sm:py-4 bg-[#6F00FF]"
       />
     </div>
 )}
@@ -114,17 +113,17 @@ export default function BodyResetLoopSection({
 
                 {/* COMMENT */}
                 <div
-                  className="text-[#FFFFFFCC] text-sm xl:text-lg sm:text-base leading-relaxed space-y-4 mb-4"
+                  className=" text-sm xl:text-lg sm:text-base leading-relaxed space-y-4 mb-4"
                   dangerouslySetInnerHTML={{
                     __html: item.comment,
                   }}
                 />
 
                 {/* AUTHOR */}
-                <p className="font-semibold text-white text-lg">
+                <p className="font-semibold text-black text-lg">
                   {item.author}
                 </p>
-                <p className="text-sm text-[#FFFFFFCC]">
+                <p className="text-sm ">
                   {item.author_city}
                 </p>
               </div>

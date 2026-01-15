@@ -25,7 +25,7 @@ export default function ShockingStatisticSection({
   if (!data) return null;
 
   return (
-    <section className="shokicking-statistics-section bg-[#3B3B3B] py-12.5 text-white">
+    <section className="shokicking-statistics-section  py-12.5 ">
       <div className="max-w-7xl mx-auto sm:px-6 px-4">
         {/* 🔹 Badge */}
         <div className="flex justify-center mb-8">
@@ -43,7 +43,7 @@ export default function ShockingStatisticSection({
         <div className="grid lg:grid-cols-2 gap-10 lg:flex-row items-stretch mb-10">
           {/* Left Content */}
           <div
-            className="text-[#FFFFFFCC] text-sm xl:text-lg sm:text-base leading-relaxed space-y-6 order-2 lg:order-1"
+            className=" text-sm xl:text-lg sm:text-base leading-relaxed space-y-6 order-2 lg:order-1"
             dangerouslySetInnerHTML={{
               __html: data.ss_video_description,
             }}
@@ -82,7 +82,7 @@ export default function ShockingStatisticSection({
             </h3>
 
             <div
-              className="text-[#FFFFFFCC] text-sm xl:text-lg sm:text-base leading-relaxed space-y-6"
+              className=" text-sm xl:text-lg sm:text-base leading-relaxed space-y-6"
               dangerouslySetInnerHTML={{
                 __html: data.ss_image_description,
               }}
@@ -102,7 +102,7 @@ export default function ShockingStatisticSection({
           ? '_blank'
           : '_self'
       }
-      className="bg-[#e43d12] hover:bg-[#c7350f]"
+      
     />
 )}
 
