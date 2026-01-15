@@ -1,23 +1,22 @@
-import { getPageBySlug, getQuizList } from '../lib/api';
-import { PAGE_SLUGS, QuizSlug } from '@/lib/constants/pageSlugs';
-import type { Metadata } from 'next';
-import Hero from '../components/landing/Hero';
-import Goals from '../components/landing/Goal';
-import CTA from '../components/landing/CTA';
-import SiteHeader from '@/components/layouts/SiteHeader';
-
+import { getPageBySlug, getQuizList } from "../lib/api";
+import { PAGE_SLUGS, QuizSlug } from "@/lib/constants/pageSlugs";
+import type { Metadata } from "next";
+import Hero from "../components/landing/Hero";
+import Goals from "../components/landing/Goal";
+import CTA from "../components/landing/CTA";
+import SiteHeader from "@/components/layouts/SiteHeader";
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPageBySlug(PAGE_SLUGS.LANDING);
   const seo = page.yoast_seo;
 
   return {
-    title: seo?.title || page.title || 'Active Aura Fitness',
+    title: seo?.title || page.title || "Active Aura Fitness",
 
     description:
       seo?.description ||
-      page.excerpt?.replace(/<[^>]*>/g, '') ||
-      'Personalized fitness & weight loss programs',
+      page.excerpt?.replace(/<[^>]*>/g, "") ||
+      "Personalized fitness & weight loss programs",
 
     alternates: {
       canonical: seo?.canonical || undefined,
@@ -30,24 +29,16 @@ export async function generateMetadata(): Promise<Metadata> {
 
     openGraph: {
       title: seo?.open_graph?.title || seo?.title,
-      description:
-        seo?.open_graph?.description ||
-        seo?.description,
-      images: seo?.open_graph?.image
-        ? [{ url: seo.open_graph.image }]
-        : [],
-      type: 'website',
+      description: seo?.open_graph?.description || seo?.description,
+      images: seo?.open_graph?.image ? [{ url: seo.open_graph.image }] : [],
+      type: "website",
     },
 
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: seo?.twitter?.title || seo?.title,
-      description:
-        seo?.twitter?.description ||
-        seo?.description,
-      images: seo?.twitter?.image
-        ? [seo.twitter.image]
-        : [],
+      description: seo?.twitter?.description || seo?.description,
+      images: seo?.twitter?.image ? [seo.twitter.image] : [],
     },
   };
 }
@@ -64,12 +55,8 @@ export default async function HomePage() {
   const quizMap: Record<string, QuizSlug> = {};
 
   quizListRes.quizzes.forEach((quiz: QuizListItem) => {
-    quizMap[
-      quiz.title.toLowerCase().replace(/\s+/g, '_')
-    ] = quiz.slug;
+    quizMap[quiz.title.toLowerCase().replace(/\s+/g, "_")] = quiz.slug;
   });
-
-
 
   return (
     <main className="bg-[#ECECEB] text-black relative overflow-hidden">
@@ -82,6 +69,7 @@ export default async function HomePage() {
         benefits={landingData.benefits}
       />
 
+      <Goals goals={landingData.goal_options} quizMap={quizMap} />
 
       {landingData.cta_button_text && (
         <CTA
@@ -89,16 +77,6 @@ export default async function HomePage() {
           href={`/${PAGE_SLUGS.RESERVATION}`}
         />
       )}
-
-
-
-      <Goals
-
-        goals={landingData.goal_options}
-        quizMap={quizMap}
-      />
-
-
     </main>
   );
 }

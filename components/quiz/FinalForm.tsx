@@ -122,7 +122,7 @@ export function FinalForm({
             className="w-full sm:px-5 px-3 sm:py-4 py-3 sm:rounded-[10px] rounded-[5px] text-black bg-white sm:text-base text-sm"
           />
           {errors.name && (
-            <p className="text-xs text-yellow-200 mt-1">{errors.name}</p>
+            <p className="text-xs text-[#6F00FF] mt-1">{errors.name}</p>
           )}
         </div>
 
@@ -139,7 +139,7 @@ export function FinalForm({
             className="w-full sm:px-5 px-3 sm:py-4 py-3 sm:rounded-[10px] rounded-[5px] text-black bg-white sm:text-base text-sm"
           />
           {errors.email && (
-            <p className="text-xs text-yellow-200 mt-1">{errors.email}</p>
+            <p className="text-xs text-[#6F00FF] mt-1">{errors.email}</p>
           )}
         </div>
 
@@ -173,7 +173,7 @@ export function FinalForm({
             
           </div>
           {errors.phone && (
-              <p className="text-xs text-yellow-200 mt-1">{errors.phone}</p>
+              <p className="text-xs text-[#6F00FF] mt-1">{errors.phone}</p>
             )}
         </div>
 
@@ -217,7 +217,7 @@ export function FinalForm({
           
         </label>
         {errors.accepted && (
-            <p className="text-xs text-yellow-200 mt-2">{errors.accepted}</p>
+            <p className="text-xs text-[#6F00FF] mt-2">{errors.accepted}</p>
           )}
       </div>
 
