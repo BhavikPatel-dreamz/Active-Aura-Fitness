@@ -14,6 +14,7 @@ import ShockingStatisticSection from "@/components/book/ShockingStatisticSection
 import ConsultationSection from "@/components/book/ConsultationSection";
 import TestimonialSection from "@/components/book/TestimonialSection";
 import FaqSection from "@/components/book/FaqSection";
+import SiteHeader from "@/components/layouts/SiteHeader";
 
 const stripHtml = (html = "") => html.replace(/<[^>]*>/g, "").trim();
 
@@ -77,8 +78,8 @@ export default async function BookYourFreePage() {
   const acf = pageData;
 
   return (
-    <main className="bg-[#2f2f2f] text-white">
-      <TopHeader />
+    <main className="bg-[#ECECEB] text-black">
+      <SiteHeader />
 
       {/* HERO */}
       <HeroSection data={acf.hero_section} />
@@ -98,10 +99,10 @@ export default async function BookYourFreePage() {
     </section>
 
     {acf.problem_section?.problem_overall_description && (
-      <section className="full-width-text bg-[#303030] text-white pt-6 sm:pt-7.5 pb-12 sm:pb-12 lg:pb-20 sm:px-6 px-4">
+      <section className="full-width-text pt-6 sm:pt-7.5 pb-12 sm:pb-12 lg:pb-20 sm:px-6 px-4">
         <div className="max-w-7xl mx-auto">
           <div
-            className="text-[#FFFFFFCC] text-sm xl:text-lg sm:text-base leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9"
+            className=" text-sm xl:text-lg sm:text-base leading-[26px] sm:leading-[30px] space-y-6 sm:space-y-9"
             dangerouslySetInnerHTML={{
               __html: acf.problem_section.problem_overall_description,
             }}

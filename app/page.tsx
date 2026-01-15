@@ -72,7 +72,7 @@ quizListRes.quizzes.forEach((quiz: QuizListItem) => {
 
 
   return (
-    <main className="bg-[#DB3706] text-white relative overflow-hidden">
+    <main className="bg-[#ECECEB] text-black relative overflow-hidden">
       <SiteHeader />
 
       <Hero
@@ -80,6 +80,11 @@ quizListRes.quizzes.forEach((quiz: QuizListItem) => {
         heroSubtitle={landingData.hero_subtitle}
         heroDescription={landingData.hero_description}
         benefits={landingData.benefits}
+      />
+
+      <Goals
+        goals={landingData.goal_options}
+        quizMap={quizMap}
       />
 
       {landingData.cta_button_text && (
@@ -91,10 +96,7 @@ quizListRes.quizzes.forEach((quiz: QuizListItem) => {
 
   
 
-      <Goals
-        goals={landingData.goal_options}
-        quizMap={quizMap}
-      />
+      
 
      
     </main>

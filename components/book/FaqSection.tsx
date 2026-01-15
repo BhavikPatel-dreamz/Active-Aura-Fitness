@@ -27,13 +27,13 @@ export default function FaqSection({ data }: Props) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="faq-section bg-[#303030] text-white pt-14 sm:pt-20 pb-10 sm:px-6 px-3">
+    <section className="faq-section bg-[#ECECEB]  pt-14 sm:pt-20 pb-10 sm:px-6 px-3">
       {/* Heading */}
       <div className="text-center mb-8">
         <h2 className="max-w-5xl mx-auto text-center text-[28px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] mb-3 font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
           {data.main_heading}
         </h2>
-        <p className="text-white text-sm sm:text-base font-medium capitalize">
+        <p className=" text-sm sm:text-base font-medium capitalize">
           {data.tag_line}
         </p>
       </div>
@@ -64,7 +64,7 @@ export default function FaqSection({ data }: Props) {
 
                 {/* Answer */}
                 {isOpen && (
-                  <p className="mt-3 text-[#FFFFFFCC] text-sm sm:text-base leading-5.5 sm:leading-8 font-medium max-w-4xl">
+                  <p className="mt-3  text-sm sm:text-base leading-5.5 sm:leading-8 font-medium max-w-4xl">
                     {faq.answer}
                   </p>
                 )}
@@ -73,7 +73,7 @@ export default function FaqSection({ data }: Props) {
               {/* CTA after 3rd FAQ */}
               {index === 2 && (
                 <div className="faq-cta border-t border-white/20">
-                  <div className="my-8 sm:my-10 bg-[#3a3a3a] rounded-xl py-10 sm:py-14 px-4 text-center">
+                  <div className="my-8 sm:my-10 bg-[#ECECEB] rounded-xl py-10 sm:py-14 px-4 text-center">
                     <h3 className="text-[24px] sm:text-[32px] md:text-[56px] font-normal uppercase leading-tight md:leading-[62px] font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
                       {data.faq_cta_heading}
                     </h3>

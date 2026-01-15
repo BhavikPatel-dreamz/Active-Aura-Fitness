@@ -86,7 +86,7 @@ export default function Hero({
           {heroTitle}
         </h2>
 
-        <h1 className="text-3xl xl:text-[56px] max-w-[856px] max-[1400px]:max-w-[700px] mx-auto leading-tight xl:leading-[62px] mb-6 font-bebas">
+        <h1 className="text-3xl text-black xl:text-[56px] max-w-[856px] max-[1400px]:max-w-[700px] mx-auto leading-tight xl:leading-[62px] mb-6 font-bebas">
           {heroSubtitle}
         </h1>
 

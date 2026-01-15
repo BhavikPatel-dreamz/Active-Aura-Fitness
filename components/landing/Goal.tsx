@@ -49,14 +49,14 @@ export default function Goals({
   }
 
   return (
-    <section className="px-4 sm:px-6 pb-16 sm:pb-20">
+    <section className="px-4 sm:px-6 pb-8 sm:pb-14">
       {/* Heading */}
       <h3
         className="
           max-w-4xl mx-auto text-center
           text-[24px] sm:text-[30px] lg:text-[35px]
           leading-9.5 sm:leading-12 lg:leading-15
-          capitalize text-white poppins font-semibold
+          capitalize text-black poppins font-semibold
           mb-6 sm:mb-8
         "
       >

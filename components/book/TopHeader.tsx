@@ -14,7 +14,7 @@ export default async function TopHeader() {
       aria-label="Active Aura Fitness"
     >
       <h1 className="text-white font-bold text-[26px] sm:text-[32px] lg:text-[40px] tracking-wide">
-        Active Aura Fitness
+        ACTIVE AURA FITNESS
       </h1>
     </a>
       </div>

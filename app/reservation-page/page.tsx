@@ -3,6 +3,7 @@ import TopHeader from '@/components/book/TopHeader';
 import { getPageBySlug } from '../../lib/api';
 import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
 import type { Metadata } from 'next';
+import SiteHeader from '@/components/layouts/SiteHeader';
 
 
 const stripHtml = (text = '') =>
@@ -89,8 +90,8 @@ export default async function ReservationPage() {
     reservation?.reservation_card_center_white_box;
 
   return (
-    <main className="min-h-screen bg-[#303030] text-white">
-      <TopHeader />
+    <main className="min-h-screen bg-[#ECECEB] text-black">
+      <SiteHeader />
 
       {/* Hero Heading */}
       <section className="text-center px-4 sm:pt-8.5 pt-8 sm:pb-10 pb-5">
@@ -98,7 +99,7 @@ export default async function ReservationPage() {
           {heroHeading}
         </h1>
       </section>
-
+       
       {/* Reservation Card */}
       <section className="flex justify-center px-4 pb-24">
         <div className="w-full max-w-[729px] bg-white text-black rounded-xl box-shadow-[0px_4px_4px_0px_#0000001A] border border-[#0000001A] overflow-hidden">
