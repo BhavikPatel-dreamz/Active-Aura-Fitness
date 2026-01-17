@@ -1,28 +1,49 @@
+import { cache } from "react";
 
 const BASE_URL = process.env.AURA_API_BASE!;
 const API_KEY = process.env.AURA_API_KEY!;
 
-export async function getPageBySlug(slug: string) {
+// export async function getPageBySlug(slug: string) {
+//   const res = await fetch(
+//     `${process.env.AURA_API_PAGE}/pages?slug=${slug}`,
+//     {
+//       next: { revalidate: 5 },
+//     }
+//   );
+//   if (!res.ok) {
+//     throw new Error(`Failed to fetch page: ${slug}`);
+//   }
+
+//   const pages = await res.json();
+
+//   // WordPress always returns an array
+//   if (!Array.isArray(pages) || pages.length === 0) {
+//     throw new Error(`Page not found: ${slug}`);
+//   }
+
+//   const page = pages[0];
+
+//   // If you're using ACF
+//   return {
+//     ...page.acf,
+//     title: page.title?.rendered,
+//     content: page.content?.rendered,
+//     yoast_seo: page.yoast_seo,
+//     yoast_head_json: page.yoast_head_json,
+//   };
+// }
+
+export const getPageBySlug = cache(async function (slug: string) {
   const res = await fetch(
     `${process.env.AURA_API_PAGE}/pages?slug=${slug}`,
-    {
-      next: { revalidate: 60 },
-    }
+    { next: { revalidate: 60 } }
   );
-  if (!res.ok) {
-    throw new Error(`Failed to fetch page: ${slug}`);
-  }
+
+  if (!res.ok) throw new Error(`Failed to fetch page: ${slug}`);
 
   const pages = await res.json();
-
-  // WordPress always returns an array
-  if (!Array.isArray(pages) || pages.length === 0) {
-    throw new Error(`Page not found: ${slug}`);
-  }
-
   const page = pages[0];
 
-  // If you're using ACF
   return {
     ...page.acf,
     title: page.title?.rendered,
@@ -30,7 +51,7 @@ export async function getPageBySlug(slug: string) {
     yoast_seo: page.yoast_seo,
     yoast_head_json: page.yoast_head_json,
   };
-}
+});
 
 
 export async function getQuizQuestions(slug: string) {
