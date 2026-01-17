@@ -45,7 +45,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
       <div className="px-0 sm:px-4">
         <AutoplayVideo
     src={data.hero_video}
-    className="mx-auto rounded-[8px] max-w-[1104px] w-full h-auto outline-0"
+    className="mx-auto rounded-[8px] max-w-[1104px] w-full lg:h-[621px] outline-0 object-cover"
   />
       </div>
 

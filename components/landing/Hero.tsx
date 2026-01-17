@@ -81,17 +81,17 @@ export default function Hero({
       </div>
 
       {/* ================= HERO CONTENT ================= */}
-      <div className="text-center relative z-10 md:py-4 py-2 xl:py-0">
+      <div className="text-center relative z-10 md:pt-10 pt-5 sm:pb-0 pb-5">
         {/* <h2 className="text-4xl xl:text-2xl font-bold max-w-4xl max-[1400px]:max-w-[700px] mx-auto mb-[30px] text-[#303030] font-poppins">
           {heroTitle}
         </h2> */}
 
-        <h1 className="text-4xl pt-1 font-extrabold text-black xl:text-[56px] max-w-[856px] max-[1400px]:max-w-[700px] mx-auto leading-tight xl:leading-[62px] mb-4 font-bebas">
+        <h1 className="text-4xl pt-1 font-bold text-black xl:text-[56px] max-w-[856px] max-[1400px]:max-w-[700px] mx-auto leading-tight xl:leading-[62px] mb-4 font-bebas">
           {heroSubtitle}
         </h1>
 
         <div
-          className="text-[16px] xl:text-[19px] leading-[26px] xl:leading-[30px] uppercase font-bold max-w-[942px] max-[1400px]:max-w-[700px] mx-auto text-[#282828] font-poppins"
+          className="text-[20px] leading-[26px] xl:leading-[30px] uppercase font-bold max-w-[942px] max-[1400px]:max-w-[700px] mx-auto text-[#282828] font-poppins"
           dangerouslySetInnerHTML={{ __html: heroDescription }}
         />
       </div>

@@ -132,7 +132,7 @@ return (
               absolute left-0 top-1/2
               h-1 sm:h-1.25
               w-full
-              bg-white
+              bg-[#ccc]
               -translate-y-1/2
             " />
 
@@ -163,7 +163,7 @@ return (
                       sm:w-7.25 sm:h-7.25
                       rounded-full
                       transition-colors duration-300
-                      ${isActive ? 'bg-[#282828]' : 'bg-white'}
+                      ${isActive ? 'bg-[#282828]' : 'bg-[#ccc]'}
                     `}
                   />
                 );
@@ -240,7 +240,7 @@ const submitJson = await submitRes.json();
                     setAnswers({ ...answers, [question.id]: opt.value })
                   }
                   className={`w-full sm:py-4.5 py-3 sm:px-4.5 px-3 sm:rounded-[10px] rounded-[6px] flex justify-between font-semibold transition-all
-                    ${isSelected ? 'bg-[#EADAFE] text-white' : 'bg-white text-black'}
+                    ${isSelected ? 'bg-[#6f00ff] text-white' : 'bg-white text-black'}
                   `}
                 >
                   {/* Option Text */}
@@ -259,7 +259,7 @@ const submitJson = await submitRes.json();
                         <circle cx="10" cy="10" r="10" fill="white" />
                         <path
                           d="M5 10.5L8.5 14L15 7"
-                          stroke="#DB3706"
+                          stroke="#6f00ff"
                           strokeWidth="2"
                           strokeLinecap="round"
                           strokeLinejoin="round"

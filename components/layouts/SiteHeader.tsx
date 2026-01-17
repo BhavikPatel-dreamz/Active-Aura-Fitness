@@ -15,7 +15,7 @@ export default async function SiteHeader() {
       className="flex items-center"
       aria-label="Active Aura Fitness"
     >
-      <h1 className="text-white font-bold text-[26px] sm:text-[32px] lg:text-[40px] tracking-wide">
+      <h1 className="text-white font-bold text-[26px] sm:text-[32px] lg:text-[40px] tracking-wide text-center">
         ACTIVE AURA FITNESS
       </h1>
     </a>
