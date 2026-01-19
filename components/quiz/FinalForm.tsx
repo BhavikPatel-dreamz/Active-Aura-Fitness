@@ -217,7 +217,7 @@ export function FinalForm({
           
         </label>
         {errors.accepted && (
-            <p className="text-xs text-[#6F00FF] mt-2">{errors.accepted}</p>
+            <p className="text-xs text-[#fd0808] mt-2">{errors.accepted}</p>
           )}
       </div>
 
