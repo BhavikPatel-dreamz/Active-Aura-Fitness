@@ -4,7 +4,7 @@ import { getPageBySlug } from "../../lib/api";
 import { PAGE_SLUGS } from "@/lib/constants/pageSlugs";
 import type { Metadata } from "next";
 import SiteHeader from "@/components/layouts/SiteHeader";
-import CalendlyEmbed from "@/components/reservation/CalendlyEmbed";
+import CalendlyLazyLoad from "@/components/reservation/CalendlyLazyLoad";
 
 const stripHtml = (text = "") => text.replace(/<[^>]*>/g, "").trim();
 
@@ -99,8 +99,7 @@ export default async function ReservationPage() {
         
           
 
-          {/* Card Body */}
-            <CalendlyEmbed />
+         <CalendlyLazyLoad />
           
         
       </section>

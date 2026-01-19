@@ -41,6 +41,7 @@ export default function AutoplayVideo({
       loop
       playsInline
       controls
+      preload="auto"
       className={className}
     />
   );

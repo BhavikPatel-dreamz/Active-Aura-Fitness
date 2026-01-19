@@ -161,3 +161,27 @@ body {
     column-count: 1;
   }
 }
+
+/* Hide scrollbar but allow scrolling */
+/* Hide scrollbar inside Calendly iframe */
+.calendly-inline-widget iframe {
+  scrollbar-width: none; /* Firefox */
+}
+
+.calendly-inline-widget iframe::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+
+
+/* .calendly-inline-widget {
+  min-width: 100% !important;
+}
+
+@media (max-width: 640px) {
+  .calendly-inline-widget {
+    height: 950px !important;
+  }
+} */
+
+

@@ -70,14 +70,7 @@ export default async function HomePage() {
         benefits={landingData.benefits}
       />
 
-      {/* {landingData.cta_button_text && (
-        <CTA
-          text={landingData.cta_button_text}
-          href={`/${PAGE_SLUGS.RESERVATION}`}
-        />
-      )}
-
-      <Goals goals={landingData.goal_options} quizMap={quizMap} /> */}
+      
 
       <HomeContent landingData={landingData} quizMap={quizMap} />
 

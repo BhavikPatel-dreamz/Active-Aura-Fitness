@@ -1,13 +1,12 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { FinalForm } from './FinalForm';
-import QuizResultDialog from './QuizResultDialog';
-import { getQuizQuestions, submitQuiz } from '@/lib/api';
-import { getCachedQuiz } from '@/lib/quizCache';
-import type { QuizSlug } from '@/lib/constants/pageSlugs';
-import {QuizQuestion} from '@/lib/types';
-
+import { useEffect, useState } from "react";
+import { FinalForm } from "./FinalForm";
+import QuizResultDialog from "./QuizResultDialog";
+import { getQuizQuestions, submitQuiz } from "@/lib/api";
+import { getCachedQuiz } from "@/lib/quizCache";
+import type { QuizSlug } from "@/lib/constants/pageSlugs";
+import { QuizQuestion } from "@/lib/types";
 
 export default function QuizSection({
   quizSlug,
@@ -24,10 +23,13 @@ export default function QuizSection({
   const [submitting, setSubmitting] = useState(false);
   const [quizId, setQuizId] = useState<number | null>(null);
 
+  const [deliveryError, setDeliveryError] = useState(false);
+  const [retrying, setRetrying] = useState(false);
+
   // Final form state
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [accepted, setAccepted] = useState(false);
   const [result, setResult] = useState<null | {
     score: number;
@@ -35,7 +37,7 @@ export default function QuizSection({
     pdfUrl: string;
   }>(null);
 
-  //cache 
+  //cache
 
   useEffect(() => {
     let mounted = true;
@@ -61,7 +63,7 @@ export default function QuizSection({
         setQuizId(res.quiz_id);
         setQuestions(res.questions || []);
       } catch (err) {
-        console.error('Failed to load quiz questions', err);
+        console.error("Failed to load quiz questions", err);
       } finally {
         if (mounted) setLoading(false);
       }
@@ -74,28 +76,23 @@ export default function QuizSection({
     };
   }, [quizSlug]);
 
-
-
   // =====================================================
   if (loading) {
     return (
-      <p className="text-center lg:py-20 md:py-12 py-8 text-black">
-        Loading…
-      </p>
+      <p className="text-center lg:py-20 md:py-12 py-8 text-black">Loading…</p>
     );
   }
 
   const question = questions[current];
   if (!question) return null;
 
-
-   const MAX_DOTS = 5;
+  const MAX_DOTS = 5;
   const TOTAL_SEGMENTS = MAX_DOTS - 1; // 4
   const TOTAL_STEPS = TOTAL_SEGMENTS * 2; // 8 half-steps
 
   const stepIndex = Math.min(
     TOTAL_STEPS,
-    Math.round((current / (questions.length - 1)) * TOTAL_STEPS)
+    Math.round((current / (questions.length - 1)) * TOTAL_STEPS),
   );
 
   const segmentWidth = 100 / TOTAL_SEGMENTS;
@@ -103,11 +100,72 @@ export default function QuizSection({
   const isHalf = stepIndex % 2 === 1;
 
   const activeProgressWidth =
-    fullSegments * segmentWidth +
-    (isHalf ? segmentWidth / 2 : 0);
+    fullSegments * segmentWidth + (isHalf ? segmentWidth / 2 : 0);
 
+  // retry
+  async function retrySending() {
+    setRetrying(true);
 
-return (
+    try {
+      const retryRes = await fetch("/api/quiz/resend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          submission_id: quizId, // or send needed fields
+          user_email: email,
+          user_phone: phone,
+        }),
+      });
+
+      const data = await retryRes.json();
+
+      if (data.email_sent && data.whatsapp_sent) {
+        // success on retry — redirect user
+        window.location.href =
+          "https://active-aura-fitness.vercel.app/book-your-free";
+        return;
+      } else {
+        // Still failing
+        alert(
+          "Still unable to send your result. Our team will contact you manually.",
+        );
+      }
+    } catch (err) {
+      alert("Network error. Please try again.");
+    } finally {
+      setRetrying(false);
+    }
+  }
+
+  if (deliveryError) {
+    return (
+      <div className="py-20 text-center px-4">
+        <h2 className="text-[24px] font-semibold mb-4 text-black">
+          Couldn’t Send Your Results
+        </h2>
+
+        <p className="mb-6 text-gray-700 max-w-[400px] mx-auto text-[16px]">
+          We received your quiz, but sending your result by email/WhatsApp
+          failed. Please retry.
+        </p>
+
+        <button
+          onClick={retrySending}
+          disabled={retrying}
+          className="
+          bg-[#6F00FF] text-white px-8 py-4 rounded-xl
+          text-[20px] font-semibold
+          hover:opacity-90 transition-all
+          disabled:opacity-50
+        "
+        >
+          {retrying ? "Retrying..." : "Retry Sending"}
+        </button>
+      </div>
+    );
+  }
+
+  return (
     <>
       {/* Result Modal */}
       {result && (
@@ -123,23 +181,24 @@ return (
         />
       )}
 
-        {/* ================= PROGRESS BAR ================= */}
-        <div className="flex justify-center mb-8 sm:mb-10 px-4">
-          <div className="relative flex items-center w-full max-w-136.25">
-            
-            {/* Background line */}
-            <div className="
+      {/* ================= PROGRESS BAR ================= */}
+      <div className="flex justify-center mb-8 sm:mb-10 px-4">
+        <div className="relative flex items-center w-full max-w-136.25">
+          {/* Background line */}
+          <div
+            className="
               absolute left-0 top-1/2
               h-1 sm:h-1.25
               w-full
               bg-[#ccc]
               -translate-y-1/2
-            " />
+            "
+          />
 
-            {/* Active line */}
-            {stepIndex > 0 && (
-              <div
-                className="
+          {/* Active line */}
+          {stepIndex > 0 && (
+            <div
+              className="
                   absolute left-0 top-1/2
                   h-[5px] sm:h-[6px]
                   bg-[#282828]
@@ -147,71 +206,72 @@ return (
                   transition-all duration-300 ease-in-out
                   rounded-[8px]
                 "
-                style={{ width: `${activeProgressWidth}%` }}
-              />
-            )}
+              style={{ width: `${activeProgressWidth}%` }}
+            />
+          )}
 
-            {/* Dots */}
-            <div className="relative z-10 flex justify-between w-full">
-              {Array.from({ length: MAX_DOTS }).map((_, i) => {
-                const isActive = stepIndex >= i * 2;
-                return (
-                  <span
-                    key={i}
-                    className={`
+          {/* Dots */}
+          <div className="relative z-10 flex justify-between w-full">
+            {Array.from({ length: MAX_DOTS }).map((_, i) => {
+              const isActive = stepIndex >= i * 2;
+              return (
+                <span
+                  key={i}
+                  className={`
                       w-5.5 h-5.5
                       sm:w-7.25 sm:h-7.25
                       rounded-full
                       transition-colors duration-300
-                      ${isActive ? 'bg-[#282828]' : 'bg-[#ccc]'}
+                      ${isActive ? "bg-[#282828]" : "bg-[#ccc]"}
                     `}
-                  />
-                );
-              })}
-            </div>
+                />
+              );
+            })}
           </div>
         </div>
-        {/* ================================================= */} 
-        
+      </div>
+      {/* ================================================= */}
+
       {/* Final Form */}
       {showFinalForm ? (
         <FinalForm
           onBack={() => setShowFinalForm(false)}
-        onSubmit={async (fullPhone: string) => {
-  setSubmitting(true);
-  try {
-    const submitRes = await fetch('/api/quiz/submit', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    quiz_id: quizId,
-    answers,
-    user_name: name,
-    user_email: email,
-    user_phone: fullPhone,
-  }),
-});
+          onSubmit={async (fullPhone: string) => {
+            setSubmitting(true);
+            try {
+              const submitRes = await fetch("/api/quiz/submit", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  quiz_id: quizId,
+                  answers,
+                  user_name: name,
+                  user_email: email,
+                  user_phone: fullPhone,
+                }),
+              });
 
-const submitJson = await submitRes.json();
+              const submitJson = await submitRes.json();
 
-    if (submitJson.success) {
-      const pdfUrl =
-        submitJson.pdfs && submitJson.pdfs.length > 0
-          ? submitJson.pdfs[0].url
-          : '';
+              if (submitJson.success) {
+                setSubmitting(true);
+                const emailOk = submitJson.email_sent === true;
+                const whatsappOk = submitJson.whatsapp_sent === true;
 
-      setShowFinalForm(false);
-      setResult({
-        score: submitJson.correct_answers,
-        percentage: submitJson.percentage,
-        pdfUrl,
-      });
-    }
-  } finally {
-    setSubmitting(false);
-  }
-}}
+                if (emailOk && whatsappOk) {
+                  window.location.href =
+                    "https://active-aura-fitness.vercel.app/book-your-free";
+                  return;
+                }
 
+                // failed → show retry UI
+                setDeliveryError(true);
+                return;
+              }
+            } finally {
+              setSubmitting(false);
+            }
+          }}
           submitting={submitting}
           name={name}
           email={email}
@@ -224,7 +284,6 @@ const submitJson = await submitRes.json();
         />
       ) : (
         <section className="bg-[#ECECEB] text-black pt-3 pb-10">
-         
           <h2 className="text-center font-semibold px-4 mb-8 max-w-185 mx-auto text-[22px] sm:text-[28px] lg:text-[35px] leading-7.5 sm:leading-9.5 lg:leading-12">
             {question.question}
           </h2>
@@ -236,11 +295,25 @@ const submitJson = await submitRes.json();
               return (
                 <button
                   key={opt.id}
-                  onClick={() =>
-                    setAnswers({ ...answers, [question.id]: opt.value })
-                  }
+                  // onClick={() =>
+                  //   setAnswers({ ...answers, [question.id]: opt.value })
+                  // }
+
+                  onClick={() => {
+                    const updated = { ...answers, [question.id]: opt.value };
+                    setAnswers(updated);
+
+                    // Auto move to next question
+                    setTimeout(() => {
+                      if (current === questions.length - 1) {
+                        setShowFinalForm(true);
+                      } else {
+                        setCurrent((c) => c + 1);
+                      }
+                    }, 300); // slight delay for click animation
+                  }}
                   className={`w-full sm:py-4.5 py-3 sm:px-4.5 px-3 sm:rounded-[10px] rounded-[6px] flex justify-between font-semibold transition-all
-                    ${isSelected ? 'bg-[#6f00ff] text-white' : 'bg-white text-black'}
+                    ${isSelected ? "bg-[#6f00ff] text-white" : "bg-white text-black"}
                   `}
                 >
                   {/* Option Text */}
@@ -274,7 +347,6 @@ const submitJson = await submitRes.json();
 
           {/* Navigation */}
           <div className="flex flex-col sm:flex-row justify-center gap-4 mt-12 py-10 px-4 border-t border-b border-[#282828]">
-            
             {/* BACK BUTTON */}
             <button
               onClick={() => {
@@ -318,7 +390,7 @@ const submitJson = await submitRes.json();
             </button>
 
             {/* NEXT BUTTON */}
-            <button
+            {/* <button
               disabled={!answers[questions[current].id]}
               onClick={() => {
                 if (current === questions.length - 1) {
@@ -350,10 +422,10 @@ const submitJson = await submitRes.json();
                 outline-none
               "
             >
-              <span>Next</span>
+              <span>Next</span> */}
 
-              {/* Right Arrow SVG */}
-              <span className="flex items-center transition-transform duration-200  ml-3">
+            {/* Right Arrow SVG */}
+            {/* <span className="flex items-center transition-transform duration-200  ml-3">
                 <svg
                   width="20"
                   height="11"
@@ -364,9 +436,8 @@ const submitJson = await submitRes.json();
                   <path d="M19.2686 3.98725L16.0436 0.728907C15.9662 0.650801 15.874 0.588805 15.7724 0.546498C15.6709 0.504191 15.562 0.482409 15.452 0.482409C15.342 0.482409 15.233 0.504191 15.1315 0.546498C15.0299 0.588805 14.9378 0.650801 14.8603 0.728907C14.7051 0.885047 14.618 1.09625 14.618 1.3164C14.618 1.53656 14.7051 1.74775 14.8603 1.9039L17.827 4.89557H0.835329C0.614318 4.89557 0.402362 4.98337 0.246081 5.13965C0.0897995 5.29593 0.002 5.50789 0.002 5.7289C0.002 5.94991 0.0897995 6.16187 0.246081 6.31815C0.402362 6.47443 0.614318 6.56223 0.835329 6.56223H17.877L14.8603 9.57057C14.7822 9.64804 14.7202 9.74021 14.6779 9.84176C14.6356 9.94331 14.6138 10.0522 14.6138 10.1623C14.6138 10.2723 14.6356 10.3812 14.6779 10.4827C14.7202 10.5843 14.7822 10.6764 14.8603 10.7539C14.9378 10.832 15.0299 10.894 15.1315 10.9363C15.233 10.9786 15.342 11.0004 15.452 11.0004C15.562 11.0004 15.6709 10.9786 15.7724 10.9363C15.874 10.894 15.9662 10.832 16.0436 10.7539L19.2686 7.52057C19.7368 7.05182 19.9998 6.4164 19.9998 5.7539C19.9998 5.0914 19.7368 4.45599 19.2686 3.98725Z" />
                 </svg>
               </span>
-            </button>
+            </button> */}
           </div>
-
         </section>
       )}
     </>
