@@ -18,8 +18,10 @@ import SiteHeader from "@/components/layouts/SiteHeader";
 
 const stripHtml = (html = "") => html.replace(/<[^>]*>/g, "").trim();
 
+const dataPromise = getPageBySlug(PAGE_SLUGS.RESERVATION);
+
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getPageBySlug(PAGE_SLUGS.BOOK_FREE);
+  const page = await dataPromise;
   const seo = page.yoast_head_json;
 
   return {
@@ -63,7 +65,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function BookYourFreePage() {
-  const pageData = await getPageBySlug(PAGE_SLUGS.BOOK_FREE);
+  const pageData = await dataPromise;
 
   // ✅ SERVER-SIDE SAFETY GUARD
   if (!pageData) {
