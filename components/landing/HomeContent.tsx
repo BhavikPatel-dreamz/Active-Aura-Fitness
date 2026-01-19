@@ -24,6 +24,19 @@ export default function HomeContent({
 
   return (
     <>
+
+    <h3
+            className="
+              max-w-5xl mx-auto text-center
+              text-[20px] sm:text-[16px] lg:text-[35px]
+              leading-9.5 sm:leading-12 lg:leading-15
+              capitalize text-black poppins font-semibold
+              mb-4 sm:mb-8
+            "
+          >
+            What’s Your #1 Goal Right Now?
+          </h3>
+    
       <QuizStarter
         text={landingData.cta_button_text}
         onClick={() => setActiveQuiz(defaultQuizSlug)}

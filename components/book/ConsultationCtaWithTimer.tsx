@@ -19,34 +19,61 @@ export default function ConsultationCtaWithTimer() {
 
   const [slots, setSlots] = useState<number>(START_SLOTS);
 
-  useEffect(() => {
-    // Load from localStorage if exists
-    const savedSlots = localStorage.getItem("slotsRemaining");
-    const lastUpdated = localStorage.getItem("slotsUpdatedAt");
+ useEffect(() => {
+  const now = Date.now();
 
-    if (savedSlots && lastUpdated) {
-      const parsedSlots = parseInt(savedSlots, 10);
-      const lastUpdateTime = parseInt(lastUpdated, 10);
-      const now = Date.now();
+  const savedSlots = localStorage.getItem("slotsRemaining");
+  const lastUpdated = localStorage.getItem("slotsUpdatedAt");
+  const cycleStarted = localStorage.getItem("slotsCycleStartedAt");
 
-      // Calculate how many reductions should have happened
-      const reductions = Math.floor((now - lastUpdateTime) / REDUCE_INTERVAL);
+  const RESET_AFTER_DAYS = 3;
+  const RESET_INTERVAL = RESET_AFTER_DAYS * 24 * 60 * 60 * 1000;
+
+  // ---------- RESET AFTER 2–3 DAYS ----------
+  if (cycleStarted) {
+    const cycleStartTime = parseInt(cycleStarted, 10);
+
+    if (now - cycleStartTime >= RESET_INTERVAL) {
+      // Reset everything
+      localStorage.setItem("slotsRemaining", String(START_SLOTS));
+      localStorage.setItem("slotsUpdatedAt", String(now));
+      localStorage.setItem("slotsCycleStartedAt", String(now));
+
+      setSlots(START_SLOTS);
+      return;
+    }
+  }
+
+  // ---------- NORMAL SLOT REDUCTION ----------
+  if (savedSlots && lastUpdated) {
+    const parsedSlots = parseInt(savedSlots, 10);
+    const lastUpdateTime = parseInt(lastUpdated, 10);
+
+    const elapsed = now - lastUpdateTime;
+    const reductions = Math.floor(elapsed / REDUCE_INTERVAL);
+
+    if (reductions > 0) {
       const newSlots = Math.max(MIN_SLOTS, parsedSlots - reductions);
+      const newUpdatedTime =
+        lastUpdateTime + reductions * REDUCE_INTERVAL;
+
+      localStorage.setItem("slotsRemaining", String(newSlots));
+      localStorage.setItem("slotsUpdatedAt", String(newUpdatedTime));
 
       setSlots(newSlots);
-
-      // If reductions occurred, update timestamp
-      if (reductions > 0) {
-        localStorage.setItem("slotsRemaining", String(newSlots));
-        localStorage.setItem("slotsUpdatedAt", String(now));
-      }
     } else {
-      // First time user
-      localStorage.setItem("slotsRemaining", String(START_SLOTS));
-      localStorage.setItem("slotsUpdatedAt", String(Date.now()));
-      setSlots(START_SLOTS);
+      setSlots(parsedSlots);
     }
-  }, []);
+  } else {
+    // First-time visitor
+    localStorage.setItem("slotsRemaining", String(START_SLOTS));
+    localStorage.setItem("slotsUpdatedAt", String(now));
+    localStorage.setItem("slotsCycleStartedAt", String(now));
+
+    setSlots(START_SLOTS);
+  }
+}, []);
+
 
   // ---------- TIMER ----------
   useEffect(() => {

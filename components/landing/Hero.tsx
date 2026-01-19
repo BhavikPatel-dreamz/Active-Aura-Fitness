@@ -86,15 +86,16 @@ export default function Hero({
           {heroTitle}
         </h2> */}
 
-        <h1 className="text-4xl pt-1 font-bold text-black xl:text-[56px] max-w-[856px] max-[1400px]:max-w-[700px] mx-auto leading-tight xl:leading-[62px] mb-4 font-bebas">
+        <h1 className="text-4xl pt-1 font-extrabold text-black xl:text-[56px] max-w-[856px] max-[1400px]:max-w-[700px] mx-auto leading-tight xl:leading-[62px] mb-4 font-bebas tracking-[0.5px]">
           {heroSubtitle}
         </h1>
-
-        <div
-          className="text-[20px] leading-[26px] xl:leading-[30px] uppercase font-bold max-w-[942px] max-[1400px]:max-w-[700px] mx-auto text-[#282828] font-poppins"
+        
+        <h2
+          className="text-[20px] leading-[26px] xl:leading-[30px] uppercase font-bold max-w-[942px] max-[1400px]:max-w-[700px] mx-auto text-[#282828] font-poppins tracking-wide"
           dangerouslySetInnerHTML={{ __html: heroDescription }}
         />
       </div>
+     
 
     
     </section>

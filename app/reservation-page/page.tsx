@@ -89,7 +89,7 @@ export default async function ReservationPage() {
 
       {/* Hero Heading */}
       <section className="text-center px-4 sm:pt-8.5 pt-8 sm:pb-10 pb-5">
-        <h1 className="text-[28px] sm:text-[32px] md:text-[56px] font-bold uppercase leading-tight md:leading-[62px] font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33]">
+        <h1 className="text-[30px] sm:text-[32px] md:text-[60px] font-extrabold uppercase leading-tight md:leading-[62px] font-bebas text-shadow-[0px_2px_4px_0px_#FFFFFF33] tracking-[0.3px]">
           {heroHeading}
         </h1>
       </section>
