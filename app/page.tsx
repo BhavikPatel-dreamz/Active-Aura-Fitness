@@ -2,9 +2,10 @@ import { getPageBySlug, getQuizList } from "../lib/api";
 import { PAGE_SLUGS, QuizSlug } from "@/lib/constants/pageSlugs";
 import type { Metadata } from "next";
 import Hero from "../components/landing/Hero";
-import Goals from "../components/landing/Goal";
-import CTA from "../components/landing/CTA";
+// import Goals from "../components/landing/Goal";
+// import CTA from "../components/landing/CTA";
 import SiteHeader from "@/components/layouts/SiteHeader";
+import HomeContent from "@/components/landing/HomeContent";
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPageBySlug(PAGE_SLUGS.LANDING);
@@ -69,14 +70,16 @@ export default async function HomePage() {
         benefits={landingData.benefits}
       />
 
-      {landingData.cta_button_text && (
+      {/* {landingData.cta_button_text && (
         <CTA
           text={landingData.cta_button_text}
           href={`/${PAGE_SLUGS.RESERVATION}`}
         />
       )}
 
-      <Goals goals={landingData.goal_options} quizMap={quizMap} />
+      <Goals goals={landingData.goal_options} quizMap={quizMap} /> */}
+
+      <HomeContent landingData={landingData} quizMap={quizMap} />
 
       
     </main>

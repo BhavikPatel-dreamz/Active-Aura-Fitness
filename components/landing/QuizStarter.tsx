@@ -1,20 +1,14 @@
-import Link from 'next/link';
-
-type Props = {
+type CTAProps = {
   text: string;
-  href: string;
-  
- 
+  onClick?: () => void;
 };
 
-//reduce-belly-fat
-
-export default function CTA({ text, href }: Props) {
+export default function CTA({ text, onClick }: CTAProps) {
   return (
-    <div className="text-center  sm:mt-12 mb-10 px-4">
-      <Link
-        href={href}
-        className="
+    <div className="w-full flex justify-center mt-8 mb-10 px-4">
+    <button
+      onClick={onClick}
+      className="
           bg-[#6F00FF] text-white font-bebas font-normal
           w-full max-w-206.5 lg:w-206.5
           h-auto lg:h-20.5
@@ -27,9 +21,9 @@ export default function CTA({ text, href }: Props) {
           cursor-pointer
           inline-flex items-center justify-center
         "
-      >
-        {text}
-      </Link>
+    >
+      {text}
+    </button>
     </div>
   );
 }
