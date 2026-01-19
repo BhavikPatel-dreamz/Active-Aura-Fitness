@@ -91,7 +91,7 @@ export default function Hero({
         </h1>
         
         <h2
-          className="text-[20px] leading-[26px] xl:leading-[30px] uppercase font-bold max-w-[942px] max-[1400px]:max-w-[700px] mx-auto text-[#282828] font-poppins tracking-wide"
+          className="text-[20px] xl:text-[30px] leading-[26px] xl:leading-[50px] uppercase font-bold max-w-[942px] max-[1400px]:max-w-[700px] mx-auto text-[#282828] font-poppins tracking-wide"
           dangerouslySetInnerHTML={{ __html: heroDescription }}
         />
       </div>
