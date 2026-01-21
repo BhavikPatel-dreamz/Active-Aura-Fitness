@@ -1,49 +1,50 @@
-import CTAButton from '../common/CTAButton';
-import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
-import AutoplayVideo from '../common/AutoPlayVideo';
+import CTAButton from "../common/CTAButton";
+import { PAGE_SLUGS } from "@/lib/constants/pageSlugs";
+import AutoplayVideo from "../common/AutoPlayVideo";
 
 type Problem = {
   problem_title: string;
-  problem_media_type: 'video' | 'image';
-  media_position: 'left' | 'right';
+  problem_media_type: "video" | "image";
+  media_position: "left" | "right";
   problem_video?: string | false;
   problem_image?: string | false;
   problem_description?: string;
-  problem_cta_button?: {
-    title?: string;
-    url?: string;
-    target?: string;
-  } | string;
+  problem_cta_button?:
+    | {
+        title?: string;
+        url?: string;
+        target?: string;
+      }
+    | string;
 };
 
 export default function ProblemSection({ data }: { data: Problem }) {
   if (!data) return null;
 
-  const isMediaLeft = data.media_position === 'left';
+  const isMediaLeft = data.media_position === "left";
 
   const Media = (
-  <div className="relative w-full rounded-2xl overflow-hidden bg-neutral-100">
-  <div className="aspect-[4/5] sm:aspect-[3/4] lg:aspect-[3/4] w-full">
-    {data.problem_media_type === "video" && data.problem_video ? (
-      <video
-        src={data.problem_video}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        className="w-full h-full object-cover object-center"
-      />
-    ) : data.problem_image ? (
-      <img
-        src={data.problem_image}
-        alt=""
-        className="w-full h-full object-cover object-center"
-      />
-    ) : null}
-  </div>
-</div>
-
+    <div className="relative w-full rounded-2xl overflow-hidden bg-neutral-100">
+      <div className="aspect-[4/5] sm:aspect-[3/4] lg:aspect-[3/4] w-full">
+        {data.problem_media_type === "video" && data.problem_video ? (
+          <video
+            src={data.problem_video}
+            autoPlay
+            loop
+            controls
+            playsInline
+            preload="metadata"
+            className="w-full h-full object-cover object-center"
+          />
+        ) : data.problem_image ? (
+          <img
+            src={data.problem_image}
+            alt=""
+            className="w-full h-full object-cover object-center"
+          />
+        ) : null}
+      </div>
+    </div>
   );
 
   const Content = (
@@ -61,22 +62,17 @@ export default function ProblemSection({ data }: { data: Problem }) {
         />
       )}
 
-      {typeof data.problem_cta_button === 'object' &&
+      {typeof data.problem_cta_button === "object" &&
         data.problem_cta_button?.title && (
           <CTAButton
-            text={data.problem_cta_button.title
-              .replace(/&nbsp;/g, '')
-              .trim()}
+            text={data.problem_cta_button.title.replace(/&nbsp;/g, "").trim()}
             href={
-              data.problem_cta_button.url &&
-              data.problem_cta_button.url !== '#'
+              data.problem_cta_button.url && data.problem_cta_button.url !== "#"
                 ? data.problem_cta_button.url
                 : `/${PAGE_SLUGS.RESERVATION}`
             }
             target={
-              data.problem_cta_button.target === '_blank'
-                ? '_blank'
-                : '_self'
+              data.problem_cta_button.target === "_blank" ? "_blank" : "_self"
             }
           />
         )}

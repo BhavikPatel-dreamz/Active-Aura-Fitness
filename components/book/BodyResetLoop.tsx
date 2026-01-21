@@ -1,5 +1,5 @@
 import CTAButton from "../common/CTAButton";
-import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+import { PAGE_SLUGS } from "@/lib/constants/pageSlugs";
 import AutoplayVideo from "../common/AutoPlayVideo";
 
 type ProvenStat = {
@@ -28,8 +28,6 @@ export default function BodyResetLoopSection({
 }: {
   data: BodyResetLoopData;
 }) {
-
-  
   if (!data) return null;
 
   return (
@@ -53,36 +51,36 @@ export default function BodyResetLoopSection({
         {/* VIDEO */}
         {data.brl_video && (
           <div className="relative max-w-5xl mx-auto rounded-xl overflow-hidden">
-           <AutoplayVideo
-  src={data.brl_video}
-  className="w-full h-auto rounded-2xl"
-/>
- 
+            <video
+              src={data.brl_video}
+              autoPlay
+              loop
+              controls
+              playsInline
+              preload="metadata"
+              className="w-full h-full object-cover object-center"
+            />
           </div>
         )}
 
         {/* CTA */}
-        {typeof data.brl_cta_button === 'object' &&
-  data.brl_cta_button?.title && (
-    <div className="text-center lg:mb-20 sm:mb-12 mb-8 ">
-      <CTAButton
-        text={data.brl_cta_button.title.replace(/&nbsp;/g, '').trim()}
-        href={
-          data.brl_cta_button.url &&
-          data.brl_cta_button.url !== '#'
-            ? data.brl_cta_button.url
-            : `/${PAGE_SLUGS.RESERVATION}`
-        }
-        target={
-          data.brl_cta_button.target === '_blank'
-            ? '_blank'
-            : '_self'
-        }
-        className="sm:px-12 sm:py-4 bg-[#6F00FF]"
-      />
-    </div>
-)}
-
+        {typeof data.brl_cta_button === "object" &&
+          data.brl_cta_button?.title && (
+            <div className="text-center lg:mb-20 sm:mb-12 mb-8 ">
+              <CTAButton
+                text={data.brl_cta_button.title.replace(/&nbsp;/g, "").trim()}
+                href={
+                  data.brl_cta_button.url && data.brl_cta_button.url !== "#"
+                    ? data.brl_cta_button.url
+                    : `/${PAGE_SLUGS.RESERVATION}`
+                }
+                target={
+                  data.brl_cta_button.target === "_blank" ? "_blank" : "_self"
+                }
+                className="sm:px-12 sm:py-4 bg-[#6F00FF]"
+              />
+            </div>
+          )}
 
         {/* PROVEN TITLE */}
         {data.brl_proven_title && (
@@ -107,9 +105,7 @@ export default function BodyResetLoopSection({
                 </div>
 
                 {/* TITLE */}
-                <h4 className="font-semibold text-lg mb-4">
-                  {item.title}
-                </h4>
+                <h4 className="font-semibold text-lg mb-4">{item.title}</h4>
 
                 {/* COMMENT */}
                 <div
@@ -123,9 +119,7 @@ export default function BodyResetLoopSection({
                 <p className="font-semibold text-black text-lg">
                   {item.author}
                 </p>
-                <p className="text-sm ">
-                  {item.author_city}
-                </p>
+                <p className="text-sm ">{item.author_city}</p>
               </div>
             ))}
           </div>
