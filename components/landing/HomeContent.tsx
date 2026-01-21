@@ -26,7 +26,17 @@ export default function HomeContent({ landingData, quizMap }: any) {
   return (
     <>
       {/* CTA visible only before user clicks it */}
-
+      <h3
+            className="
+              max-w-5xl mx-auto text-center
+              text-[20px] sm:text-[16px] lg:text-[45px]
+              leading-9.5 sm:leading-12 lg:leading-15
+              capitalize text-black poppins font-semibold
+              mb-4 sm:mb-8 mt-5
+            "
+          >
+            What’s Your #1 Goal Right Now?
+          </h3>
       
       {!showGoalsFromCTA && (
         <CTA
