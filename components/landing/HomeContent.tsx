@@ -26,12 +26,16 @@ export default function HomeContent({ landingData, quizMap }: any) {
   return (
     <>
       {/* CTA visible only before user clicks it */}
+
+      
       {!showGoalsFromCTA && (
         <CTA
           text={landingData.cta_button_text}
           onClick={() => setShowGoalsFromCTA(true)}
         />
       )}
+
+
 
       {/* Goals ALWAYS visible except when quiz is opened */}
       <Goals

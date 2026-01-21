@@ -1,5 +1,6 @@
 import CTAButton from '../common/CTAButton';
 import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+import AutoplayVideo from '../common/AutoPlayVideo';
 
 type Problem = {
   problem_title: string;
@@ -26,11 +27,13 @@ export default function ProblemSection({ data }: { data: Problem }) {
         <video
           src={data.problem_video}
           autoPlay
-          muted
           loop
+          controls
           playsInline
+           preload="auto"
           className="w-full h-full object-cover"
         />
+        
       ) : data.problem_image ? (
         <img
           src={data.problem_image}
