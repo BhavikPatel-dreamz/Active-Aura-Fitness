@@ -7,7 +7,6 @@ import ProblemSection from "@/components/book/ProblemSection";
 import SecretSection from "@/components/book/SecretSection";
 import BodyResetLoopSection from "@/components/book/BodyResetLoop";
 import ConsultationCtaWithTimer from "@/components/book/ConsultationCtaWithTimer";
-import TopHeader from "@/components/book/TopHeader";
 import WhyItWorksSection from "@/components/book/WhyItWorksSection";
 import LaunchPriceSection from "@/components/book/LaunchPriceSection";
 import ShockingStatisticSection from "@/components/book/ShockingStatisticSection";

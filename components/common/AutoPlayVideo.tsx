@@ -1,73 +1,47 @@
-"use client";
+'use client';
 
 import { useEffect, useRef } from "react";
 
-export default function AutoplayVideo({
-  src,
-  className = "",
-}: {
+interface AutoVideoProps {
   src: string;
   className?: string;
-}) {
+}
 
-  // const videoRef = useRef<HTMLVideoElement | null>(null);
+export default function AutoVideo({ src, className }: AutoVideoProps) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  // useEffect(() => {
-  //   const video = videoRef.current;
-  //   if (!video) return;
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
 
-  //   // Try autoplay muted (required by browsers)
-  //   video.muted = true;
-  //   video.play().catch(() => {});
+    // The browser will allow play WITH sound only after interaction
+    const enableSound = () => {
+      video.muted = false;   // unmute
+      video.play().catch(() => {});
+      window.removeEventListener("click", enableSound);
+      window.removeEventListener("touchstart", enableSound);
+    };
 
-  //   // After user interaction → unmute + keep playing
-  //   const enableSound = () => {
-  //     video.muted = false;
-  //     video.play().catch(() => {});
-  //     window.removeEventListener("click", enableSound);
-  //     window.removeEventListener("touchstart", enableSound);
-  //     window.removeEventListener("scroll", enableSound);
-  //   };
+    window.addEventListener("click", enableSound);
+    window.addEventListener("touchstart", enableSound);
 
-  //   window.addEventListener("click", enableSound);
-  //   window.addEventListener("touchstart", enableSound);
-  //   window.addEventListener("scroll", enableSound);
-  // }, []);
+    return () => {
+      window.removeEventListener("click", enableSound);
+      window.removeEventListener("touchstart", enableSound);
+    };
+  }, []);
 
   return (
     <video
-      // ref={videoRef}
+      ref={videoRef}
       src={src}
       loop
       playsInline
       controls
       autoPlay
-      muted
+      muted  
       preload="auto"
       className={className}
     />
   );
 }
-
-// "use client";
-
-// export default function AutoplayVideo({
-//   src,
-//   className = "",
-// }: {
-//   src: string;
-//   className?: string;
-// }) {
-//   return (
-//     <video
-//       src={src}
-//       autoPlay
-//       muted
-//       loop
-//       playsInline
-//       preload="auto"
-//       className={className}
-//     />
-//   );
-// }
-

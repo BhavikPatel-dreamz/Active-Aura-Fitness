@@ -69,12 +69,9 @@ export default async function HomePage() {
         heroDescription={landingData.hero_description}
         benefits={landingData.benefits}
       />
-
       
-
       <HomeContent landingData={landingData} quizMap={quizMap} />
-
-      
+  
     </main>
   );
 }

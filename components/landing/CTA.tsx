@@ -2,18 +2,17 @@ import Link from 'next/link';
 
 type Props = {
   text: string;
-  href: string;
-  
- 
+  onClick?: () => void;
 };
 
 //reduce-belly-fat
 
-export default function CTA({ text, href }: Props) {
+export default function CTA({ text, onClick }: Props) {
   return (
     <div className="text-center  sm:mt-12 mb-10 px-4">
       <Link
-        href={href}
+        href="#"
+        onClick={onClick}
         className="
           bg-[#6F00FF] text-white font-bebas font-normal
           w-full max-w-206.5 lg:w-206.5
