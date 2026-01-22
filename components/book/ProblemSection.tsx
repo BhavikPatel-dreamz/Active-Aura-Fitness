@@ -27,15 +27,19 @@ export default function ProblemSection({ data }: { data: Problem }) {
     <div className="relative w-full rounded-2xl overflow-hidden bg-neutral-100">
       <div className="aspect-[4/5] sm:aspect-[3/4] lg:aspect-[3/4] w-full">
         {data.problem_media_type === "video" && data.problem_video ? (
-          <video
-            src={data.problem_video}
-            autoPlay
-            loop
-            controls
-            playsInline
-            preload="metadata"
-            className="w-full h-full object-cover object-center"
-          />
+          // <video
+          //   src={data.problem_video}
+          //   autoPlay
+          //   loop
+          //   controls
+          //   playsInline
+          //   preload="metadata"
+          //   className="w-full h-full object-cover object-center"
+          // />
+          <AutoplayVideo
+                    src={data.problem_video}
+                    className="w-full h-full object-cover object-center"
+                  />
         ) : data.problem_image ? (
           <img
             src={data.problem_image}

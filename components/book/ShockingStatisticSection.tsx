@@ -1,6 +1,7 @@
 import Image from "next/image";
 import CTAButton from "../common/CTAButton";
 import { PAGE_SLUGS } from '@/lib/constants/pageSlugs';
+import AutoplayVideo from "../common/AutoPlayVideo";
 
 type ShockingStatisticSectionProps = {
   data: {
@@ -51,14 +52,18 @@ export default function ShockingStatisticSection({
 
           {/* Right Video */}
           <div className="rounded-[12px] overflow-hidden h-[240px] sm:h-[320px] md:h-full order-1 lg:order-2">
-            <video
+            {/* <video
               src={data.ss_video}
               autoPlay
               muted
               loop
               playsInline
               className="w-full h-full object-cover rounded-xl"
-            />
+            /> */}
+            <AutoplayVideo
+              src={data.ss_video}
+              className="w-full h-full object-cover rounded-xl"
+            />  
           </div>
         </div>
 

@@ -51,7 +51,7 @@ export default function BodyResetLoopSection({
         {/* VIDEO */}
         {data.brl_video && (
           <div className="relative max-w-5xl mx-auto rounded-xl overflow-hidden">
-            <video
+            {/* <video
               src={data.brl_video}
               autoPlay
               loop
@@ -59,7 +59,11 @@ export default function BodyResetLoopSection({
               playsInline
               preload="metadata"
               className="w-full h-full object-cover object-center"
-            />
+            /> */}
+            <AutoplayVideo
+              src={data.brl_video}
+              className="w-full h-full object-cover object-center"
+            />  
           </div>
         )}
 
