@@ -1,25 +1,69 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CTA from "./CTA";
 import Goals from "./Goal";
 import QuizSection from "@/components/quiz/QuizSection";
 import { QuizSlug } from "@/lib/constants/pageSlugs";
+import { getQuizQuestions} from "@/lib/api";
 
 export default function HomeContent({ landingData, quizMap }: any) {
   const [showGoalsFromCTA, setShowGoalsFromCTA] = useState(false);
   const [activeQuiz, setActiveQuiz] = useState<QuizSlug | null>(null);
 
-  // When quiz is started → show ONLY quiz (CTA + Goals + Back Button hidden)
-  if (activeQuiz) {
+  const [quizStore, setQuizStore] = useState<
+  Record<QuizSlug, any[]>
+>({} as Record<QuizSlug, any[]>);
+
+
+
+  useEffect(() => {
+  async function preloadAllQuizzes() {
+    try {
+      const entries = Object.entries(quizMap);
+
+      const results = await Promise.all(
+        entries.map(async ([_, slug]) => {
+          const res = await getQuizQuestions(slug as string);
+          return [slug, res.questions || []];
+        })
+      );
+
+      const store: Record<QuizSlug, any[]> = {
+        "feel-confident-again": [],
+        "improve-energy": [],
+        "lose-weight": [],
+        "reduce-belly-fat": []
+      };
+      results.forEach(([slug, questions]) => {
+        store[slug as QuizSlug] = questions;
+      });
+
+      setQuizStore(store);
+    } catch (err) {
+      console.error("Quiz preload failed", err);
+    }
+  }
+
+  preloadAllQuizzes();
+}, [quizMap]);
+
+const handleGoalSelect = (goalText: string) => {
+  const slug = quizMap[goalText.toLowerCase().replace(/\s+/g, "_")];
+  if (!slug) return;
+
+  setActiveQuiz(slug);
+};
+
+
+
+
+    if (activeQuiz) {
     return (
       <QuizSection
         quizSlug={activeQuiz}
-        onExitQuiz={() => {
-          setActiveQuiz(null);
-          setShowGoalsFromCTA(false); // reset back to full landing page
-        }}
-      />
+        onExitQuiz={() => setActiveQuiz(null)} 
+        questions={quizStore[activeQuiz] || []}     />
     );
   }
 
@@ -48,11 +92,14 @@ export default function HomeContent({ landingData, quizMap }: any) {
 
 
       {/* Goals ALWAYS visible except when quiz is opened */}
-      <Goals
-        goals={landingData.goal_options}
-        quizMap={quizMap}
-        onSelectGoal={(slug: QuizSlug) => setActiveQuiz(slug)}
-      />
+     <Goals
+  goals={landingData.goal_options}
+  quizMap={quizMap}
+  onSelectGoal={(slug: QuizSlug) => {
+    setActiveQuiz(slug);
+  }}
+/>
+
 
       {/* Back button ONLY when CTA clicked AND quiz is NOT opened */}
      {showGoalsFromCTA && !activeQuiz && (

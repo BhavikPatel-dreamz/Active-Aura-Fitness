@@ -3,19 +3,20 @@
 import { useEffect, useState } from "react";
 import { FinalForm } from "./FinalForm";
 import QuizResultDialog from "./QuizResultDialog";
-import { getQuizQuestions, submitQuiz } from "@/lib/api";
-import { getCachedQuiz } from "@/lib/quizCache";
+import { getCachedQuiz, setCachedQuiz } from "@/lib/quizCache";
 import type { QuizSlug } from "@/lib/constants/pageSlugs";
 import { QuizQuestion } from "@/lib/types";
 
 export default function QuizSection({
   quizSlug,
+  questions,
   onExitQuiz,
 }: {
   quizSlug: QuizSlug;
+  questions: QuizQuestion[];
   onExitQuiz: () => void;
 }) {
-  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
+  // const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
@@ -37,52 +38,7 @@ export default function QuizSection({
     pdfUrl: string;
   }>(null);
 
-  //cache
-
-  useEffect(() => {
-    let mounted = true;
-
-    async function load() {
-      setLoading(true);
-      setCurrent(0);
-      setAnswers({});
-
-      // ✅ 1. Try cache first
-      const cached = getCachedQuiz(quizSlug);
-      if (cached && mounted) {
-        setQuestions(cached);
-        setLoading(false);
-        return;
-      }
-
-      // ✅ 2. Fallback to API
-      try {
-        const res = await getQuizQuestions(quizSlug);
-        if (!mounted) return;
-
-        setQuizId(res.quiz_id);
-        setQuestions(res.questions || []);
-      } catch (err) {
-        console.error("Failed to load quiz questions", err);
-      } finally {
-        if (mounted) setLoading(false);
-      }
-    }
-
-    load();
-
-    return () => {
-      mounted = false;
-    };
-  }, [quizSlug]);
-
-  // =====================================================
-  if (loading) {
-    return (
-      <p className="text-center lg:py-20 md:py-12 py-8 text-black">Loading…</p>
-    );
-  }
-
+  console.log("QuizSection mounted", quizSlug, questions);
   const question = questions[current];
   if (!question) return null;
 
