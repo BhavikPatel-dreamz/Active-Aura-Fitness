@@ -1,7 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import QuizSection from '@/components/quiz/QuizSection';
+import type { QuizSlug } from '@/lib/constants/pageSlugs';
+import { normalizeKey } from '@/lib/utils/normalizeKey';
+import { setCachedQuiz, getCachedQuiz } from '@/lib/quizCache';
+import { getQuizQuestions } from '@/lib/api';
 
 type Goal = {
   text: string;
@@ -11,39 +15,55 @@ type Goal = {
 export default function Goals({
   goals,
   quizMap,
+  onSelectGoal
 }: {
   goals: Goal[];
-  quizMap: Record<string, number>;
+  quizMap: Record<string, QuizSlug>;
+  onSelectGoal: (slug: QuizSlug) => void;
 }) {
-  const [activeQuizId, setActiveQuizId] = useState<number | null>(null);
 
-  if (activeQuizId) {
-    return (
-      <QuizSection
-        quizId={activeQuizId}
-        onExitQuiz={() => setActiveQuizId(null)}
-      />
-    );
-  }
+  const prefetchQuiz = useCallback(async (slug: QuizSlug) => {
+    if (getCachedQuiz(slug)) return;
+
+    try {
+      const data = await getQuizQuestions(slug);
+      if (data?.questions?.length) {
+        setCachedQuiz(slug, data.questions);
+      }
+    } catch (error) {
+      console.error('Quiz prefetch failed:', error);
+    }
+  }, []);
 
   return (
-    <section className="max-w-4xl mx-auto px-6 pb-20">
-      <h3 className="text-center text-xl font-bold mb-6">
-        What’s Your #1 Goal Right Now?
-      </h3>
+    <section className="px-3 sm:px-6 pb-8 sm:pb-14 mt-4">
 
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid sm:grid-cols-2 gap-4 sm:gap-6.25 max-w-154.75 mx-auto">
         {goals.map((goal) => {
-          const quizId = quizMap[goal.value];
+          const quizSlug = quizMap[normalizeKey(goal.text)];
+          if (!quizSlug) return null;
 
           return (
             <button
-              key={goal.value}
-              onClick={() => setActiveQuizId(quizId)}
-              className="bg-white text-black p-4 rounded-lg font-semibold flex justify-between"
+              key={goal.text}
+              onMouseEnter={() => prefetchQuiz(quizSlug)}
+              onFocus={() => prefetchQuiz(quizSlug)}
+              onClick={() => onSelectGoal(quizSlug)}   // ✔ FIXED
+              className="bg-white text-[#303030] text-[16px] sm:text-[18px]
+                         capitalize rounded-[10px] px-3 py-2 sm:p-4 font-semibold
+                         flex justify-between items-center w-full
+                         max-w-74.25 mx-auto h-auto sm:h-15 cursor-pointer"
             >
-              {goal.text}
-              <span>→</span>
+              <span className="text-left">{goal.text}</span>
+
+              <span className="shrink-0">
+                <svg width="17" height="14" viewBox="0 0 17 14" fill="none">
+                  <path
+                    d="M1.16658 8.15561L12.8333 8.15561L8.99492 11.9939..."
+                    fill="#303030"
+                  />
+                </svg>
+              </span>
             </button>
           );
         })}
