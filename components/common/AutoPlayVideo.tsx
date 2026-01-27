@@ -81,3 +81,5 @@ export default function AutoVideo({ src, className }: AutoVideoProps) {
     />
   );
 }
+
+

@@ -50,7 +50,14 @@ export default function BodyResetLoopSection({
 
         {/* VIDEO */}
         {data.brl_video && (
-          <div className="relative max-w-5xl mx-auto rounded-xl overflow-hidden">
+          <div className="mx-auto 
+                w-full 
+                sm:max-w-md 
+                md:max-w-lg 
+                lg:max-w-xl
+                aspect-[4/5] 
+                rounded-2xl 
+                overflow-hidden">
             {/* <video
               src={data.brl_video}
               autoPlay
@@ -62,7 +69,7 @@ export default function BodyResetLoopSection({
             /> */}
             <AutoplayVideo
               src={data.brl_video}
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover rounded-2xl object-center"
             />  
           </div>
         )}
