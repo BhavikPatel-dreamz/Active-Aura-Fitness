@@ -34,12 +34,12 @@ export default function CalendlyLazyLoad() {
   return (
     <div ref={containerRef} >
       {shouldLoad ? (
-        <CalendlyEmbed />
-      ) : (
-        <div className="flex justify-center py-20 text-gray-500 font-medium">
-          Loading calendar…
-        </div>
-      )}
+  <CalendlyEmbed />
+) : (
+  <div className="flex justify-center py-20">
+    <div className="w-full max-w-md h-[600px] rounded-xl bg-gray-100 animate-pulse" />
+  </div>
+)}
     </div>
   );
 }

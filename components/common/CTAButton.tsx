@@ -1,4 +1,6 @@
+'use client';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 type CTAButtonProps = {
   text: string;
@@ -7,12 +9,22 @@ type CTAButtonProps = {
   className?: string;
 };
 
+
 export default function CTAButton({
   text,
   href,
   target = '_self',
   className = '',
 }: CTAButtonProps) {
+
+  useEffect(() => {
+  // Pre-warm Calendly connections (makes real widget 2x faster)
+  const link1 = document.createElement('link');
+  link1.rel = 'preconnect';
+  link1.href = 'https://assets.calendly.com';
+  document.head.appendChild(link1);
+}, []);
+
   return (
     <Link
       href={href}

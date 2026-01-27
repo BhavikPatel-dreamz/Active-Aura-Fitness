@@ -5,6 +5,8 @@ import { PAGE_SLUGS } from "@/lib/constants/pageSlugs";
 import type { Metadata } from "next";
 import SiteHeader from "@/components/layouts/SiteHeader";
 import CalendlyLazyLoad from "@/components/reservation/CalendlyLazyLoad";
+import CalendlyWidget from "@/components/reservation/CalendlyWidget";
+import InstantCalendly from "@/components/reservation/InstantCalendly";
 
 const stripHtml = (text = "") => text.replace(/<[^>]*>/g, "").trim();
 
@@ -99,7 +101,9 @@ export default async function ReservationPage() {
         
           
 
-         <CalendlyLazyLoad />
+        {/* <InstantCalendly /> */}
+        <CalendlyWidget />
+
           
         
       </section>

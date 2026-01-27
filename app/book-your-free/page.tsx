@@ -14,6 +14,8 @@ import ConsultationSection from "@/components/book/ConsultationSection";
 import TestimonialSection from "@/components/book/TestimonialSection";
 import FaqSection from "@/components/book/FaqSection";
 import SiteHeader from "@/components/layouts/SiteHeader";
+import CalendlyPreloader from "@/components/reservation/CalendlyPreloader";
+
 
 const stripHtml = (html = "") => html.replace(/<[^>]*>/g, "").trim();
 
@@ -84,6 +86,9 @@ export default async function BookYourFreePage() {
 
       {/* HERO */}
       <HeroSection data={acf.hero_section} />
+
+      {/* <CalendlyPreloader /> */}
+
 
       <ConsultationCtaWithTimer />
 
