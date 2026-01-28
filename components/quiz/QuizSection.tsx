@@ -78,7 +78,7 @@ export default function QuizSection({
       if (data.email_sent && data.whatsapp_sent) {
         // success on retry — redirect user
         window.location.href =
-          "https://active-aura-fitness.vercel.app/book-your-free";
+          " https://activeaurafitness.com/book-your-free";
         return;
       } else {
         // Still failing
