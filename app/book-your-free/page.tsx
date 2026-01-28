@@ -1,4 +1,4 @@
-import { getPageBySlug, getLogos } from "../../lib/api";
+import { getPageBySlug} from "../../lib/api";
 import { PAGE_SLUGS } from "@/lib/constants/pageSlugs";
 import type { Metadata } from "next";
 import HeroSection from "../../components/book/HeroSection";
@@ -14,7 +14,7 @@ import ConsultationSection from "@/components/book/ConsultationSection";
 import TestimonialSection from "@/components/book/TestimonialSection";
 import FaqSection from "@/components/book/FaqSection";
 import SiteHeader from "@/components/layouts/SiteHeader";
-import CalendlyPreloader from "@/components/reservation/CalendlyPreloader";
+
 
 
 const stripHtml = (html = "") => html.replace(/<[^>]*>/g, "").trim();
