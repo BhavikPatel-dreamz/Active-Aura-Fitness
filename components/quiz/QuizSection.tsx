@@ -191,53 +191,49 @@ export default function QuizSection({
       {/* Final Form */}
       {showFinalForm ? (
         <FinalForm
-          onBack={() => setShowFinalForm(false)}
-          onSubmit={async (fullPhone: string) => {
-            setSubmitting(true);
-            try {
-              const submitRes = await fetch("/api/quiz/submit", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  quiz_id: quizId,
-                  answers,
-                  user_name: name,
-                  user_email: email,
-                  user_phone: fullPhone,
-                }),
-              });
+    onBack={() => setShowFinalForm(false)}
+    submitting={submitting}
+    name={name}
+    email={email}
+    phone={phone}
+    accepted={accepted}
+    setName={setName}
+    setEmail={setEmail}
+    setPhone={setPhone}
+    setAccepted={setAccepted}
+    onSubmit={(fullPhone: string) => {
+      
+      setSubmitting(true);
 
-              const submitJson = await submitRes.json();
+      
+      window.location.href = "/book-your-free";
 
-              if (submitJson.success) {
-                setSubmitting(true);
-                const emailOk = submitJson.email_sent === true;
-                const whatsappOk = submitJson.whatsapp_sent === true;
+      fetch("/api/quiz/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          quiz_id: quizId,
+          answers,
+          user_name: name,
+          user_email: email,
+          user_phone: fullPhone,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.success) {
+            console.error("Quiz submit failed", data);
+          }
 
-                if (emailOk && whatsappOk) {
-                  window.location.href =
-                    "https://active-aura-fitness.vercel.app/book-your-free";
-                  return;
-                }
-
-                // failed → show retry UI
-                setDeliveryError(true);
-                return;
-              }
-            } finally {
-              setSubmitting(false);
-            }
-          }}
-          submitting={submitting}
-          name={name}
-          email={email}
-          phone={phone}
-          accepted={accepted}
-          setName={setName}
-          setEmail={setEmail}
-          setPhone={setPhone}
-          setAccepted={setAccepted}
-        />
+          if (!data.email_sent || !data.whatsapp_sent) {
+            console.warn("Delivery pending, backend will retry");
+          }
+        })
+        .catch((err) => {
+          console.error("Submit error:", err);
+        });
+    }}
+  />
       ) : (
         <section className="bg-[#ECECEB] text-black pt-3 pb-10">
           <h2 className="text-center font-semibold px-4 mb-8 max-w-185 mx-auto text-[22px] sm:text-[28px] lg:text-[35px] leading-7.5 sm:leading-9.5 lg:leading-12">
