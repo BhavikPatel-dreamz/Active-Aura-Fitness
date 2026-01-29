@@ -50,4 +50,4 @@ jobs:
           git pull origin main || exit
           git status
           npm install
-          pm2 start npm --name "Active-Aura-Fitness" -- run start; pm2 restart all
+          APP_NAME="Active-Aura-Fitness"; pm2 list | grep -q "$APP_NAME" && pm2 restart "$APP_NAME" || pm2 start npm --name "$APP_NAME" -- run start
