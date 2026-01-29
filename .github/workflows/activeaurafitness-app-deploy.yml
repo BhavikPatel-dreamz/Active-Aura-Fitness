@@ -50,4 +50,27 @@ jobs:
           git pull origin main || exit
           git status
           npm install
-          APP_NAME="Active-Aura-Fitness"; pm2 list | grep -q "$APP_NAME" && pm2 restart "$APP_NAME" || pm2 start npm --name "$APP_NAME" -- run start
+          # Safe PM2 restart to avoid EADDRINUSE
+          APP_NAME="Active-Aura-Fitness"
+          PORT=9000
+
+          # Check if port is in use and kill the process
+          PID=$(lsof -ti:$PORT)
+          if [ -n "$PID" ]; then
+            echo "Port $PORT is in use by PID $PID. Killing..."
+            kill -9 $PID
+          fi
+
+          # Restart or start PM2
+          if pm2 list | grep -q "$APP_NAME"; then
+            echo "App already running. Restarting..."
+            pm2 restart "$APP_NAME"
+          else
+            echo "App not running. Starting..."
+            pm2 start npm --name "$APP_NAME" -- run start
+          fi
+
+          # Save PM2 process list to restart on reboot
+          pm2 save
+          
+          
