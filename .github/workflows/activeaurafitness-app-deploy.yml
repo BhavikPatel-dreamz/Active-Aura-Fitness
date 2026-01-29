@@ -1,0 +1,53 @@
+name: Deploy activeaurafitness-app to Server
+
+on:
+  push: # Select When Workflow Trigger
+    branches:
+      - main  # Select Your Branch Here
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '22'  # Use your preferred Node
+
+    - name: Install dependencies
+      run: |
+        npm install
+
+    - name: Build the project
+      run: |
+        npm run build  # Assuming you have a build script defined in package.json
+      continue-on-error: false  # Fail the workflow if the build step fails
+
+    - name: Deploy to activeaurafitness-app VM
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        source: "./"  # This now correctly points to the current directory
+        target: "/var/www/html/Active-Aura-Fitness" # Defile Path Here
+
+    - name: Restart Server Application
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # load nvm
+          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # load nvm bash_completion
+          cd /var/www/html/Active-Aura-Fitness || exit
+          git pull origin main || exit
+          git status
+          npm install
+          pm2 start npm --name "Active-Aura-Fitness" -- run start; pm2 restart all
