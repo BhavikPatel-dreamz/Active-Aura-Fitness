@@ -88,7 +88,7 @@ export default function RootLayout({
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', '${PIXEL_ID}');
             fbq('track', 'PageView');
-            
+            console.log('Meta Pixel initialized with ID: ${PIXEL_ID}');
           `}
         </Script>
       </head>
