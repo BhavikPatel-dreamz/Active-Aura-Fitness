@@ -72,7 +72,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-   const PIXEL_ID = "517991158551582";
+   const PIXEL_ID = "2460433677688370";
   return (
     <html lang="en">
       <head>
