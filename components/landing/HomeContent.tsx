@@ -6,6 +6,7 @@ import Goals from "./Goal";
 import QuizSection from "@/components/quiz/QuizSection";
 import { QuizSlug } from "@/lib/constants/pageSlugs";
 import { getQuizQuestions} from "@/lib/api";
+import { trackEvent } from "@/lib/utils/analytics";
 
 export default function HomeContent({ landingData, quizMap }: any) {
   const [showGoalsFromCTA, setShowGoalsFromCTA] = useState(false);
@@ -85,7 +86,10 @@ const handleGoalSelect = (goalText: string) => {
       {!showGoalsFromCTA && (
         <CTA
           text={landingData.cta_button_text}
-          onClick={() => setShowGoalsFromCTA(true)}
+          onClick={() => {
+            setShowGoalsFromCTA(true);
+            trackEvent("Lead", "start_assessment", "Start Assessment Button");
+          }}
         />
       )}
 
