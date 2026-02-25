@@ -28,7 +28,6 @@ export default function CTAButton({
 
   const handleClick = () => {
     trackEvent("Schedule", "book_call_clicked", text);
-    console.log("CTA clicked:", text);
   };
 
   return (
