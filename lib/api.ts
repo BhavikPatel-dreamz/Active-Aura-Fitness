@@ -134,41 +134,90 @@ export async function validateQuiz(payload: {
 }
 
 
+// export async function getLogos() {
+//   const res = await fetch(
+//     `${BASE_URL}/logo?source=site`,
+//     {
+//       headers: {
+//         'x-api-key': API_KEY,
+//       },
+//       cache: 'no-store',
+//     }
+//   );
+
+//   if (!res.ok) {
+//     throw new Error('Failed to fetch page data');
+//   }
+
+//   const json = await res.json();
+//   return json.logo;
+// }
+
+// export async function getFavicon() {
+//   const res = await fetch(`${BASE_URL}/favicon`, {
+//     headers: {
+//       'x-api-key': API_KEY,
+//     },
+//     next: { revalidate: 3600 }, // cache for 1 hour
+//     signal: AbortSignal.timeout(5000),
+//   });
+
+//   if (!res.ok) {
+//     const text = await res.text();
+//     console.error('Favicon API failed:', text);
+//     throw new Error('Failed to fetch favicon');
+//   }
+
+//   const json = await res.json();
+//   return json.favicon;
+// }
+
+
 export async function getLogos() {
-  const res = await fetch(
-    `${BASE_URL}/logo?source=site`,
-    {
+  try {
+    const res = await fetch(`${BASE_URL}/logo?source=site`, {
       headers: {
-        'x-api-key': API_KEY,
+        "x-api-key": API_KEY,
       },
-      cache: 'no-store',
+      next: { revalidate: 3600 }, // cache for 1 hour
+      signal: AbortSignal.timeout(8000),
+    });
+
+    if (!res.ok) {
+      console.error("Logo API failed:", res.status);
+      return null;
     }
-  );
 
-  if (!res.ok) {
-    throw new Error('Failed to fetch page data');
+    const json = await res.json();
+    return json?.logo || null;
+  } catch (error) {
+    console.error("Logo fetch error:", error);
+    return null;
   }
-
-  const json = await res.json();
-  return json.logo;
 }
 
 export async function getFavicon() {
-  const res = await fetch(`${BASE_URL}/favicon`, {
-    headers: {
-      'x-api-key': API_KEY,
-    },
-    next: { revalidate: 3600 }, // cache for 1 hour
-  });
+  try {
+    const res = await fetch(`${BASE_URL}/favicon`, {
+      headers: {
+        "x-api-key": API_KEY,
+      },
+      next: { revalidate: 3600 }, // cache for 1 hour
+      signal: AbortSignal.timeout(8000),
+    });
 
-  if (!res.ok) {
-    const text = await res.text();
-    console.error('Favicon API failed:', text);
-    throw new Error('Failed to fetch favicon');
+    if (!res.ok) {
+      const text = await res.text();
+      console.error("Favicon API failed:", text);
+      return null;
+    }
+
+    const json = await res.json();
+    return json?.favicon || null;
+  } catch (error) {
+    console.error("Favicon fetch error:", error);
+    return null;
   }
-
-  const json = await res.json();
-  return json.favicon;
 }
 
 
