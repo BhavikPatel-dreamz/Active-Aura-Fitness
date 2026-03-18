@@ -3,35 +3,6 @@ import { cache } from "react";
 const BASE_URL = process.env.AURA_API_BASE!;
 const API_KEY = process.env.AURA_API_KEY!;
 
-// export async function getPageBySlug(slug: string) {
-//   const res = await fetch(
-//     `${process.env.AURA_API_PAGE}/pages?slug=${slug}`,
-//     {
-//       next: { revalidate: 5 },
-//     }
-//   );
-//   if (!res.ok) {
-//     throw new Error(`Failed to fetch page: ${slug}`);
-//   }
-
-//   const pages = await res.json();
-
-//   // WordPress always returns an array
-//   if (!Array.isArray(pages) || pages.length === 0) {
-//     throw new Error(`Page not found: ${slug}`);
-//   }
-
-//   const page = pages[0];
-
-//   // If you're using ACF
-//   return {
-//     ...page.acf,
-//     title: page.title?.rendered,
-//     content: page.content?.rendered,
-//     yoast_seo: page.yoast_seo,
-//     yoast_head_json: page.yoast_head_json,
-//   };
-// }
 
 export const getPageBySlug = cache(async function (slug: string) {
   const res = await fetch(
@@ -132,45 +103,6 @@ export async function validateQuiz(payload: {
 
   return res.json();
 }
-
-
-// export async function getLogos() {
-//   const res = await fetch(
-//     `${BASE_URL}/logo?source=site`,
-//     {
-//       headers: {
-//         'x-api-key': API_KEY,
-//       },
-//       cache: 'no-store',
-//     }
-//   );
-
-//   if (!res.ok) {
-//     throw new Error('Failed to fetch page data');
-//   }
-
-//   const json = await res.json();
-//   return json.logo;
-// }
-
-// export async function getFavicon() {
-//   const res = await fetch(`${BASE_URL}/favicon`, {
-//     headers: {
-//       'x-api-key': API_KEY,
-//     },
-//     next: { revalidate: 3600 }, // cache for 1 hour
-//     signal: AbortSignal.timeout(5000),
-//   });
-
-//   if (!res.ok) {
-//     const text = await res.text();
-//     console.error('Favicon API failed:', text);
-//     throw new Error('Failed to fetch favicon');
-//   }
-
-//   const json = await res.json();
-//   return json.favicon;
-// }
 
 
 export async function getLogos() {
