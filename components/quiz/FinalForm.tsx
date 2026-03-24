@@ -1,7 +1,7 @@
 "use client";
 
 import { trackEvent } from "@/lib/utils/analytics";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 type Props = {
   onBack: () => void;
@@ -17,9 +17,7 @@ type Props = {
   setAccepted: (v: boolean) => void;
 };
 
-type CallingCode = {
-  code: string; // +91, +1, +61
-};
+
 
 export function FinalForm({
   onBack,
@@ -34,9 +32,78 @@ export function FinalForm({
   setPhone,
   setAccepted,
 }: Props) {
-  const [codes, setCodes] = useState<CallingCode[]>([]);
-  const [countryCode, setCountryCode] = useState("+1");
+  // Country selector state (moved inside component)
+  const [countries, setCountries] = useState<{
+    name: string;
+    flagUrl: string;
+    dialCode: string;
+    cca2: string;
+  }[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<{
+    name: string;
+    flagUrl: string;
+    dialCode: string;
+    cca2: string;
+  }>({
+    name: "India",
+    flagUrl: "https://flagcdn.com/w40/in.png",
+    dialCode: "+91",
+    cca2: "IN",
+  });
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const searchRef = useRef<HTMLInputElement | null>(null);
 
+  useEffect(() => {
+    fetch("https://restcountries.com/v3.1/all?fields=name,idd,cca2")
+      .then((res) => res.json())
+      .then((data: any) => {
+        const formatted = data
+          .map((c: any) => {
+            const root = c.idd?.root || "";
+            const suffix = c.idd?.suffixes?.length === 1 ? c.idd.suffixes[0] : "";
+            const dialCode = root + suffix;
+            if (!dialCode) return null;
+            const code = c.cca2?.toLowerCase();
+            return {
+              name: c.name?.common || "",
+              flagUrl: `https://flagcdn.com/w40/${code}.png`,
+              dialCode,
+              cca2: c.cca2,
+            };
+          })
+          .filter(Boolean as NonNullable<any>)
+          .sort((a: any, b: any) => a.name.localeCompare(b.name));
+        setCountries(formatted);
+        const india = formatted.find((c: any) => c.cca2 === "IN");
+        if (india) setSelectedCountry(india);
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+        setSearchQuery("");
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    if (dropdownOpen && searchRef.current) {
+      setTimeout(() => searchRef.current?.focus(), 50);
+    }
+  }, [dropdownOpen]);
+
+  const filteredCountries = countries.filter(
+    (c) =>
+      c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.dialCode.includes(searchQuery)
+  );
   const [errors, setErrors] = useState<{
     name?: string;
     email?: string;
@@ -52,27 +119,7 @@ export function FinalForm({
     return /^[0-9]{7,15}$/.test(phone);
   }
 
-  useEffect(() => {
-    async function fetchCallingCodes() {
-      const res = await fetch("https://restcountries.com/v3.1/all?fields=idd");
-      const data: any[] = await res.json();
 
-      // ✅ explicitly tell TS these are strings
-      const codes: string[] = Array.from(
-        new Set<string>(
-          data
-            .filter((c) => c.idd?.root)
-            .map((c) => `${c.idd.root}${c.idd.suffixes?.[0] || ""}`)
-        )
-      ).sort((a, b) => a.localeCompare(b));
-
-      const formatted: CallingCode[] = codes.map((code) => ({ code }));
-
-      setCodes(formatted);
-    }
-
-    fetchCallingCodes();
-  }, []);
 
   function handleSubmit() {
     const newErrors: typeof errors = {};
@@ -98,7 +145,7 @@ export function FinalForm({
     if (Object.keys(newErrors).length > 0) return;
 
     // Submit only if valid
-    const fullPhone = `${countryCode}${phone}`;
+    const fullPhone = `${selectedCountry.dialCode}${phone}`;
     onSubmit(fullPhone);
   }
 
@@ -149,33 +196,89 @@ export function FinalForm({
           <label className="block text-sm sm:text-lg sm:mb-2 mb-1 font-semibold">
             Phone Number
           </label>
-
-          <div className="flex bg-white sm:rounded-[10px] rounded-[5px] overflow-hidden">
-            <select
-              value={countryCode}
-              onChange={(e) => setCountryCode(e.target.value)}
-              name="countryCode"
-              className="text-center text-black font-medium outline-none sm:w-[67px] w-auto max-w-[96px] text-sm sm:text-base"
-            >
-              {codes.map((c) => (
-                <option key={c.code} value={c.code}>
-                  {c.code}
-                </option>
-              ))}
-            </select>
-
-            <input
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="5551234567"
-              name="phone"
-              className="flex-1 sm:px-5 px-3 sm:py-4 py-3 text-black outline-none border-l border-[#9E9E9E] sm:ml-[10px] ml-1 sm:text-base text-sm"
-            />
-            
+          <div className="relative">
+            <div className="flex items-center bg-white rounded-[10px] border border-[#d1d5db] focus-within:border-[#6F00FF] shadow-sm" style={{ minHeight: 52 }}>
+              {/* Country code dropdown */}
+              <div ref={dropdownRef} className="relative flex items-center">
+                <button
+                  type="button"
+                  className="flex items-center gap-2 px-3 py-2 h-full focus:outline-none"
+                  style={{ minWidth: 70 }}
+                  onClick={() => setDropdownOpen((v) => !v)}
+                  tabIndex={0}
+                >
+                  <img src={selectedCountry.flagUrl} alt={selectedCountry.cca2} className="w-[22px] h-[15px] rounded-[2px] object-cover" />
+                  <span className="font-medium text-base text-black">{selectedCountry.dialCode}</span>
+                  <svg className="ml-1 w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                {dropdownOpen && (
+                  <div
+                    role="listbox"
+                    style={{
+                      position: "absolute",
+                      top: "110%",
+                      left: 0,
+                      zIndex: 9999,
+                      width: "320px",
+                      backgroundColor: "#fff",
+                      border: "1px solid rgba(35, 31, 32, 0.2)",
+                      borderRadius: "10px",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <div style={{ padding: "8px 12px", borderBottom: "1px solid rgba(35, 31, 32, 0.1)", display: "flex", alignItems: "center", gap: "8px", backgroundColor: "#fff" }}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(35,31,32,0.4)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                      <input
+                        ref={searchRef}
+                        type="text"
+                        placeholder="Search countries"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        style={{ border: "none", outline: "none", width: "100%", fontSize: "14px", color: "rgb(35, 31, 32)", backgroundColor: "transparent" }}
+                      />
+                    </div>
+                    <ul style={{ listStyle: "none", margin: 0, padding: "4px 0", maxHeight: "220px", overflowY: "auto" }}>
+                      {filteredCountries.length === 0 ? (
+                        <li style={{ padding: "12px 16px", fontSize: "14px", color: "rgba(35,31,32,0.5)" }}>No results found</li>
+                      ) : (
+                        filteredCountries.map((country) => (
+                          <li
+                            key={country.cca2}
+                            role="option"
+                            aria-selected={selectedCountry?.cca2 === country.cca2}
+                            onClick={() => {
+                              setSelectedCountry(country);
+                              setDropdownOpen(false);
+                              setSearchQuery("");
+                            }}
+                            style={{ display: "flex", alignItems: "center", gap: "10px", padding: "9px 14px", cursor: "pointer", fontSize: "14px", color: "rgb(35, 31, 32)", backgroundColor: selectedCountry?.cca2 === country.cca2 ? "rgba(35,31,32,0.06)" : "transparent" }}
+                            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "rgba(35,31,32,0.06)"; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = selectedCountry?.cca2 === country.cca2 ? "rgba(35,31,32,0.06)" : "transparent"; }}
+                          >
+                            <img src={country.flagUrl} alt={country.name} style={{ width: "22px", height: "15px", objectFit: "cover", borderRadius: "2px", flexShrink: 0 }} />
+                            <span style={{ flex: 1 }}>{country.name}</span>
+                            <span style={{ color: "rgba(35,31,32,0.5)", fontWeight: "500" }}>{country.dialCode}</span>
+                          </li>
+                        ))
+                      )}
+                    </ul>
+                  </div>
+                )}
+              </div>
+              <input
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Enter Mobile no."
+                name="phone"
+                className="flex-1 px-4 py-3 text-black bg-transparent outline-none border-0 text-base rounded-r-[10px]"
+                style={{ minWidth: 0 }}
+              />
+            </div>
           </div>
           {errors.phone && (
-              <p className="text-xs text-[#fd0808] mt-1">{errors.phone}</p>
-            )}
+            <p className="text-xs text-[#fd0808] mt-1">{errors.phone}</p>
+          )}
         </div>
 
         {/* Terms */}
@@ -183,7 +286,7 @@ export function FinalForm({
           <input
             className="
                 appearance-none
-                w-[18px] h-[18px]
+                w-4.5 h-4.5
                 rounded-[5px]
                 border border-black
                 bg-transparent
@@ -198,10 +301,10 @@ export function FinalForm({
                 after:absolute
                 after:hidden
                 checked:after:block
-                after:left-[5px]
-                after:top-[1px]
-                after:w-[5px]
-                after:h-[10px]
+                after:left-1.25
+                after:top-px
+                after:w-1.25
+                after:h-2.5
                 after:border-r-2
                 after:border-b-2
                 after:border-white
