@@ -45,10 +45,10 @@ export function FinalForm({
     dialCode: string;
     cca2: string;
   }>({
-    name: "India",
-    flagUrl: "https://flagcdn.com/w40/in.png",
-    dialCode: "+91",
-    cca2: "IN",
+    name: "United States",
+    flagUrl: "https://flagcdn.com/w40/us.png",
+    dialCode: "+1",
+    cca2: "US",
   });
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -59,25 +59,30 @@ export function FinalForm({
     fetch("https://restcountries.com/v3.1/all?fields=name,idd,cca2")
       .then((res) => res.json())
       .then((data: any) => {
-        const formatted = data
-          .map((c: any) => {
-            const root = c.idd?.root || "";
-            const suffix = c.idd?.suffixes?.length === 1 ? c.idd.suffixes[0] : "";
-            const dialCode = root + suffix;
-            if (!dialCode) return null;
-            const code = c.cca2?.toLowerCase();
-            return {
-              name: c.name?.common || "",
-              flagUrl: `https://flagcdn.com/w40/${code}.png`,
-              dialCode,
-              cca2: c.cca2,
-            };
-          })
-          .filter(Boolean as NonNullable<any>)
-          .sort((a: any, b: any) => a.name.localeCompare(b.name));
+        let formatted: any[] = [];
+        data.forEach((c: any) => {
+          const root = c.idd?.root || "";
+          const suffixes = c.idd?.suffixes || [];
+          // For countries with multiple suffixes (like US), add all
+          if (suffixes.length > 0) {
+            suffixes.forEach((suffix: string) => {
+              const dialCode = root + suffix;
+              if (!dialCode) return;
+              const code = c.cca2?.toLowerCase();
+              formatted.push({
+                name: c.name?.common || "",
+                flagUrl: `https://flagcdn.com/w40/${code}.png`,
+                dialCode,
+                cca2: c.cca2,
+              });
+            });
+          }
+        });
+        formatted = formatted.sort((a: any, b: any) => a.name.localeCompare(b.name));
         setCountries(formatted);
-        const india = formatted.find((c: any) => c.cca2 === "IN");
-        if (india) setSelectedCountry(india);
+        // Set default to USA if found, else keep current
+        const usa = formatted.find((c: any) => c.cca2 === "US" && c.dialCode === "+1");
+        if (usa) setSelectedCountry(usa);
       })
       .catch(() => {});
   }, []);
@@ -204,7 +209,7 @@ export function FinalForm({
                   type="button"
                   className="flex items-center gap-2 px-3 py-2 h-full focus:outline-none"
                   style={{ minWidth: 70 }}
-                  onClick={() => setDropdownOpen((v) => !v)}
+                  onClick={e => { e.stopPropagation(); setDropdownOpen((v) => !v); }}
                   tabIndex={0}
                 >
                   <img src={selectedCountry.flagUrl} alt={selectedCountry.cca2} className="w-[22px] h-[15px] rounded-[2px] object-cover" />
@@ -244,7 +249,7 @@ export function FinalForm({
                       ) : (
                         filteredCountries.map((country) => (
                           <li
-                            key={country.cca2}
+                            key={`${country.cca2}-${country.dialCode}`}
                             role="option"
                             aria-selected={selectedCountry?.cca2 === country.cca2}
                             onClick={() => {
