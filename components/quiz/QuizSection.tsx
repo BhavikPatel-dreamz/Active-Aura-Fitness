@@ -251,7 +251,7 @@ export default function QuizSection({
           console.warn("Delivery pending, backend will retry");
         }
 
-        // window.location.href = "/book-your-free";
+        window.location.href = "/book-your-free";
       } catch (err) {
         console.error("Submit error:", err);
       } finally {
