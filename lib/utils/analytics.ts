@@ -5,6 +5,26 @@ type TrackEventOptions = {
 
 const DEFAULT_DEDUPE_WINDOW_MS = 1500;
 const recentlyTrackedEvents = new Map<string, number>();
+const STANDARD_META_EVENTS = new Set([
+  "AddPaymentInfo",
+  "AddToCart",
+  "AddToWishlist",
+  "CompleteRegistration",
+  "Contact",
+  "CustomizeProduct",
+  "Donate",
+  "FindLocation",
+  "InitiateCheckout",
+  "Lead",
+  "PageView",
+  "Purchase",
+  "Schedule",
+  "Search",
+  "StartTrial",
+  "SubmitApplication",
+  "Subscribe",
+  "ViewContent",
+]);
 
 export const trackEvent = (
   metaEvent: string,
@@ -26,7 +46,11 @@ export const trackEvent = (
 
     // Facebook Pixel
     if ((window as any).fbq) {
-      (window as any).fbq("track", metaEvent);
+      const metaTrackMethod = STANDARD_META_EVENTS.has(metaEvent)
+        ? "track"
+        : "trackCustom";
+
+      (window as any).fbq(metaTrackMethod, metaEvent);
     }
 
     // Google Analytics

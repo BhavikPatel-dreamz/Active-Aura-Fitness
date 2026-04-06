@@ -88,7 +88,11 @@ const handleGoalSelect = (goalText: string) => {
           text={landingData.cta_button_text}
           onClick={() => {
             setShowGoalsFromCTA(true);
-            trackEvent("Lead", "start_assessment", "Start Assessment Button");
+            trackEvent(
+              "AssessmentStart",
+              "assessment_start",
+              "Start Assessment Button"
+            );
           }}
         />
       )}
@@ -100,7 +104,7 @@ const handleGoalSelect = (goalText: string) => {
   goals={landingData.goal_options}
   quizMap={quizMap}
   onSelectGoal={(slug: QuizSlug) => {
-      trackEvent("Lead", "start_assessment", `Goal Selected: ${slug}`, {
+      trackEvent("AssessmentStart", "assessment_start", `Goal Selected: ${slug}`, {
         dedupeKey: `quiz_start:${slug}`,
         dedupeWindowMs: 5000,
       });

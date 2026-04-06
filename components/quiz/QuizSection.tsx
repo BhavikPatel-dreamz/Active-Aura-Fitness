@@ -218,34 +218,40 @@ export default function QuizSection({
         }),
         });
         const data = await res.json();
+        const resolvedQuizId =
+          data?.quiz_id ?? data?.quizId ?? data?.submission_id ?? data?.id ?? quizId;
+
+        if (resolvedQuizId != null) {
+          setQuizId(resolvedQuizId);
+        }
 
         if (!data.success) {
           console.error("Quiz submit failed", data);
           return;
         }
 
-        console.debug("[Analytics] Triggering CompleteRegistration", {
-          eventName: "CompleteRegistration",
-          category: "quiz_completed",
+        console.log("[Analytics] Triggering Lead", {
+          eventName: "Lead",
+          category: "registration_submitted",
           label: "Submit Quiz Button",
-          quizId,
+          quizId: resolvedQuizId,
           email,
           phone: fullPhone,
         });
 
         trackEvent(
-          "CompleteRegistration",
-          "quiz_completed",
+          "Lead",
+          "registration_submitted",
           "Submit Quiz Button"
         );
 
-        console.debug("[Analytics] CompleteRegistration event dispatched");
+        console.log("[Analytics] Lead event dispatched");
 
         if (!data.email_sent || !data.whatsapp_sent) {
           console.warn("Delivery pending, backend will retry");
         }
 
-        window.location.href = "/book-your-free";
+        // window.location.href = "/book-your-free";
       } catch (err) {
         console.error("Submit error:", err);
       } finally {
