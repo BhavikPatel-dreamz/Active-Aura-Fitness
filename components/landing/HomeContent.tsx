@@ -100,6 +100,10 @@ const handleGoalSelect = (goalText: string) => {
   goals={landingData.goal_options}
   quizMap={quizMap}
   onSelectGoal={(slug: QuizSlug) => {
+      trackEvent("Lead", "start_assessment", `Goal Selected: ${slug}`, {
+        dedupeKey: `quiz_start:${slug}`,
+        dedupeWindowMs: 5000,
+      });
     setActiveQuiz(slug);
   }}
 />

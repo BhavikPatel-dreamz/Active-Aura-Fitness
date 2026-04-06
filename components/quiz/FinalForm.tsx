@@ -1,6 +1,5 @@
 "use client";
 
-import { trackEvent } from "@/lib/utils/analytics";
 import { useEffect, useState, useRef } from "react";
 
 type Props = {
@@ -369,12 +368,6 @@ export function FinalForm({
           disabled={submitting}
           onClick={() => {
             handleSubmit();
-            trackEvent(
-              "CompleteRegistration",
-              "quiz_completed",
-              "Submit Quiz Button"
-            );
-            // console.log("Submit clicked");
           }}
 
           className="

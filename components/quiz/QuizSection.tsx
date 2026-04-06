@@ -6,6 +6,7 @@ import QuizResultDialog from "./QuizResultDialog";
 import { getCachedQuiz, setCachedQuiz } from "@/lib/quizCache";
 import type { QuizSlug } from "@/lib/constants/pageSlugs";
 import { QuizQuestion } from "@/lib/types";
+import { trackEvent } from "@/lib/utils/analytics";
 
 export default function QuizSection({
   quizSlug,
@@ -38,7 +39,7 @@ export default function QuizSection({
     pdfUrl: string;
   }>(null);
 
-  console.log("QuizSection mounted", quizSlug, questions);
+  // console.log("QuizSection mounted", quizSlug, questions);
   const question = questions[current];
   if (!question) return null;
 
@@ -201,14 +202,11 @@ export default function QuizSection({
     setEmail={setEmail}
     setPhone={setPhone}
     setAccepted={setAccepted}
-    onSubmit={(fullPhone: string) => {
-      
+    onSubmit={async (fullPhone: string) => {
       setSubmitting(true);
 
-      
-      window.location.href = "/book-your-free";
-
-      fetch("/api/quiz/submit", {
+      try {
+        const res = await fetch("/api/quiz/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -218,20 +216,41 @@ export default function QuizSection({
           user_email: email,
           user_phone: fullPhone,
         }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (!data.success) {
-            console.error("Quiz submit failed", data);
-          }
-
-          if (!data.email_sent || !data.whatsapp_sent) {
-            console.warn("Delivery pending, backend will retry");
-          }
-        })
-        .catch((err) => {
-          console.error("Submit error:", err);
         });
+        const data = await res.json();
+
+        if (!data.success) {
+          console.error("Quiz submit failed", data);
+          return;
+        }
+
+        console.debug("[Analytics] Triggering CompleteRegistration", {
+          eventName: "CompleteRegistration",
+          category: "quiz_completed",
+          label: "Submit Quiz Button",
+          quizId,
+          email,
+          phone: fullPhone,
+        });
+
+        trackEvent(
+          "CompleteRegistration",
+          "quiz_completed",
+          "Submit Quiz Button"
+        );
+
+        console.debug("[Analytics] CompleteRegistration event dispatched");
+
+        if (!data.email_sent || !data.whatsapp_sent) {
+          console.warn("Delivery pending, backend will retry");
+        }
+
+        window.location.href = "/book-your-free";
+      } catch (err) {
+        console.error("Submit error:", err);
+      } finally {
+        setSubmitting(false);
+      }
     }}
   />
       ) : (
