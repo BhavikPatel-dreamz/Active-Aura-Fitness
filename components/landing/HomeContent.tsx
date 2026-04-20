@@ -12,9 +12,14 @@ export default function HomeContent({ landingData, quizMap }: any) {
   const [showGoalsFromCTA, setShowGoalsFromCTA] = useState(false);
   const [activeQuiz, setActiveQuiz] = useState<QuizSlug | null>(null);
 
+  type QuizStoreItem = {
+    quizId: number | null;
+    questions: any[];
+  };
+
   const [quizStore, setQuizStore] = useState<
-  Record<QuizSlug, any[]>
->({} as Record<QuizSlug, any[]>);
+    Record<QuizSlug, QuizStoreItem>
+  >({} as Record<QuizSlug, QuizStoreItem>);
 
 
 
@@ -26,18 +31,24 @@ export default function HomeContent({ landingData, quizMap }: any) {
       const results = await Promise.all(
         entries.map(async ([_, slug]) => {
           const res = await getQuizQuestions(slug as string);
-          return [slug, res.questions || []];
+          return [
+            slug,
+            {
+              quizId: res?.quiz_id ?? null,
+              questions: res?.questions || [],
+            },
+          ];
         })
       );
 
-      const store: Record<QuizSlug, any[]> = {
-        "feel-confident-again": [],
-        "improve-energy": [],
-        "lose-weight": [],
-        "reduce-belly-fat": []
+      const store: Record<QuizSlug, QuizStoreItem> = {
+        "feel-confident-again": { quizId: null, questions: [] },
+        "improve-energy": { quizId: null, questions: [] },
+        "lose-weight": { quizId: null, questions: [] },
+        "reduce-belly-fat": { quizId: null, questions: [] },
       };
-      results.forEach(([slug, questions]) => {
-        store[slug as QuizSlug] = questions;
+      results.forEach(([slug, quizData]) => {
+        store[slug as QuizSlug] = quizData as QuizStoreItem;
       });
 
       setQuizStore(store);
@@ -64,7 +75,9 @@ const handleGoalSelect = (goalText: string) => {
       <QuizSection
         quizSlug={activeQuiz}
         onExitQuiz={() => setActiveQuiz(null)} 
-        questions={quizStore[activeQuiz] || []}     />
+        questions={quizStore[activeQuiz]?.questions || []}
+        initialQuizId={quizStore[activeQuiz]?.quizId ?? null}
+      />
     );
   }
 
