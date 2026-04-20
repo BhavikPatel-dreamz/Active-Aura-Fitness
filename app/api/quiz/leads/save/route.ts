@@ -1,16 +1,29 @@
 import { NextResponse } from "next/server";
 
 const LEAD_SAVE_URL =
-  "https://dddemo.net/wordpress/2025/aura-fitness/wp-json/aura-quiz/v1/leads/save";
+  "https://dddemo.net/wordpress/2026/aura-fitness/wp-json/aura-quiz/v1/leads/save";
+const API_KEY = process.env.AURA_API_KEY;
 
 export async function POST(req: Request) {
   try {
+    if (!API_KEY) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Server misconfiguration: missing AURA_API_KEY",
+        },
+        { status: 500 },
+      );
+    }
+
     const payload = await req.json();
 
     const res = await fetch(LEAD_SAVE_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "x-api-key": API_KEY,
+        Authorization: `Bearer ${API_KEY}`,
       },
       body: JSON.stringify(payload),
       cache: "no-store",
