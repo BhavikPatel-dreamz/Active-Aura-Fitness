@@ -11,12 +11,10 @@ import { trackEvent } from "@/lib/utils/analytics";
 export default function QuizSection({
   quizSlug,
   questions,
-  initialQuizId,
   onExitQuiz,
 }: {
   quizSlug: QuizSlug;
   questions: QuizQuestion[];
-  initialQuizId?: number | null;
   onExitQuiz: () => void;
 }) {
   // const [questions, setQuestions] = useState<QuizQuestion[]>([]);
@@ -25,8 +23,7 @@ export default function QuizSection({
   const [loading, setLoading] = useState(true);
   const [showFinalForm, setShowFinalForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [quizId, setQuizId] = useState<number | null>(initialQuizId ?? null);
-  const [leadId, setLeadId] = useState<number | null>(null);
+  const [quizId, setQuizId] = useState<number | null>(null);
 
   const [deliveryError, setDeliveryError] = useState(false);
   const [retrying, setRetrying] = useState(false);
@@ -41,12 +38,6 @@ export default function QuizSection({
     percentage: number;
     pdfUrl: string;
   }>(null);
-
-  useEffect(() => {
-    if (initialQuizId != null) {
-      setQuizId(initialQuizId);
-    }
-  }, [initialQuizId]);
 
   // console.log("QuizSection mounted", quizSlug, questions);
   const question = questions[current];
@@ -67,69 +58,6 @@ export default function QuizSection({
 
   const activeProgressWidth =
     fullSegments * segmentWidth + (isHalf ? segmentWidth / 2 : 0);
-
-  const FORM_TRIGGER_QUESTION_COUNT = 2;
-
-  function resolveNumericId(...candidates: unknown[]) {
-    for (const value of candidates) {
-      if (typeof value === "number" && Number.isFinite(value)) {
-        return value;
-      }
-      if (typeof value === "string") {
-        const parsed = Number(value);
-        if (Number.isFinite(parsed)) {
-          return parsed;
-        }
-      }
-    }
-    return null;
-  }
-
-  async function submitFinalQuiz(
-    finalAnswers: Record<string, string>,
-    forcedLeadId?: number,
-  ) {
-    const finalLeadId = forcedLeadId ?? leadId;
-
-    if (!finalLeadId) {
-      setShowFinalForm(true);
-      return;
-    }
-
-    setSubmitting(true);
-
-    try {
-      const res = await fetch("/api/quiz/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          lead_id: finalLeadId,
-          quiz_id: quizId,
-          answers: finalAnswers,
-          goal: quizSlug.replace(/-/g, "_"),
-          lifestyle: finalAnswers.lifestyle,
-          weight_loss: finalAnswers.weight_loss,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok || data?.success === false) {
-        console.error("Quiz submit failed", data);
-        return;
-      }
-
-      if (!data.email_sent || !data.whatsapp_sent) {
-        console.warn("Delivery pending, backend will retry");
-      }
-
-      window.location.href = "/book-your-free";
-    } catch (err) {
-      console.error("Submit error:", err);
-    } finally {
-      setSubmitting(false);
-    }
-  }
 
   // retry
   async function retrySending() {
@@ -264,100 +192,73 @@ export default function QuizSection({
       {/* Final Form */}
       {showFinalForm ? (
         <FinalForm
-          onBack={() => setShowFinalForm(false)}
-          submitting={submitting}
-          name={name}
-          email={email}
-          phone={phone}
-          accepted={accepted}
-          setName={setName}
-          setEmail={setEmail}
-          setPhone={setPhone}
-          setAccepted={setAccepted}
-          onSubmit={async (fullPhone: string) => {
-            if (!quizId) {
-              alert("Quiz ID is missing. Please restart the quiz and try again.");
-              return;
-            }
+    onBack={() => setShowFinalForm(false)}
+    submitting={submitting}
+    name={name}
+    email={email}
+    phone={phone}
+    accepted={accepted}
+    setName={setName}
+    setEmail={setEmail}
+    setPhone={setPhone}
+    setAccepted={setAccepted}
+    onSubmit={async (fullPhone: string) => {
+      setSubmitting(true);
 
-            setSubmitting(true);
+      try {
+        const res = await fetch("/api/quiz/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          quiz_id: quizId,
+          answers,
+          user_name: name,
+          user_email: email,
+          user_phone: fullPhone,
+        }),
+        });
+        const data = await res.json();
+        const resolvedQuizId =
+          data?.quiz_id ?? data?.quizId ?? data?.submission_id ?? data?.id ?? quizId;
 
-            try {
-              const res = await fetch("/api/quiz/leads/save", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  name,
-                  email,
-                  phone: fullPhone,
-                  quiz_id: quizId,
-                }),
-              });
+        if (resolvedQuizId != null) {
+          setQuizId(resolvedQuizId);
+        }
 
-              const data = await res.json().catch(() => null);
+        if (!data.success) {
+          console.error("Quiz submit failed", data);
+          return;
+        }
 
-              if (!res.ok || !data?.success) {
-                const errorMessage =
-                  data?.error ||
-                  data?.message ||
-                  `Lead save failed (HTTP ${res.status})`;
+        console.log("[Analytics] Triggering Lead", {
+          eventName: "Lead",
+          category: "registration_submitted",
+          label: "Submit Quiz Button",
+          quizId: resolvedQuizId,
+          email,
+          phone: fullPhone,
+        });
 
-                console.warn("Lead save failed", {
-                  status: res.status,
-                  data,
-                });
+        trackEvent(
+          "Lead",
+          "registration_submitted",
+          "Submit Quiz Button"
+        );
 
-                alert(errorMessage);
-                return;
-              }
+        console.log("[Analytics] Lead event dispatched");
 
-              const resolvedLeadId = resolveNumericId(
-                data?.lead_id,
-                data?.existing_lead_id,
-              );
+        if (!data.email_sent || !data.whatsapp_sent) {
+          console.warn("Delivery pending, backend will retry");
+        }
 
-              if (!resolvedLeadId) {
-                console.warn("Lead API did not return lead_id", data);
-                alert("Lead was not created correctly. Please try again.");
-                return;
-              }
-
-              setLeadId(resolvedLeadId);
-
-              console.log("[Analytics] Triggering Lead", {
-                eventName: "Lead",
-                category: "registration_submitted",
-                label: "Submit Quiz Button",
-                quizId,
-                leadId: resolvedLeadId,
-                email,
-                phone: fullPhone,
-                isDuplicate: data?.is_duplicate,
-              });
-
-              trackEvent(
-                "Lead",
-                "registration_submitted",
-                "Submit Quiz Button",
-              );
-
-              console.log("[Analytics] Lead event dispatched");
-
-              setShowFinalForm(false);
-
-              if (current === questions.length - 1) {
-                await submitFinalQuiz(answers, resolvedLeadId);
-              } else {
-                setCurrent((c) => Math.min(c + 1, questions.length - 1));
-              }
-            } catch (err) {
-              console.warn("Lead save error:", err);
-              alert("Something went wrong while saving your details. Please try again.");
-            } finally {
-              setSubmitting(false);
-            }
-          }}
-        />
+        window.location.href = "/book-your-free";
+      } catch (err) {
+        console.error("Submit error:", err);
+      } finally {
+        setSubmitting(false);
+      }
+    }}
+  />
       ) : (
         <section className="bg-[#ECECEB] text-black pt-3 pb-10">
           <h2 className="text-center font-semibold px-4 mb-8 max-w-185 mx-auto text-[22px] sm:text-[28px] lg:text-[35px] leading-7.5 sm:leading-9.5 lg:leading-12">
@@ -376,30 +277,18 @@ export default function QuizSection({
                   // }
 
                   onClick={() => {
-                    if (submitting) return;
-
                     const updated = { ...answers, [question.id]: opt.value };
                     setAnswers(updated);
 
                     // Auto move to next question
-                    setTimeout(async () => {
+                    setTimeout(() => {
                       if (current === questions.length - 1) {
-                        await submitFinalQuiz(updated);
+                        setShowFinalForm(true);
                       } else {
-                        const nextQuestionIndex = current + 1;
-
-                        if (
-                          !leadId &&
-                          nextQuestionIndex === FORM_TRIGGER_QUESTION_COUNT
-                        ) {
-                          setShowFinalForm(true);
-                        } else {
-                          setCurrent(nextQuestionIndex);
-                        }
+                        setCurrent((c) => c + 1);
                       }
                     }, 300); // slight delay for click animation
                   }}
-                  disabled={submitting}
                   className={`w-full sm:py-4.5 py-3 sm:px-4.5 px-3 sm:rounded-[10px] rounded-[6px] flex justify-between font-semibold transition-all
                     ${isSelected ? "bg-[#6f00ff] text-white" : "bg-white text-black"}
                   `}
