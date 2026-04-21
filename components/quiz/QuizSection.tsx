@@ -42,11 +42,30 @@ export default function QuizSection({
     pdfUrl: string;
   }>(null);
 
+  const leadStorageKey = `quizLeadId:${quizSlug}`;
+
   useEffect(() => {
     if (initialQuizId != null) {
       setQuizId(initialQuizId);
     }
   }, [initialQuizId]);
+
+  useEffect(() => {
+    const cachedLeadId = sessionStorage.getItem(leadStorageKey);
+
+    if (!cachedLeadId) return;
+
+    const parsedLeadId = Number(cachedLeadId);
+    if (Number.isFinite(parsedLeadId) && parsedLeadId > 0) {
+      setLeadId(parsedLeadId);
+    }
+  }, [leadStorageKey]);
+
+  useEffect(() => {
+    if (leadId) {
+      sessionStorage.setItem(leadStorageKey, String(leadId));
+    }
+  }, [leadId, leadStorageKey]);
 
   // console.log("QuizSection mounted", quizSlug, questions);
   const question = questions[current];
