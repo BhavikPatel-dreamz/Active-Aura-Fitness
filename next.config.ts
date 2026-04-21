@@ -6,8 +6,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'app.activeaurafitness.com',
-        pathname: "/wp-content/**",
+        hostname: "dddemo.net",
+        pathname: "/wordpress/**",
       },
     ],
   },
