@@ -114,7 +114,7 @@ export default function QuizSection({
 
       const data = await res.json();
 
-      if (!data.success) {
+      if (!res.ok || data?.success === false) {
         console.error("Quiz submit failed", data);
         return;
       }
