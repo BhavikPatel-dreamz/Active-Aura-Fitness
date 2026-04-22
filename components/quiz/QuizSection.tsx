@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { FinalForm } from "./FinalForm";
 import QuizResultDialog from "./QuizResultDialog";
 import { getCachedQuiz, setCachedQuiz } from "@/lib/quizCache";
@@ -18,8 +17,6 @@ export default function QuizSection({
   questions: QuizQuestion[];
   onExitQuiz: () => void;
 }) {
-  const router = useRouter();
-  const [isNavigating, startTransition] = useTransition();
   // const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -42,37 +39,6 @@ export default function QuizSection({
     pdfUrl: string;
   }>(null);
 
-  const leadStorageKey = `quizLeadId:${quizSlug}`;
-
-  useEffect(() => {
-    if (initialQuizId != null) {
-      setQuizId(initialQuizId);
-    }
-  }, [initialQuizId]);
-
-  useEffect(() => {
-    const cachedLeadId = sessionStorage.getItem(leadStorageKey);
-
-    if (!cachedLeadId) return;
-
-    const parsedLeadId = Number(cachedLeadId);
-    if (Number.isFinite(parsedLeadId) && parsedLeadId > 0) {
-      setLeadId(parsedLeadId);
-    }
-  }, [leadStorageKey]);
-
-  useEffect(() => {
-    if (leadId) {
-      sessionStorage.setItem(leadStorageKey, String(leadId));
-    }
-  }, [leadId, leadStorageKey]);
-
-  useEffect(() => {
-    if (current === questions.length - 1) {
-      router.prefetch("/book-your-free");
-    }
-  }, [current, questions.length, router]);
-
   // console.log("QuizSection mounted", quizSlug, questions);
   const question = questions[current];
   if (!question) return null;
@@ -93,73 +59,6 @@ export default function QuizSection({
   const activeProgressWidth =
     fullSegments * segmentWidth + (isHalf ? segmentWidth / 2 : 0);
 
-  const FORM_TRIGGER_QUESTION_COUNT = 2;
-  const isFinalSubmitInProgress =
-    (submitting || isNavigating) && current === questions.length - 1;
-
-  function resolveNumericId(...candidates: unknown[]) {
-    for (const value of candidates) {
-      if (typeof value === "number" && Number.isFinite(value)) {
-        return value;
-      }
-      if (typeof value === "string") {
-        const parsed = Number(value);
-        if (Number.isFinite(parsed)) {
-          return parsed;
-        }
-      }
-    }
-    return null;
-  }
-
-  async function submitFinalQuiz(
-    finalAnswers: Record<string, string>,
-    forcedLeadId?: number,
-  ) {
-    const finalLeadId = forcedLeadId ?? leadId;
-
-    if (!finalLeadId) {
-      setShowFinalForm(true);
-      return;
-    }
-
-    setSubmitting(true);
-
-    try {
-      const res = await fetch("/api/quiz/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          lead_id: finalLeadId,
-          quiz_id: quizId,
-          answers: finalAnswers,
-          goal: quizSlug.replace(/-/g, "_"),
-          lifestyle: finalAnswers.lifestyle,
-          weight_loss: finalAnswers.weight_loss,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok || data?.success === false) {
-        console.error("Quiz submit failed", data);
-        return;
-      }
-
-      if (!data.email_sent || !data.whatsapp_sent) {
-        console.warn("Delivery pending, backend will retry");
-      }
-
-      startTransition(() => {
-        router.replace("/book-your-free");
-      });
-    } catch (err) {
-      console.error("Submit error:", err);
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
   // retry
   async function retrySending() {
     setRetrying(true);
@@ -179,9 +78,8 @@ export default function QuizSection({
 
       if (data.email_sent && data.whatsapp_sent) {
         // success on retry — redirect user
-        startTransition(() => {
-          router.replace("/book-your-free");
-        });
+        window.location.href =
+          " https://activeaurafitness.com/book-your-free";
         return;
       } else {
         // Still failing
@@ -238,17 +136,6 @@ export default function QuizSection({
             onExitQuiz();
           }}
         />
-      )}
-
-      {isFinalSubmitInProgress && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 px-4">
-          <div className="flex flex-col items-center gap-3 rounded-2xl bg-white px-6 py-5 shadow-2xl">
-            <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#6F00FF] border-t-transparent" />
-            <p className="text-center text-base font-semibold text-black">
-              Please wait while we finalize your submission...
-            </p>
-          </div>
-        </div>
       )}
 
       {/* ================= PROGRESS BAR ================= */}
