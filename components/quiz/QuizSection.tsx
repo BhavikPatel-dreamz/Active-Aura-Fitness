@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { FinalForm } from "./FinalForm";
 import QuizResultDialog from "./QuizResultDialog";
 import { getCachedQuiz, setCachedQuiz } from "@/lib/quizCache";
@@ -19,6 +20,8 @@ export default function QuizSection({
   initialQuizId?: number | null;
   onExitQuiz: () => void;
 }) {
+  const router = useRouter();
+  const [isNavigating, startTransition] = useTransition();
   // const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -67,6 +70,12 @@ export default function QuizSection({
     }
   }, [leadId, leadStorageKey]);
 
+  useEffect(() => {
+    if (current === questions.length - 1) {
+      router.prefetch("/book-your-free");
+    }
+  }, [current, questions.length, router]);
+
   // console.log("QuizSection mounted", quizSlug, questions);
   const question = questions[current];
   if (!question) return null;
@@ -88,6 +97,8 @@ export default function QuizSection({
     fullSegments * segmentWidth + (isHalf ? segmentWidth / 2 : 0);
 
   const FORM_TRIGGER_QUESTION_COUNT = 2;
+  const isFinalSubmitInProgress =
+    (submitting || isNavigating) && current === questions.length - 1;
 
   function resolveNumericId(...candidates: unknown[]) {
     for (const value of candidates) {
@@ -142,7 +153,9 @@ export default function QuizSection({
         console.warn("Delivery pending, backend will retry");
       }
 
-      window.location.href = "/book-your-free";
+      startTransition(() => {
+        router.replace("/book-your-free");
+      });
     } catch (err) {
       console.error("Submit error:", err);
     } finally {
@@ -169,8 +182,9 @@ export default function QuizSection({
 
       if (data.email_sent && data.whatsapp_sent) {
         // success on retry — redirect user
-        window.location.href =
-          " https://activeaurafitness.com/book-your-free";
+        startTransition(() => {
+          router.replace("/book-your-free");
+        });
         return;
       } else {
         // Still failing
@@ -227,6 +241,17 @@ export default function QuizSection({
             onExitQuiz();
           }}
         />
+      )}
+
+      {isFinalSubmitInProgress && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 px-4">
+          <div className="flex flex-col items-center gap-3 rounded-2xl bg-white px-6 py-5 shadow-2xl">
+            <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#6F00FF] border-t-transparent" />
+            <p className="text-center text-base font-semibold text-black">
+              Please wait while we finalize your submission...
+            </p>
+          </div>
+        </div>
       )}
 
       {/* ================= PROGRESS BAR ================= */}
