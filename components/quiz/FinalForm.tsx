@@ -155,10 +155,10 @@ export function FinalForm({
 
   return (
     <section className="bg-[#ECECEB] text-black pb-8">
-      {/* <h2 className="text-center font-semibold text-[22px] sm:text-[26px] md:text-[35px] sm:mb-12 mb-5 px-4">
-        Final Step : Where Should We Send <br />
+      <h2 className="text-center font-semibold text-[22px] sm:text-[26px] md:text-[35px] sm:mb-12 mb-5 px-4">
+        Where Should We Send <br />
         Your Personalized Results?
-      </h2> */}
+      </h2>
 
       <div className="max-w-xl mx-auto px-6 sm:mb-20 mb-10">
         {/* Name */}
