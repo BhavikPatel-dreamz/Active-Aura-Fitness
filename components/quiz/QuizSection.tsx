@@ -96,7 +96,7 @@ export default function QuizSection({
   const activeProgressWidth =
     fullSegments * segmentWidth + (isHalf ? segmentWidth / 2 : 0);
 
-  const FORM_TRIGGER_QUESTION_COUNT = 2;
+  const FORM_TRIGGER_QUESTION_COUNT = 1;
   const isFinalSubmitInProgress =
     (submitting || isNavigating) && current === questions.length - 1;
 
